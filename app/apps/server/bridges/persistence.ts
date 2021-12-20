@@ -25,8 +25,16 @@ export class AppPersistenceBridge extends PersistenceBridge {
 		return this.orch.getPersistenceModel().insert({ appId, data });
 	}
 
-	protected async createWithAssociations(data: object, associations: Array<RocketChatAssociationRecord>, appId: string): Promise<string> {
-		this.orch.debugLog(`The App ${ appId } is storing a new object in their persistence that is associated with some models.`, data, associations);
+	protected async createWithAssociations(
+		data: object,
+		associations: Array<RocketChatAssociationRecord>,
+		appId: string,
+	): Promise<string> {
+		this.orch.debugLog(
+			`The App ${ appId } is storing a new object in their persistence that is associated with some models.`,
+			data,
+			associations,
+		);
 
 		if (typeof data !== 'object') {
 			throw new Error('Attempted to store an invalid data type, it must be an object.');
@@ -36,25 +44,36 @@ export class AppPersistenceBridge extends PersistenceBridge {
 	}
 
 	protected async readById(id: string, appId: string): Promise<object> {
-		this.orch.debugLog(`The App ${ appId } is reading their data in their persistence with the id: "${ id }"`);
+		this.orch.debugLog(
+			`The App ${ appId } is reading their data in their persistence with the id: "${ id }"`,
+		);
 
 		const record = this.orch.getPersistenceModel().findOneById(id);
 
 		return record.data;
 	}
 
-	protected async readByAssociations(associations: Array<RocketChatAssociationRecord>, appId: string): Promise<Array<object>> {
-		this.orch.debugLog(`The App ${ appId } is searching for records that are associated with the following:`, associations);
+	protected async readByAssociations(
+		associations: Array<RocketChatAssociationRecord>,
+		appId: string,
+	): Promise<Array<object>> {
+		this.orch.debugLog(
+			`The App ${ appId } is searching for records that are associated with the following:`,
+			associations,
+		);
 
-		const records = this.orch.getPersistenceModel().find({
-			appId,
-			associations: { $all: associations },
-		}).fetch();
+		const records = this.orch
+			.getPersistenceModel()
+			.find({
+				appId,
+				associations: { $all: associations },
+			})
+			.fetch();
 
 		return Array.isArray(records) ? records.map((r) => r.data) : [];
 	}
 
-	protected async remove(id: string, appId: string): Promise<object|undefined> {
+	protected async remove(id: string, appId: string): Promise<object | undefined> {
 		this.orch.debugLog(`The App ${ appId } is removing one of their records by the id: "${ id }"`);
 
 		const record = this.orch.getPersistenceModel().findOne({ _id: id, appId });
@@ -68,8 +87,14 @@ export class AppPersistenceBridge extends PersistenceBridge {
 		return record.data;
 	}
 
-	protected async removeByAssociations(associations: Array<RocketChatAssociationRecord>, appId: string): Promise<Array<object>|undefined> {
-		this.orch.debugLog(`The App ${ appId } is removing records with the following associations:`, associations);
+	protected async removeByAssociations(
+		associations: Array<RocketChatAssociationRecord>,
+		appId: string,
+	): Promise<Array<object> | undefined> {
+		this.orch.debugLog(
+			`The App ${ appId } is removing records with the following associations:`,
+			associations,
+		);
 
 		const query = {
 			appId,
@@ -89,7 +114,12 @@ export class AppPersistenceBridge extends PersistenceBridge {
 		return Array.isArray(records) ? records.map((r) => r.data) : [];
 	}
 
-	protected async update(id: string, data: object, _upsert: boolean, appId: string): Promise<string> {
+	protected async update(
+		id: string,
+		data: object,
+		_upsert: boolean,
+		appId: string,
+	): Promise<string> {
 		this.orch.debugLog(`The App ${ appId } is updating the record "${ id }" to:`, data);
 
 		if (typeof data !== 'object') {
@@ -99,8 +129,17 @@ export class AppPersistenceBridge extends PersistenceBridge {
 		throw new Error('Not implemented.');
 	}
 
-	protected async updateByAssociations(associations: Array<RocketChatAssociationRecord>, data: object, upsert: boolean, appId: string): Promise<string> {
-		this.orch.debugLog(`The App ${ appId } is updating the record with association to data as follows:`, associations, data);
+	protected async updateByAssociations(
+		associations: Array<RocketChatAssociationRecord>,
+		data: object,
+		upsert: boolean,
+		appId: string,
+	): Promise<string> {
+		this.orch.debugLog(
+			`The App ${ appId } is updating the record with association to data as follows:`,
+			associations,
+			data,
+		);
 
 		if (typeof data !== 'object') {
 			throw new Error('Attempted to store an invalid data type, it must be an object.');

@@ -46,13 +46,16 @@ settingsRegistry.addGroup('OAuth', function() {
 			i18nLabel: 'Server_Type',
 		});
 
-		const customOAuthQuery = [{
-			_id: 'Accounts_OAuth_Wordpress',
-			value: true,
-		}, {
-			_id: 'Accounts_OAuth_Wordpress_server_type',
-			value: 'custom',
-		}];
+		const customOAuthQuery = [
+			{
+				_id: 'Accounts_OAuth_Wordpress',
+				value: true,
+			},
+			{
+				_id: 'Accounts_OAuth_Wordpress_server_type',
+				value: 'custom',
+			},
+		];
 
 		this.add('Accounts_OAuth_Wordpress_identity_path', '', {
 			type: 'string',

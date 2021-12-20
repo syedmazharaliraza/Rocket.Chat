@@ -52,12 +52,21 @@ class AutoTransferChatSchedulerClass {
 	}
 
 	private async transferRoom(roomId: string): Promise<boolean> {
-		const room = LivechatRooms.findOneById(roomId, { _id: 1, v: 1, servedBy: 1, open: 1, departmentId: 1 });
+		const room = LivechatRooms.findOneById(roomId, {
+			_id: 1,
+			v: 1,
+			servedBy: 1,
+			open: 1,
+			departmentId: 1,
+		});
 		if (!room?.open || !room?.servedBy?._id) {
 			return false;
 		}
 
-		const { departmentId, servedBy: { _id: ignoreAgentId } } = room;
+		const {
+			departmentId,
+			servedBy: { _id: ignoreAgentId },
+		} = room;
 
 		if (!RoutingManager.getConfig().autoAssignAgent) {
 			return Livechat.returnRoomAsInquiry(room._id, departmentId);
@@ -65,7 +74,11 @@ class AutoTransferChatSchedulerClass {
 
 		const agent = await RoutingManager.getNextAgent(departmentId, ignoreAgentId);
 		if (agent) {
-			return forwardRoomToAgent(room, { userId: agent.agentId, transferredBy: schedulerUser, transferredTo: agent });
+			return forwardRoomToAgent(room, {
+				userId: agent.agentId,
+				transferredBy: schedulerUser,
+				transferredTo: agent,
+			});
 		}
 
 		return false;

@@ -13,46 +13,77 @@ export class AnalyticsRaw extends BaseRaw<T> {
 		{ key: { 'room._id': 1, date: 1 }, unique: true },
 	];
 
-	saveMessageSent({ room, date }: { room: IRoom; date: IAnalytic['date'] }): Promise<UpdateWriteOpResult> {
-		return this.updateMany({ date, 'room._id': room._id, type: 'messages' }, {
-			$set: {
-				room: {
-					_id: room._id,
-					name: room.fname || room.name,
-					t: room.t,
-					usernames: room.usernames || [],
+	saveMessageSent({
+		room,
+		date,
+	}: {
+		room: IRoom;
+		date: IAnalytic['date'];
+	}): Promise<UpdateWriteOpResult> {
+		return this.updateMany(
+			{ date, 'room._id': room._id, type: 'messages' },
+			{
+				$set: {
+					room: {
+						_id: room._id,
+						name: room.fname || room.name,
+						t: room.t,
+						usernames: room.usernames || [],
+					},
 				},
+				$setOnInsert: {
+					_id: Random.id(),
+					date,
+					type: 'messages',
+				},
+				$inc: { messages: 1 },
 			},
-			$setOnInsert: {
-				_id: Random.id(),
-				date,
-				type: 'messages',
-			},
-			$inc: { messages: 1 },
-		}, { upsert: true });
+			{ upsert: true },
+		);
 	}
 
 	saveUserData({ date }: { date: IAnalytic['date'] }): Promise<UpdateWriteOpResult> {
-		return this.updateMany({ date, type: 'users' }, {
-			$setOnInsert: {
-				_id: Random.id(),
-				date,
-				type: 'users',
+		return this.updateMany(
+			{ date, type: 'users' },
+			{
+				$setOnInsert: {
+					_id: Random.id(),
+					date,
+					type: 'users',
+				},
+				$inc: { users: 1 },
 			},
-			$inc: { users: 1 },
-		}, { upsert: true });
+			{ upsert: true },
+		);
 	}
 
-	saveMessageDeleted({ room, date }: { room: { _id: string }; date: IAnalytic['date'] }): Promise<UpdateWriteOpResult> {
-		return this.updateMany({ date, 'room._id': room._id }, {
-			$inc: { messages: -1 },
-		});
+	saveMessageDeleted({
+		room,
+		date,
+	}: {
+		room: { _id: string };
+		date: IAnalytic['date'];
+	}): Promise<UpdateWriteOpResult> {
+		return this.updateMany(
+			{ date, 'room._id': room._id },
+			{
+				$inc: { messages: -1 },
+			},
+		);
 	}
 
-	getMessagesSentTotalByDate({ start, end, options = {} }: { start: IAnalytic['date']; end: IAnalytic['date']; options?: { sort?: SortOptionObject<T>; count?: number } }): AggregationCursor<{
-		_id: IAnalytic['date'];
-		messages: number;
-	}> {
+	getMessagesSentTotalByDate({
+		start,
+		end,
+		options = {},
+	}: {
+		start: IAnalytic['date'];
+		end: IAnalytic['date'];
+		options?: { sort?: SortOptionObject<T>; count?: number };
+	}): AggregationCursor<{
+			_id: IAnalytic['date'];
+			messages: number;
+		}> {
 		return this.col.aggregate<{
 			_id: IAnalytic['date'];
 			messages: number;
@@ -74,10 +105,16 @@ export class AnalyticsRaw extends BaseRaw<T> {
 		]);
 	}
 
-	getMessagesOrigin({ start, end }: { start: IAnalytic['date']; end: IAnalytic['date'] }): AggregationCursor<{
-		t: IRoom['t'];
-		messages: number;
-	}> {
+	getMessagesOrigin({
+		start,
+		end,
+	}: {
+		start: IAnalytic['date'];
+		end: IAnalytic['date'];
+	}): AggregationCursor<{
+			t: IRoom['t'];
+			messages: number;
+		}> {
 		const params = [
 			{
 				$match: {
@@ -102,12 +139,20 @@ export class AnalyticsRaw extends BaseRaw<T> {
 		return this.col.aggregate(params);
 	}
 
-	getMostPopularChannelsByMessagesSentQuantity({ start, end, options = {} }: { start: IAnalytic['date']; end: IAnalytic['date']; options?: { sort?: SortOptionObject<T>; count?: number } }): AggregationCursor<{
-		t: IRoom['t'];
-		name: string;
-		messages: number;
-		usernames: string[];
-	}> {
+	getMostPopularChannelsByMessagesSentQuantity({
+		start,
+		end,
+		options = {},
+	}: {
+		start: IAnalytic['date'];
+		end: IAnalytic['date'];
+		options?: { sort?: SortOptionObject<T>; count?: number };
+	}): AggregationCursor<{
+			t: IRoom['t'];
+			name: string;
+			messages: number;
+			usernames: string[];
+		}> {
 		return this.col.aggregate([
 			{
 				$match: {
@@ -135,10 +180,18 @@ export class AnalyticsRaw extends BaseRaw<T> {
 		]);
 	}
 
-	getTotalOfRegisteredUsersByDate({ start, end, options = {} }: { start: IAnalytic['date']; end: IAnalytic['date']; options?: { sort?: SortOptionObject<T>; count?: number } }): AggregationCursor<{
-		_id: IAnalytic['date'];
-		users: number;
-	}> {
+	getTotalOfRegisteredUsersByDate({
+		start,
+		end,
+		options = {},
+	}: {
+		start: IAnalytic['date'];
+		end: IAnalytic['date'];
+		options?: { sort?: SortOptionObject<T>; count?: number };
+	}): AggregationCursor<{
+			_id: IAnalytic['date'];
+			users: number;
+		}> {
 		return this.col.aggregate<{
 			_id: IAnalytic['date'];
 			users: number;

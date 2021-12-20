@@ -50,7 +50,9 @@ export class SAMLUtils {
 		relayState = value;
 	}
 
-	public static getServiceProviderOptions(providerName: string): IServiceProviderOptions | undefined {
+	public static getServiceProviderOptions(
+		providerName: string,
+	): IServiceProviderOptions | undefined {
 		this.log(providerName, providerList);
 
 		return _.find(providerList, (providerOptions) => providerOptions.provider === providerName);
@@ -72,7 +74,9 @@ export class SAMLUtils {
 		globalSettings.nameOverwrite = Boolean(samlConfigs.nameOverwrite);
 		globalSettings.mailOverwrite = Boolean(samlConfigs.mailOverwrite);
 		globalSettings.channelsAttributeUpdate = Boolean(samlConfigs.channelsAttributeUpdate);
-		globalSettings.includePrivateChannelsInUpdate = Boolean(samlConfigs.includePrivateChannelsInUpdate);
+		globalSettings.includePrivateChannelsInUpdate = Boolean(
+			samlConfigs.includePrivateChannelsInUpdate,
+		);
 
 		if (samlConfigs.immutableProperty && typeof samlConfigs.immutableProperty === 'string') {
 			globalSettings.immutableProperty = samlConfigs.immutableProperty;
@@ -143,7 +147,11 @@ export class SAMLUtils {
 		}
 	}
 
-	public static inflateXml(base64Data: string, successCallback: (xml: string) => void, errorCallback: (err: string | object | null) => void): void {
+	public static inflateXml(
+		base64Data: string,
+		successCallback: (xml: string) => void,
+		errorCallback: (err: string | object | null) => void,
+	): void {
 		const buffer = Buffer.from(base64Data, 'base64');
 		zlib.inflateRaw(buffer, (err, decoded) => {
 			if (err) {
@@ -160,16 +168,26 @@ export class SAMLUtils {
 		});
 	}
 
-	public static validateStatus(doc: Document): { success: boolean; message: string; statusCode: string } {
+	public static validateStatus(doc: Document): {
+		success: boolean;
+		message: string;
+		statusCode: string;
+	} {
 		let successStatus = false;
 		let status = null;
 		let messageText = '';
 
-		const statusNodes = doc.getElementsByTagNameNS('urn:oasis:names:tc:SAML:2.0:protocol', 'StatusCode');
+		const statusNodes = doc.getElementsByTagNameNS(
+			'urn:oasis:names:tc:SAML:2.0:protocol',
+			'StatusCode',
+		);
 
 		if (statusNodes.length) {
 			const statusNode = statusNodes[0];
-			const statusMessage = doc.getElementsByTagNameNS('urn:oasis:names:tc:SAML:2.0:protocol', 'StatusMessage')[0];
+			const statusMessage = doc.getElementsByTagNameNS(
+				'urn:oasis:names:tc:SAML:2.0:protocol',
+				'StatusMessage',
+			)[0];
 
 			if (statusMessage && statusMessage.firstChild && statusMessage.firstChild.textContent) {
 				messageText = statusMessage.firstChild.textContent;
@@ -193,7 +211,8 @@ export class SAMLUtils {
 			return cert;
 		}
 
-		return cert.replace(/-+BEGIN CERTIFICATE-+\r?\n?/, '')
+		return cert
+			.replace(/-+BEGIN CERTIFICATE-+\r?\n?/, '')
 			.replace(/-+END CERTIFICATE-+\r?\n?/, '')
 			.replace(/\r\n/g, '\n')
 			.trim();
@@ -249,7 +268,6 @@ export class SAMLUtils {
 				continue;
 			}
 
-
 			let attributeMap: IAttributeMapping | null = null;
 
 			// If it's a complex type, let's check what's in it
@@ -301,12 +319,8 @@ export class SAMLUtils {
 			}
 		}
 
-
 		if (identifier) {
-			const defaultTypes = [
-				'email',
-				'username',
-			];
+			const defaultTypes = ['email', 'username'];
 
 			if (defaultTypes.includes(identifier)) {
 				parsedMap.identifier.type = identifier;
@@ -319,7 +333,11 @@ export class SAMLUtils {
 		return parsedMap;
 	}
 
-	public static getProfileValue(profile: Record<string, any>, mapping: IAttributeMapping, forceString = false): any {
+	public static getProfileValue(
+		profile: Record<string, any>,
+		mapping: IAttributeMapping,
+		forceString = false,
+	): any {
 		const values: Record<string, string> = {
 			regex: '',
 		};
@@ -386,7 +404,10 @@ export class SAMLUtils {
 		return mainValue;
 	}
 
-	public static convertArrayBufferToString(buffer: ArrayBuffer, encoding: BufferEncoding = 'utf8'): string {
+	public static convertArrayBufferToString(
+		buffer: ArrayBuffer,
+		encoding: BufferEncoding = 'utf8',
+	): string {
 		return Buffer.from(buffer).toString(encoding);
 	}
 
@@ -416,7 +437,9 @@ export class SAMLUtils {
 				throw new Error('SAML User Data Map: invalid Identifier configuration received.');
 			}
 			if (!profile[userDataMap.identifier.attribute]) {
-				throw new Error(`SAML Profile did not have the expected identifier (${ userDataMap.identifier.attribute }).`);
+				throw new Error(
+					`SAML Profile did not have the expected identifier (${ userDataMap.identifier.attribute }).`,
+				);
 			}
 		}
 

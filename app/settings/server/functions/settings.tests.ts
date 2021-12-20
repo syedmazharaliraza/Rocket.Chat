@@ -126,7 +126,11 @@ describe('Settings', () => {
 
 		expect(Settings).to.have.property('insertCalls').to.be.equal(2);
 		expect(Settings).to.have.property('upsertCalls').to.be.equal(1);
-		expect(Settings.findOne({ _id: 'my_setting' })).to.include({ ...expectedSetting, value: 2, processEnvValue: 2 });
+		expect(Settings.findOne({ _id: 'my_setting' })).to.include({
+			...expectedSetting,
+			value: 2,
+			processEnvValue: 2,
+		});
 	});
 
 	it('should respect override via environment as boolean', () => {
@@ -176,7 +180,6 @@ describe('Settings', () => {
 				});
 			});
 		});
-
 
 		expect(Settings.insertCalls).to.be.equal(2);
 		expect(Settings.upsertCalls).to.be.equal(1);
@@ -237,7 +240,8 @@ describe('Settings', () => {
 
 		expect(Settings.insertCalls).to.be.equal(2);
 		expect(Settings.upsertCalls).to.be.equal(1);
-		expect(Settings.findOne({ _id: 'my_setting_str' })).to.include({ ...expectedSetting,
+		expect(Settings.findOne({ _id: 'my_setting_str' })).to.include({
+			...expectedSetting,
 			value: 'hey ho',
 			processEnvValue: 'hey ho',
 			packageValue: 'hey',
@@ -295,7 +299,6 @@ describe('Settings', () => {
 		expect(Settings.findOne({ _id: 'my_setting' })).to.include({ ...expectedSetting });
 	});
 
-
 	it('should call `settings.get` callback on setting added', (done) => {
 		const settings = new CachedSettings();
 		Settings.settings = settings;
@@ -333,7 +336,7 @@ describe('Settings', () => {
 		const settingsRegistry = new SettingsRegistry({ store: settings, model: Settings as any });
 
 		settings.watch('setting_callback', spiedCallback1, { debounce: 1 });
-		settings.watchByRegex(/setting_callback/ig, spiedCallback2, { debounce: 1 });
+		settings.watchByRegex(/setting_callback/gi, spiedCallback2, { debounce: 1 });
 
 		settings.initilized();
 		settingsRegistry.addGroup('group', function() {

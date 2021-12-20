@@ -15,11 +15,15 @@ Meteor.methods({
 				'_createdBy._id': this.userId,
 			});
 		} else {
-			throw new Meteor.Error('not_authorized', 'Unauthorized', { method: 'deleteIncomingIntegration' });
+			throw new Meteor.Error('not_authorized', 'Unauthorized', {
+				method: 'deleteIncomingIntegration',
+			});
 		}
 
 		if (!integration) {
-			throw new Meteor.Error('error-invalid-integration', 'Invalid integration', { method: 'deleteIncomingIntegration' });
+			throw new Meteor.Error('error-invalid-integration', 'Invalid integration', {
+				method: 'deleteIncomingIntegration',
+			});
 		}
 
 		await Integrations.removeById(integrationId);

@@ -12,4 +12,9 @@ const handleAfterOnHoldChatResumed = async (room: any): Promise<void> => {
 	LivechatEnterprise.releaseOnHoldChat(room);
 };
 
-callbacks.add('livechat:afterOnHoldChatResumed', handleAfterOnHoldChatResumed, callbacks.priority.HIGH, 'livechat-after-on-hold-chat-resumed');
+callbacks.add(
+	'livechat:afterOnHoldChatResumed',
+	handleAfterOnHoldChatResumed,
+	callbacks.priority.HIGH,
+	'livechat-after-on-hold-chat-resumed',
+);

@@ -13,7 +13,14 @@ type FindUsersParam = {
 	sort?: Record<string, any>;
 };
 
-export function findUsersOfRoom({ rid, status, skip = 0, limit = 0, filter = '', sort = {} }: FindUsersParam): Mongo.Cursor<IUser> {
+export function findUsersOfRoom({
+	rid,
+	status,
+	skip = 0,
+	limit = 0,
+	filter = '',
+	sort = {},
+}: FindUsersParam): Mongo.Cursor<IUser> {
 	const options = {
 		fields: {
 			name: 1,
@@ -31,8 +38,10 @@ export function findUsersOfRoom({ rid, status, skip = 0, limit = 0, filter = '',
 		...limit > 0 && { limit },
 	};
 
-	return Users.findByActiveUsersExcept(filter, undefined, options, undefined, [{
-		__rooms: rid,
-		...status && { status },
-	}]);
+	return Users.findByActiveUsersExcept(filter, undefined, options, undefined, [
+		{
+			__rooms: rid,
+			...status && { status },
+		},
+	]);
 }

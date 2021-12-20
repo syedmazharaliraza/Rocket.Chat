@@ -14,8 +14,8 @@ const sValidEmail = `^${ sAddrSpec }$`;
 const reg = new RegExp(sValidEmail);
 
 /*
-	* Code from https://github.com/dleitee/valid.js
-	* Checks for email
-	* @params email
-	*/
+ * Code from https://github.com/dleitee/valid.js
+ * Checks for email
+ * @params email
+ */
 export const isEmail = (email: string): boolean => reg.test(email);

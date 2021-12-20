@@ -8,7 +8,12 @@ import { registerWithHub } from '../lib/dns';
 import { enableCallbacks, disableCallbacks } from '../lib/callbacks';
 import { setupLogger } from '../lib/logger';
 import { FederationKeys } from '../../../models/server/raw';
-import { STATUS_ENABLED, STATUS_REGISTERING, STATUS_ERROR_REGISTERING, STATUS_DISABLED } from '../constants';
+import {
+	STATUS_ENABLED,
+	STATUS_REGISTERING,
+	STATUS_ERROR_REGISTERING,
+	STATUS_DISABLED,
+} from '../constants';
 
 Meteor.startup(async function() {
 	const federationPublicKey = await FederationKeys.getPublicKeyString();
@@ -46,13 +51,16 @@ Meteor.startup(async function() {
 
 		this.add('FEDERATION_Discovery_Method', 'dns', {
 			type: 'select',
-			values: [{
-				key: 'dns',
-				i18nLabel: 'DNS',
-			}, {
-				key: 'hub',
-				i18nLabel: 'Hub',
-			}],
+			values: [
+				{
+					key: 'dns',
+					i18nLabel: 'DNS',
+				},
+				{
+					key: 'hub',
+					i18nLabel: 'Hub',
+				},
+			],
 			i18nLabel: 'FEDERATION_Discovery_Method',
 			i18nDescription: 'FEDERATION_Discovery_Method_Description',
 			public: true,
@@ -73,7 +81,11 @@ const updateSettings = async function(): Promise<void> {
 		try {
 			await updateStatus(STATUS_REGISTERING);
 
-			await registerWithHub(getFederationDomain(), settings.get('Site_Url'), await FederationKeys.getPublicKeyString());
+			await registerWithHub(
+				getFederationDomain(),
+				settings.get('Site_Url'),
+				await FederationKeys.getPublicKeyString(),
+			);
 
 			await updateStatus(STATUS_ENABLED);
 		} catch (err) {

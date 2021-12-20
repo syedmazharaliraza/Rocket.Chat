@@ -8,7 +8,6 @@ settingsRegistry.addGroup('OAuth', function() {
 	});
 });
 
-
 settings.watch('Accounts_OAuth_Apple', (enabled) => {
 	if (!enabled) {
 		return ServiceConfiguration.configurations.remove({
@@ -16,13 +15,16 @@ settings.watch('Accounts_OAuth_Apple', (enabled) => {
 		});
 	}
 
-	ServiceConfiguration.configurations.upsert({
-		service: 'apple',
-	}, {
-		$set: {
-			// We'll hide this button on Web Client
-			showButton: false,
-			enabled: settings.get('Accounts_OAuth_Apple'),
+	ServiceConfiguration.configurations.upsert(
+		{
+			service: 'apple',
 		},
-	});
+		{
+			$set: {
+				// We'll hide this button on Web Client
+				showButton: false,
+				enabled: settings.get('Accounts_OAuth_Apple'),
+			},
+		},
+	);
 });

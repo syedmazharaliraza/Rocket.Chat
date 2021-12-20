@@ -25,7 +25,7 @@ type FileAttachment = {
 	video_url?: string;
 	video_type?: string;
 	video_size?: string;
-}
+};
 
 const language = settings.get<string>('Language') || 'en';
 const t = (s: string): string => TAPi18n.__(s, { lng: language });
@@ -78,7 +78,11 @@ function getGuestByEmail(email: string, name: string, department = ''): any {
 	throw new Error('Error getting guest');
 }
 
-async function uploadAttachment(attachment: Attachment, rid: string, visitorToken: string): Promise<FileAttachment> {
+async function uploadAttachment(
+	attachment: Attachment,
+	rid: string,
+	visitorToken: string,
+): Promise<FileAttachment> {
 	const details = {
 		name: attachment.filename,
 		size: attachment.size,
@@ -125,8 +129,14 @@ async function uploadAttachment(attachment: Attachment, rid: string, visitorToke
 	});
 }
 
-export async function onEmailReceived(email: ParsedMail, inbox: string, department = ''): Promise<void> {
-	logger.debug(`New email conversation received on inbox ${ inbox }. Will be assigned to department ${ department }`);
+export async function onEmailReceived(
+	email: ParsedMail,
+	inbox: string,
+	department = '',
+): Promise<void> {
+	logger.debug(
+		`New email conversation received on inbox ${ inbox }. Will be assigned to department ${ department }`,
+	);
 	if (!email.from?.value?.[0]?.address) {
 		return;
 	}
@@ -138,9 +148,16 @@ export async function onEmailReceived(email: ParsedMail, inbox: string, departme
 	logger.debug(`Fetching guest for visitor ${ email.from.value[0].address }`);
 	const guest = getGuestByEmail(email.from.value[0].address, email.from.value[0].name, department);
 
-	logger.debug(`Guest ${ guest._id } obtained. Attempting to find or create a room on department ${ department }`);
+	logger.debug(
+		`Guest ${ guest._id } obtained. Attempting to find or create a room on department ${ department }`,
+	);
 
-	let room = LivechatRooms.findOneByVisitorTokenAndEmailThreadAndDepartment(guest.token, thread, department, {});
+	let room = LivechatRooms.findOneByVisitorTokenAndEmailThreadAndDepartment(
+		guest.token,
+		thread,
+		department,
+		{},
+	);
 
 	logger.debug({
 		msg: 'Room found for guest',
@@ -163,7 +180,9 @@ export async function onEmailReceived(email: ParsedMail, inbox: string, departme
 	const rid = room?._id ?? Random.id();
 	const msgId = Random.id();
 
-	logger.debug(`Sending email message to room ${ rid } for visitor ${ guest._id }. Conversation assigned to department ${ department }`);
+	logger.debug(
+		`Sending email message to room ${ rid } for visitor ${ guest._id }. Conversation assigned to department ${ department }`,
+	);
 	Livechat.sendMessage({
 		guest,
 		message: {
@@ -172,29 +191,36 @@ export async function onEmailReceived(email: ParsedMail, inbox: string, departme
 			msg,
 			attachments: [
 				{
-					actions: [{
-						type: 'button',
-						text: t('Reply_via_Email'),
-						msg: 'msg',
-						msgId,
-						msg_in_chat_window: true,
-						msg_processing_type: 'respondWithQuotedMessage',
-					}],
+					actions: [
+						{
+							type: 'button',
+							text: t('Reply_via_Email'),
+							msg: 'msg',
+							msgId,
+							msg_in_chat_window: true,
+							msg_processing_type: 'respondWithQuotedMessage',
+						},
+					],
 				},
 			],
-			blocks: [{
-				type: 'context',
-				elements: [{
-					type: 'mrkdwn',
-					text: `**${ t('From') }:** ${ email.from.text }\n**${ t('Subject') }:** ${ email.subject }`,
-				}],
-			}, {
-				type: 'section',
-				text: {
-					type: 'mrkdwn',
-					text: msg,
+			blocks: [
+				{
+					type: 'context',
+					elements: [
+						{
+							type: 'mrkdwn',
+							text: `**${ t('From') }:** ${ email.from.text }\n**${ t('Subject') }:** ${ email.subject }`,
+						},
+					],
 				},
-			}],
+				{
+					type: 'section',
+					text: {
+						type: 'mrkdwn',
+						text: msg,
+					},
+				},
+			],
 			rid,
 			email: {
 				references,
@@ -215,35 +241,40 @@ export async function onEmailReceived(email: ParsedMail, inbox: string, departme
 			},
 		},
 		agent: undefined,
-	}).then(async () => {
-		if (!email.attachments.length) {
-			return;
-		}
-
-		const attachments = [];
-		for await (const attachment of email.attachments) {
-			if (attachment.type !== 'attachment') {
-				continue;
+	})
+		.then(async () => {
+			if (!email.attachments.length) {
+				return;
 			}
 
-			try {
-				attachments.push(await uploadAttachment(attachment, rid, guest.token));
-			} catch (e) {
-				Livechat.logger.error('Error uploading attachment from email', e);
-			}
-		}
+			const attachments = [];
+			for await (const attachment of email.attachments) {
+				if (attachment.type !== 'attachment') {
+					continue;
+				}
 
-		Messages.update({ _id: msgId }, {
-			$addToSet: {
-				attachments: {
-					$each: attachments,
+				try {
+					attachments.push(await uploadAttachment(attachment, rid, guest.token));
+				} catch (e) {
+					Livechat.logger.error('Error uploading attachment from email', e);
+				}
+			}
+
+			Messages.update(
+				{ _id: msgId },
+				{
+					$addToSet: {
+						attachments: {
+							$each: attachments,
+						},
+					},
 				},
-			},
+			);
+		})
+		.catch((err) => {
+			Livechat.logger.error({
+				msg: 'Error receiving email',
+				err,
+			});
 		});
-	}).catch((err) => {
-		Livechat.logger.error({
-			msg: 'Error receiving email',
-			err,
-		});
-	});
 }

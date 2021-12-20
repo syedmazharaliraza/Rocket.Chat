@@ -22,8 +22,6 @@ onLicense('auditing', () => {
 			Permissions.create(permission._id, permission.roles);
 		});
 
-		defaultRoles.forEach((role) =>
-			Roles.createOrUpdate(role.name, role.scope),
-		);
+		defaultRoles.forEach((role) => Roles.createOrUpdate(role.name, role.scope));
 	});
 });

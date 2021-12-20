@@ -1,4 +1,7 @@
-import { ITypingDescriptor, MessageBridge } from '@rocket.chat/apps-engine/server/bridges/MessageBridge';
+import {
+	ITypingDescriptor,
+	MessageBridge,
+} from '@rocket.chat/apps-engine/server/bridges/MessageBridge';
 import { IMessage } from '@rocket.chat/apps-engine/definition/messages';
 import { IUser } from '@rocket.chat/apps-engine/definition/users';
 import { IRoom } from '@rocket.chat/apps-engine/definition/rooms';

@@ -16,7 +16,9 @@ Meteor.methods({
 	async sendFileMessage(roomId, _store, file, msgData = {}) {
 		const user = Meteor.user() as IUser | undefined;
 		if (!user) {
-			throw new Meteor.Error('error-invalid-user', 'Invalid user', { method: 'sendFileMessage' } as any);
+			throw new Meteor.Error('error-invalid-user', 'Invalid user', {
+				method: 'sendFileMessage',
+			} as any);
 		}
 
 		const room = await Rooms.findOneById(roomId);
@@ -40,11 +42,13 @@ Meteor.methods({
 
 		const attachments: MessageAttachment[] = [];
 
-		const files = [{
-			_id: file._id,
-			name: file.name,
-			type: file.type,
-		}];
+		const files = [
+			{
+				_id: file._id,
+				name: file.name,
+				type: file.type,
+			},
+		];
 
 		if (/^image\/.+/.test(file.type)) {
 			const attachment: FileAttachmentProps = {
@@ -119,7 +123,6 @@ Meteor.methods({
 			};
 			attachments.push(attachment);
 		}
-
 
 		const msg = Meteor.call('sendMessage', {
 			rid: roomId,

@@ -52,9 +52,12 @@ export class OmnichannelQueueInactivityMonitorClass {
 	}
 
 	createIndex(): void {
-		this._db.collection(SCHEDULER_NAME).createIndex({
-			'data.inquiryId': 1,
-		}, { unique: true });
+		this._db.collection(SCHEDULER_NAME).createIndex(
+			{
+				'data.inquiryId': 1,
+			},
+			{ unique: true },
+		);
 	}
 
 	start(): void {

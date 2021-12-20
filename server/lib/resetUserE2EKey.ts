@@ -13,7 +13,9 @@ const sendResetNotitification = function(uid: string): void {
 	}
 
 	const language = user.language || settings.get('Language') || 'en';
-	const addresses = user.emails?.filter(({ verified }: { verified: boolean}) => verified).map((e) => e.address);
+	const addresses = user.emails
+		?.filter(({ verified }: { verified: boolean }) => verified)
+		.map((e) => e.address);
 	if (!addresses?.length) {
 		return;
 	}
@@ -43,10 +45,14 @@ const sendResetNotitification = function(uid: string): void {
 					html,
 				} as any);
 			} catch (error) {
-				throw new Meteor.Error('error-email-send-failed', `Error trying to send email: ${ error.message }`, {
-					function: 'resetUserE2EEncriptionKey',
-					message: error.message,
-				});
+				throw new Meteor.Error(
+					'error-email-send-failed',
+					`Error trying to send email: ${ error.message }`,
+					{
+						function: 'resetUserE2EEncriptionKey',
+						message: error.message,
+					},
+				);
 			}
 		});
 	}

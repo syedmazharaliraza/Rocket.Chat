@@ -10,7 +10,8 @@ describe('LDAP', function() {
 
 	describe('[/ldap.syncNow]', () => {
 		it('should throw an error containing totp-required error ', (done) => {
-			request.post(api('ldap.syncNow'))
+			request
+				.post(api('ldap.syncNow'))
 				.set(credentials)
 				.expect('Content-Type', 'application/json')
 				.expect(400)

@@ -5,13 +5,14 @@ import { check } from 'meteor/check';
 import { hasPermission } from '../../../authorization/server';
 import { Settings } from '../../../models/server/raw';
 
-
 Meteor.methods({
 	async removeOAuthService(name) {
 		check(name, String);
 
 		if (!Meteor.userId()) {
-			throw new Meteor.Error('error-invalid-user', 'Invalid user', { method: 'removeOAuthService' });
+			throw new Meteor.Error('error-invalid-user', 'Invalid user', {
+				method: 'removeOAuthService',
+			});
 		}
 
 		if (hasPermission(Meteor.userId(), 'add-oauth-service') !== true) {

@@ -66,11 +66,11 @@ type ResultFields<Base, Defaults> = Defaults extends void
 		? Pick<Defaults, keyof Defaults>
 		: Omit<Defaults, keyof Defaults>;
 
-const warnFields = process.env.NODE_ENV !== 'production'
-	? (...rest: any): void => {
-		console.warn(...rest, new Error().stack);
-	}
-	: new Function();
+const warnFields =	process.env.NODE_ENV !== 'production'
+		? (...rest: any): void => {
+			console.warn(...rest, new Error().stack);
+		  }
+		: new Function();
 
 export class BaseRaw<T, C extends DefaultFields<T> = undefined> implements IBaseRaw<T> {
 	public readonly defaultFields: C;

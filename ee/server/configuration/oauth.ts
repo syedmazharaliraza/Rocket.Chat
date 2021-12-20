@@ -59,11 +59,22 @@ onLicense('oauth-enterprise', () => {
 
 		if (settings.mapChannels) {
 			const channelsMap = getChannelsMap(settings.channelsMap);
-			OAuthEEManager.mapSSOGroupsToChannels(auth.user, auth.serviceData, settings.groupsClaim, channelsMap, settings.channelsAdmin);
+			OAuthEEManager.mapSSOGroupsToChannels(
+				auth.user,
+				auth.serviceData,
+				settings.groupsClaim,
+				channelsMap,
+				settings.channelsAdmin,
+			);
 		}
 
 		if (settings.mergeRoles) {
-			OAuthEEManager.updateRolesFromSSO(auth.user, auth.serviceData, settings.rolesClaim, settings.rolesToSync.split(',').map((role) => role.trim()));
+			OAuthEEManager.updateRolesFromSSO(
+				auth.user,
+				auth.serviceData,
+				settings.rolesClaim,
+				settings.rolesToSync.split(',').map((role) => role.trim()),
+			);
 		}
 	});
 
@@ -73,7 +84,13 @@ onLicense('oauth-enterprise', () => {
 
 		if (settings.mapChannels) {
 			const channelsMap = getChannelsMap(settings.channelsMap);
-			OAuthEEManager.mapSSOGroupsToChannels(auth.user, auth.identity, settings.groupsClaim, channelsMap, settings.channelsAdmin);
+			OAuthEEManager.mapSSOGroupsToChannels(
+				auth.user,
+				auth.identity,
+				settings.groupsClaim,
+				channelsMap,
+				settings.channelsAdmin,
+			);
 		}
 
 		if (settings.mergeRoles) {

@@ -39,7 +39,6 @@ class AutoCloseOnHoldSchedulerClass {
 		await this.scheduler.schedule(when, jobName, { roomId, comment });
 	}
 
-
 	public async unscheduleRoom(roomId: string): Promise<void> {
 		const jobName = `${ SCHEDULER_NAME }-${ roomId }`;
 		await this.scheduler.cancel({ name: jobName });

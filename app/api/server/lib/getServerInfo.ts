@@ -1,12 +1,13 @@
-
 import { Info } from '../../../utils/server';
 import { hasAnyRoleAsync } from '../../../authorization/server/functions/hasRole';
 
-type ServerInfo = {
-	info: Info;
-} | {
-	version: string | undefined;
-};
+type ServerInfo =
+	| {
+		info: Info;
+	  }
+	| {
+		version: string | undefined;
+	  };
 
 const removePatchInfo = (version: string): string => version.replace(/(\d+\.\d+).*/, '$1');
 

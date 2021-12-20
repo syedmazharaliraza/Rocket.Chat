@@ -25,21 +25,26 @@ settings.watch('LDAP_Enable', (value) => {
 		return callbacks.remove('beforeValidateLogin', 'validateLdapLoginFallback');
 	}
 
-	callbacks.add('beforeValidateLogin', (login: Record<string, any>) => {
-		if (!login.allowed) {
+	callbacks.add(
+		'beforeValidateLogin',
+		(login: Record<string, any>) => {
+			if (!login.allowed) {
+				return login;
+			}
+
+			// The fallback setting should only block password logins, so users that have other login services can continue using them
+			if (login.type !== 'password') {
+				return login;
+			}
+
+			// LDAP users can still login locally when login fallback is enabled
+			if (login.user.services?.ldap?.id) {
+				login.allowed = settings.get<boolean>('LDAP_Login_Fallback') ?? false;
+			}
+
 			return login;
-		}
-
-		// The fallback setting should only block password logins, so users that have other login services can continue using them
-		if (login.type !== 'password') {
-			return login;
-		}
-
-		// LDAP users can still login locally when login fallback is enabled
-		if (login.user.services?.ldap?.id) {
-			login.allowed = settings.get<boolean>('LDAP_Login_Fallback') ?? false;
-		}
-
-		return login;
-	}, callbacks.priority.MEDIUM, 'validateLdapLoginFallback');
+		},
+		callbacks.priority.MEDIUM,
+		'validateLdapLoginFallback',
+	);
 });

@@ -8,7 +8,9 @@ export const getSettingDefaults = (
 ): ISetting => {
 	const { _id, value, sorter, ...props } = setting;
 
-	const options = Object.fromEntries(Object.entries(props).filter(([, value]) => value !== undefined));
+	const options = Object.fromEntries(
+		Object.entries(props).filter(([, value]) => value !== undefined),
+	);
 
 	return {
 		_id,

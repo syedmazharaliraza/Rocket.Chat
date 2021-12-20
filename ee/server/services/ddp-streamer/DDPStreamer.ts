@@ -15,7 +15,7 @@ import { DDP_EVENTS } from './constants';
 
 const {
 	PORT: port = 4000,
-// 	PROMETHEUS_PORT = 9100,
+	// 	PROMETHEUS_PORT = 9100,
 } = process.env;
 
 const proxy = function(req: IncomingMessage, res: ServerResponse): void {

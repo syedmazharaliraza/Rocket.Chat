@@ -1,8 +1,10 @@
-
-
 import { ISetting } from '../../../../definition/ISetting';
 
-export const validateSetting = <T extends ISetting>(_id: T['_id'], type: T['type'], value: T['value'] | unknown): boolean => {
+export const validateSetting = <T extends ISetting>(
+	_id: T['_id'],
+	type: T['type'],
+	value: T['value'] | unknown,
+): boolean => {
 	switch (type) {
 		case 'asset':
 			if (typeof value !== 'object') {
@@ -39,7 +41,6 @@ export const validateSetting = <T extends ISetting>(_id: T['_id'], type: T['type
 			}
 			break;
 		case 'select':
-
 			if (typeof value !== 'string' && typeof value !== 'number') {
 				throw new Error(`Setting ${ _id } is of type select but got ${ typeof value }`);
 			}

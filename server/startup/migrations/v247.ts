@@ -4,8 +4,10 @@ import { addMigration } from '../../lib/migrations';
 addMigration({
 	version: 247,
 	up() {
-		const customOauthServices = settings.getByRegexp(/Accounts_OAuth_Custom-[^-]+$/mi);
-		const serviceNames = customOauthServices.map(([key]) => key.replace('Accounts_OAuth_Custom-', ''));
+		const customOauthServices = settings.getByRegexp(/Accounts_OAuth_Custom-[^-]+$/im);
+		const serviceNames = customOauthServices.map(([key]) =>
+			key.replace('Accounts_OAuth_Custom-', ''),
+		);
 
 		serviceNames.forEach((serviceName) => {
 			settingsRegistry.add(`Accounts_OAuth_Custom-${ serviceName }-roles_to_sync`, '', {

@@ -18,9 +18,14 @@ export const deleteMessage = async function(message: IMessage, user: IUser): Pro
 	const bridges = Apps && Apps.isLoaded() && Apps.getBridges();
 
 	if (deletedMsg && bridges) {
-		const prevent = Promise.await(bridges.getListenerBridge().messageEvent('IPreMessageDeletePrevent', deletedMsg));
+		const prevent = Promise.await(
+			bridges.getListenerBridge().messageEvent('IPreMessageDeletePrevent', deletedMsg),
+		);
 		if (prevent) {
-			throw new Meteor.Error('error-app-prevented-deleting', 'A Rocket.Chat App prevented the message deleting.');
+			throw new Meteor.Error(
+				'error-app-prevented-deleting',
+				'A Rocket.Chat App prevented the message deleting.',
+			);
 		}
 	}
 

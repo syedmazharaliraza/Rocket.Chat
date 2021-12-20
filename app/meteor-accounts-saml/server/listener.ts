@@ -39,7 +39,11 @@ const samlUrlToObject = function(url: string | undefined): ISAMLAction | null {
 	return result;
 };
 
-const middleware = function(req: IIncomingMessage, res: ServerResponse, next: (err?: any) => void): void {
+const middleware = function(
+	req: IIncomingMessage,
+	res: ServerResponse,
+	next: (err?: any) => void,
+): void {
 	// Make sure to catch any exceptions because otherwise we'd crash
 	// the runner
 	try {
@@ -73,10 +77,12 @@ const middleware = function(req: IIncomingMessage, res: ServerResponse, next: (e
 };
 
 // Listen to incoming SAML http requests
-WebApp.connectHandlers.use(bodyParser.json()).use(function(req: IncomingMessage, res: ServerResponse, next: (err?: any) => void) {
-	// Need to create a fiber since we're using synchronous http calls and nothing
-	// else is wrapping this in a fiber automatically
-	fiber(function() {
-		middleware(req as IIncomingMessage, res, next);
-	}).run();
-});
+WebApp.connectHandlers
+	.use(bodyParser.json())
+	.use(function(req: IncomingMessage, res: ServerResponse, next: (err?: any) => void) {
+		// Need to create a fiber since we're using synchronous http calls and nothing
+		// else is wrapping this in a fiber automatically
+		fiber(function() {
+			middleware(req as IIncomingMessage, res, next);
+		}).run();
+	});
