@@ -108,7 +108,7 @@ export class NotificationsModule {
 		const notifyUser = this.notifyUser.bind(this);
 
 		this.streamRoomMessage.allowWrite('none');
-		this.streamRoomMessage.allowRead(async function(eventName, extraData) {
+		this.streamRoomMessage.allowRead(async function (eventName, extraData) {
 			const room = await Rooms.findOneById(eventName);
 			if (!room) {
 				return false;
@@ -131,7 +131,7 @@ export class NotificationsModule {
 		});
 
 		this.streamRoomMessage.allowRead('__my_messages__', 'all');
-		this.streamRoomMessage.allowEmit('__my_messages__', async function(_eventName, { rid }) {
+		this.streamRoomMessage.allowEmit('__my_messages__', async function (_eventName, { rid }) {
 			if (!this.userId) {
 				return false;
 			}
@@ -162,7 +162,7 @@ export class NotificationsModule {
 
 		this.streamAll.allowWrite('none');
 		this.streamAll.allowRead('all');
-		this.streamAll.allowRead('private-settings-changed', async function() {
+		this.streamAll.allowRead('private-settings-changed', async function () {
 			if (this.userId == null) {
 				return false;
 			}
@@ -176,7 +176,7 @@ export class NotificationsModule {
 		this.streamLogged.allowWrite('none');
 		this.streamLogged.allowRead('logged');
 
-		this.streamRoom.allowRead(async function(eventName, extraData): Promise<boolean> {
+		this.streamRoom.allowRead(async function (eventName, extraData): Promise<boolean> {
 			const [rid, e] = eventName.split('/');
 
 			if (e === 'webrtc') {
@@ -187,7 +187,7 @@ export class NotificationsModule {
 			if (extraData?.token) {
 				// TODO improve this to make a query 'v.token'
 				const room = await Rooms.findOneById<Pick<IOmnichannelRoom, 't' | 'v'>>(rid, {
-					projection: { t: 1, 'v.token': 1 },
+					projection: { 't': 1, 'v.token': 1 },
 				});
 				return !!room && room.t === 'l' && room.v.token === extraData.token;
 			}
@@ -216,7 +216,7 @@ export class NotificationsModule {
 				if (extraData?.token) {
 					// TODO improve this to make a query 'v.token'
 					const room = await Rooms.findOneById<Pick<IOmnichannelRoom, 't' | 'v'>>(rid, {
-						projection: { t: 1, 'v.token': 1 },
+						projection: { 't': 1, 'v.token': 1 },
 					});
 					return !!room && room.t === 'l' && room.v.token === extraData.token;
 				}
@@ -226,7 +226,7 @@ export class NotificationsModule {
 				}
 
 				// TODO consider using something to cache settings
-				const key = await Settings.getValueById('UI_Use_Real_Name') ? 'name' : 'username';
+				const key = (await Settings.getValueById('UI_Use_Real_Name')) ? 'name' : 'username';
 
 				const user = await Users.findOneById<Pick<IUser, 'name' | 'username'>>(userId, {
 					projection: {
@@ -246,7 +246,7 @@ export class NotificationsModule {
 		}
 
 		const { streamRoom } = this;
-		this.streamRoom.allowWrite(async function(
+		this.streamRoom.allowWrite(async function (
 			eventName,
 			username,
 			_activity,
@@ -265,21 +265,21 @@ export class NotificationsModule {
 				return false;
 			}
 
-			if (!await canType({ extraData, rid, username, userId: this.userId })) {
+			if (!(await canType({ extraData, rid, username, userId: this.userId }))) {
 				return false;
 			}
 
 			// DEPRECATED
 			// Keep compatibility between old and new events
 			if (
-				e === 'user-activity'
-				&& Array.isArray(_activity)
-				&& (_activity.length === 0 || _activity.includes('user-typing'))
+				e === 'user-activity' &&
+				Array.isArray(_activity) &&
+				(_activity.length === 0 || _activity.includes('user-typing'))
 			) {
-				streamRoom.emit(`${ rid }/typing`, username, _activity.includes('user-typing'));
+				streamRoom.emit(`${rid}/typing`, username, _activity.includes('user-typing'));
 			} else if (e === 'typing') {
 				streamRoom.emit(
-					`${ rid }/user-activity`,
+					`${rid}/user-activity`,
 					username,
 					_activity ? ['user-typing'] : [],
 					extraData,
@@ -290,19 +290,20 @@ export class NotificationsModule {
 		});
 
 		this.streamRoomUsers.allowRead('none');
-		this.streamRoomUsers.allowWrite(async function(eventName, ...args) {
+		this.streamRoomUsers.allowWrite(async function (eventName, ...args) {
 			const [roomId, e] = eventName.split('/');
 			if (!this.userId) {
 				const room = await Rooms.findOneById<IOmnichannelRoom>(roomId, {
-					projection: { t: 1, 'servedBy._id': 1 },
+					projection: { 't': 1, 'servedBy._id': 1 },
 				});
 				if (room && room.t === 'l' && e === 'webrtc' && room.servedBy) {
 					notifyUser(room.servedBy._id, e, ...args);
 					return false;
 				}
-			} else if (await Subscriptions.countByRoomIdAndUserId(roomId, this.userId) > 0) {
-				const livechatSubscriptions: ISubscription[] =					await Subscriptions.findByLivechatRoomIdAndNotUserId(roomId, this.userId, {
-						projection: { 'v._id': 1, _id: 0 },
+			} else if ((await Subscriptions.countByRoomIdAndUserId(roomId, this.userId)) > 0) {
+				const livechatSubscriptions: ISubscription[] =
+					await Subscriptions.findByLivechatRoomIdAndNotUserId(roomId, this.userId, {
+						projection: { 'v._id': 1, '_id': 0 },
 					}).toArray();
 				if (livechatSubscriptions && e === 'webrtc') {
 					livechatSubscriptions.forEach(
@@ -313,14 +314,14 @@ export class NotificationsModule {
 				const subscriptions: ISubscription[] = await Subscriptions.findByRoomIdAndNotUserId(
 					roomId,
 					this.userId,
-					{ projection: { 'u._id': 1, _id: 0 } },
+					{ projection: { 'u._id': 1, '_id': 0 } },
 				).toArray();
 				subscriptions.forEach((subscription) => notifyUser(subscription.u._id, e, ...args));
 			}
 			return false;
 		});
 
-		this.streamUser.allowWrite(async function(eventName) {
+		this.streamUser.allowWrite(async function (eventName) {
 			const [, e] = eventName.split('/');
 			if (e === 'webrtc') {
 				return true;
@@ -328,7 +329,7 @@ export class NotificationsModule {
 
 			return Boolean(this.userId);
 		});
-		this.streamUser.allowRead(async function(eventName) {
+		this.streamUser.allowRead(async function (eventName) {
 			const [userId, e] = eventName.split('/');
 
 			if (e === 'webrtc') {
@@ -353,16 +354,16 @@ export class NotificationsModule {
 		this.streamAppsEngine.allowWrite('none');
 
 		this.streamCannedResponses.allowWrite('none');
-		this.streamCannedResponses.allowRead(async function() {
+		this.streamCannedResponses.allowRead(async function () {
 			return (
-				!!this.userId
-				&& !!await Settings.getValueById('Canned_Responses_Enable')
+				!!this.userId &&
+				!!(await Settings.getValueById('Canned_Responses_Enable')) &&
 				Authorization.hasPermission(this.userId, 'view-canned-responses')
 			);
 		});
 
 		this.streamIntegrationHistory.allowWrite('none');
-		this.streamIntegrationHistory.allowRead(async function() {
+		this.streamIntegrationHistory.allowRead(async function () {
 			if (!this.userId) {
 				return false;
 			}
@@ -372,13 +373,13 @@ export class NotificationsModule {
 			]);
 		});
 
-		this.streamLivechatRoom.allowRead(async function(roomId, extraData) {
+		this.streamLivechatRoom.allowRead(async function (roomId, extraData) {
 			const room = await Rooms.findOneById<Pick<IOmnichannelRoom, 't' | 'v'>>(roomId, {
 				projection: { _id: 0, t: 1, v: 1 },
 			});
 
 			if (!room) {
-				console.warn(`Invalid eventName: "${ roomId }"`);
+				console.warn(`Invalid eventName: "${roomId}"`);
 				return false;
 			}
 
@@ -389,12 +390,12 @@ export class NotificationsModule {
 		});
 
 		this.streamLivechatQueueData.allowWrite('none');
-		this.streamLivechatQueueData.allowRead(async function() {
+		this.streamLivechatQueueData.allowRead(async function () {
 			return this.userId ? Authorization.hasPermission(this.userId, 'view-l-room') : false;
 		});
 
 		this.streamStdout.allowWrite('none');
-		this.streamStdout.allowRead(async function() {
+		this.streamStdout.allowRead(async function () {
 			if (!this.userId) {
 				return false;
 			}
@@ -402,7 +403,7 @@ export class NotificationsModule {
 		});
 
 		this.streamRoomData.allowWrite('none');
-		this.streamRoomData.allowRead(async function(rid) {
+		this.streamRoomData.allowRead(async function (rid) {
 			if (!this.userId) {
 				return false;
 			}
@@ -440,7 +441,7 @@ export class NotificationsModule {
 					const roomEvent = (...args: any[]): void => {
 						// TODO if receive a removed event could do => streamer.removeListener(rid, roomEvent);
 						const payload = streamer.changedPayload(streamer.subscriptionName, 'id', {
-							eventName: `${ userId }/rooms-changed`,
+							eventName: `${userId}/rooms-changed`,
 							args,
 						});
 
@@ -506,11 +507,11 @@ export class NotificationsModule {
 	}
 
 	notifyRoom(room: string, eventName: string, ...args: any[]): void {
-		return this.streamRoom.emit(`${ room }/${ eventName }`, ...args);
+		return this.streamRoom.emit(`${room}/${eventName}`, ...args);
 	}
 
 	notifyUser(userId: string, eventName: string, ...args: any[]): void {
-		return this.streamUser.emit(`${ userId }/${ eventName }`, ...args);
+		return this.streamUser.emit(`${userId}/${eventName}`, ...args);
 	}
 
 	notifyAllInThisInstance(eventName: string, ...args: any[]): void {
@@ -522,11 +523,11 @@ export class NotificationsModule {
 	}
 
 	notifyRoomInThisInstance(room: string, eventName: string, ...args: any[]): void {
-		return this.streamRoom.emitWithoutBroadcast(`${ room }/${ eventName }`, ...args);
+		return this.streamRoom.emitWithoutBroadcast(`${room}/${eventName}`, ...args);
 	}
 
 	notifyUserInThisInstance(userId: string, eventName: string, ...args: any[]): void {
-		return this.streamUser.emitWithoutBroadcast(`${ userId }/${ eventName }`, ...args);
+		return this.streamUser.emitWithoutBroadcast(`${userId}/${eventName}`, ...args);
 	}
 
 	sendPresence(uid: string, ...args: any[]): void {
