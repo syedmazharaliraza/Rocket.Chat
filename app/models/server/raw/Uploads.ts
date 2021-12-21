@@ -45,8 +45,8 @@ export class UploadsRaw extends BaseRaw<T> {
 				$ne: true,
 			},
 
-			...searchText && { name: { $regex: new RegExp(escapeRegExp(searchText), 'i') } },
-			...fileType && fileType !== 'all' && { typeGroup: fileType },
+			...(searchText && { name: { $regex: new RegExp(escapeRegExp(searchText), 'i') } }),
+			...(fileType && fileType !== 'all' && { typeGroup: fileType }),
 		};
 
 		const fileOptions = {

@@ -300,6 +300,6 @@ export function migrateDatabase(targetVersion: 'latest' | number, subcommands?: 
 export const onFreshInstall =
 	getControl().version !== 0
 		? (): void => {
-			/* noop */
+				/* noop */
 		  }
 		: (fn: () => unknown): unknown => fn();

@@ -79,7 +79,7 @@ export class UserPresence {
 
 export class StreamPresence {
 	static getInstance(Streamer: IStreamerConstructor, name = 'user-presence'): IStreamer {
-		return new class StreamPresence extends Streamer {
+		return new (class StreamPresence extends Streamer {
 			async _publish(
 				publication: IPublication,
 				_eventName: string,
@@ -103,7 +103,7 @@ export class StreamPresence {
 
 				publication.onStop(() => client.stop());
 			}
-		}(name);
+		})(name);
 	}
 }
 

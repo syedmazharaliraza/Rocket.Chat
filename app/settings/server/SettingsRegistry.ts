@@ -58,7 +58,7 @@ const getGroupDefaults = (_id: string, options: ISettingAddGroupOptions = {}): I
 	blocked: blockedSettings.has(_id),
 	hidden: hiddenSettings.has(_id),
 	type: 'group',
-	...options.displayQuery && { displayQuery: JSON.stringify(options.displayQuery) },
+	...(options.displayQuery && { displayQuery: JSON.stringify(options.displayQuery) }),
 });
 
 export type ISettingAddGroupOptions = Partial<ISettingGroup>;
@@ -78,10 +78,10 @@ type ISettingAddOptions = Partial<ISetting>;
 
 const compareSettingsIgnoringKeys =
 	(keys: Array<keyof ISetting>) =>
-		(a: ISetting, b: ISetting): boolean =>
-			[...new Set([...Object.keys(a), ...Object.keys(b)])]
-				.filter((key) => !keys.includes(key as keyof ISetting))
-				.every((key) => isEqual(a[key as keyof ISetting], b[key as keyof ISetting]));
+	(a: ISetting, b: ISetting): boolean =>
+		[...new Set([...Object.keys(a), ...Object.keys(b)])]
+			.filter((key) => !keys.includes(key as keyof ISetting))
+			.every((key) => isEqual(a[key as keyof ISetting], b[key as keyof ISetting]));
 
 const compareSettings = compareSettingsIgnoringKeys([
 	'value',
@@ -175,9 +175,9 @@ export class SettingsRegistry {
 				{ _id },
 				{
 					$set: { ...settingOverwrittenProps },
-					...removedKeys.length && {
+					...(removedKeys.length && {
 						$unset: removedKeys.reduce((unset, key) => ({ ...unset, [key]: 1 }), {}),
-					},
+					}),
 				},
 			);
 			return;
@@ -243,40 +243,40 @@ export class SettingsRegistry {
 
 		const addWith =
 			(preset: ISettingAddOptions) =>
-				(id: string, value: SettingValue, options: ISettingAddOptions = {}): void => {
-					const mergedOptions = { ...preset, ...options };
-					this.add(id, value, mergedOptions);
-				};
+			(id: string, value: SettingValue, options: ISettingAddOptions = {}): void => {
+				const mergedOptions = { ...preset, ...options };
+				this.add(id, value, mergedOptions);
+			};
 		const sectionSetWith =
 			(preset: ISettingAddOptions) =>
-				(options: ISettingAddOptions, cb: addSectionCallback): void => {
-					const mergedOptions = { ...preset, ...options };
-					cb.call({
-						add: addWith(mergedOptions),
-						with: sectionSetWith(mergedOptions),
-					});
-				};
+			(options: ISettingAddOptions, cb: addSectionCallback): void => {
+				const mergedOptions = { ...preset, ...options };
+				cb.call({
+					add: addWith(mergedOptions),
+					with: sectionSetWith(mergedOptions),
+				});
+			};
 		const sectionWith =
 			(preset: ISettingAddOptions) =>
-				(section: string, cb: addSectionCallback): void => {
-					const mergedOptions = { ...preset, section };
-					cb.call({
-						add: addWith(mergedOptions),
-						with: sectionSetWith(mergedOptions),
-					});
-				};
+			(section: string, cb: addSectionCallback): void => {
+				const mergedOptions = { ...preset, section };
+				cb.call({
+					add: addWith(mergedOptions),
+					with: sectionSetWith(mergedOptions),
+				});
+			};
 
 		const groupSetWith =
 			(preset: ISettingAddOptions) =>
-				(options: ISettingAddOptions, cb: addGroupCallback): void => {
-					const mergedOptions = { ...preset, ...options };
+			(options: ISettingAddOptions, cb: addGroupCallback): void => {
+				const mergedOptions = { ...preset, ...options };
 
-					cb.call({
-						add: addWith(mergedOptions),
-						section: sectionWith(mergedOptions),
-						with: groupSetWith(mergedOptions),
-					});
-				};
+				cb.call({
+					add: addWith(mergedOptions),
+					section: sectionWith(mergedOptions),
+					with: groupSetWith(mergedOptions),
+				});
+			};
 
 		return groupSetWith({ group: _id })({}, callback);
 	}

@@ -176,7 +176,7 @@ export class LDAPManager {
 			}
 
 			const [ldapUser] = users;
-			if (!await ldap.authenticate(ldapUser.dn, password)) {
+			if (!(await ldap.authenticate(ldapUser.dn, password))) {
 				logger.debug(`Wrong password for ${escapedUsername}`);
 				throw new Error('Invalid user or wrong password');
 			}
@@ -184,12 +184,12 @@ export class LDAPManager {
 			if (settings.get<boolean>('LDAP_Find_User_After_Login')) {
 				// Do a search as the user and check if they have any result
 				authLogger.debug('User authenticated successfully, performing additional search.');
-				if (await ldap.searchAndCount(ldapUser.dn, {}) === 0) {
+				if ((await ldap.searchAndCount(ldapUser.dn, {})) === 0) {
 					authLogger.debug(`Bind successful but user ${ldapUser.dn} was not found via search`);
 				}
 			}
 
-			if (!await ldap.isUserAcceptedByGroupFilter(escapedUsername, ldapUser.dn)) {
+			if (!(await ldap.isUserAcceptedByGroupFilter(escapedUsername, ldapUser.dn))) {
 				throw new Error('User not in a valid group');
 			}
 
@@ -275,7 +275,7 @@ export class LDAPManager {
 
 		const syncData = forceUserSync || (settings.get<boolean>('LDAP_Update_Data_On_Login') ?? true);
 		logger.debug({ msg: 'Logging user in', syncData });
-		const updatedUser = (syncData && await this.syncUserForLogin(ldapUser, user)) || user;
+		const updatedUser = (syncData && (await this.syncUserForLogin(ldapUser, user))) || user;
 
 		this.onLogin(ldapUser, updatedUser, password, ldap, false);
 		return {
@@ -291,7 +291,7 @@ export class LDAPManager {
 		logger.debug({
 			msg: 'Syncing user data',
 			ldapUser: _.omit(ldapUser, '_raw'),
-			user: { ...existingUser && { email: existingUser.emails, _id: existingUser._id } },
+			user: { ...(existingUser && { email: existingUser.emails, _id: existingUser._id }) },
 		});
 
 		const userData = this.mapUserData(ldapUser, usedUsername);

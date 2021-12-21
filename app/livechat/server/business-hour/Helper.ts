@@ -61,7 +61,7 @@ export const openBusinessHourDefault = async (): Promise<void> => {
 
 export const createDefaultBusinessHourIfNotExists = async (): Promise<void> => {
 	if (
-		await LivechatBusinessHours.find({ type: LivechatBusinessHourTypes.DEFAULT }).count() === 0
+		(await LivechatBusinessHours.find({ type: LivechatBusinessHourTypes.DEFAULT }).count()) === 0
 	) {
 		await LivechatBusinessHours.insertOne(createDefaultBusinessHourRow());
 	}

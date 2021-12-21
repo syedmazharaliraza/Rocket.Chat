@@ -114,7 +114,7 @@ class CustomOplogHandle {
 			),
 
 			op: { $in: ['i', 'u', 'd'] },
-			...lastOplogEntry && { ts: { $gt: lastOplogEntry.ts } },
+			...(lastOplogEntry && { ts: { $gt: lastOplogEntry.ts } }),
 		};
 
 		this.stream = oplogCollection

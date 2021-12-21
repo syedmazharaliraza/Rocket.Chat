@@ -100,8 +100,8 @@ export class Server extends EventEmitter {
 			this.serialize({
 				[DDP_EVENTS.MSG]: DDP_EVENTS.RESULT,
 				id,
-				...result && { result },
-				...error && { error },
+				...(result && { result }),
+				...(error && { error }),
 			}),
 		);
 		return client.send(
@@ -117,7 +117,7 @@ export class Server extends EventEmitter {
 			this.serialize({
 				[DDP_EVENTS.MSG]: DDP_EVENTS.NO_SUBSCRIBE,
 				id,
-				...error && { error },
+				...(error && { error }),
 			}),
 		);
 	}

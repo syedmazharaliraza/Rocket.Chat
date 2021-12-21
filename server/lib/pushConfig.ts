@@ -88,20 +88,20 @@ settings.watch<boolean>('Push_enable', async function (enabled) {
 			: undefined;
 
 	let apn:
-	| {
-		apiKey?: string;
-		passphrase: string;
-		key: string;
-		cert: string;
-		gateway?: string;
+		| {
+				apiKey?: string;
+				passphrase: string;
+				key: string;
+				cert: string;
+				gateway?: string;
 		  }
-	| undefined;
+		| undefined;
 	let gcm:
-	| {
-		apiKey: string;
-		projectNumber: string;
+		| {
+				apiKey: string;
+				projectNumber: string;
 		  }
-	| undefined;
+		| undefined;
 
 	if (!gateways) {
 		gcm = {

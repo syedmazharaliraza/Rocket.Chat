@@ -140,7 +140,7 @@ export class RolesRaw extends BaseRaw<IRole> {
 
 			switch (role.scope) {
 				case 'Subscriptions':
-					scope && await this.models.Subscriptions.removeRolesByUserId(userId, [roleName], scope);
+					scope && (await this.models.Subscriptions.removeRolesByUserId(userId, [roleName], scope));
 					break;
 				case 'Users':
 				default:

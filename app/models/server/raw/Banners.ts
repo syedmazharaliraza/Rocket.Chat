@@ -51,7 +51,7 @@ export class BannersRaw extends BaseRaw<T> {
 		const today = new Date();
 
 		const query = {
-			...bannerId && { _id: bannerId },
+			...(bannerId && { _id: bannerId }),
 			platform,
 			startAt: { $lte: today },
 			expireAt: { $gte: today },

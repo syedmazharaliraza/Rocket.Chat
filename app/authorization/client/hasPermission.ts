@@ -12,40 +12,40 @@ const isValidScope = (scope: IRole['scope']): boolean =>
 
 const createPermissionValidator =
 	(quantifier: (predicate: (permissionId: IPermission['_id']) => boolean) => boolean) =>
-		(
-			permissionIds: IPermission['_id'][],
-			scope: string | undefined,
-			userId: IUser['_id'],
-		): boolean => {
-			const user: IUser | null = Models.Users.findOneById(userId, { fields: { roles: 1 } });
+	(
+		permissionIds: IPermission['_id'][],
+		scope: string | undefined,
+		userId: IUser['_id'],
+	): boolean => {
+		const user: IUser | null = Models.Users.findOneById(userId, { fields: { roles: 1 } });
 
-			const checkEachPermission = quantifier.bind(permissionIds);
+		const checkEachPermission = quantifier.bind(permissionIds);
 
-			return checkEachPermission((permissionId) => {
-				if (user?.roles) {
-					if (AuthorizationUtils.isPermissionRestrictedForRoleList(permissionId, user.roles)) {
-						return false;
-					}
+		return checkEachPermission((permissionId) => {
+			if (user?.roles) {
+				if (AuthorizationUtils.isPermissionRestrictedForRoleList(permissionId, user.roles)) {
+					return false;
+				}
+			}
+
+			const permission: IPermission | null = ChatPermissions.findOne(permissionId, {
+				fields: { roles: 1 },
+			});
+			const roles = permission?.roles ?? [];
+
+			return roles.some((roleName) => {
+				const role = Models.Roles.findOne(roleName, { fields: { scope: 1 } });
+				const roleScope = role?.scope;
+
+				if (!isValidScope(roleScope)) {
+					return false;
 				}
 
-				const permission: IPermission | null = ChatPermissions.findOne(permissionId, {
-					fields: { roles: 1 },
-				});
-				const roles = permission?.roles ?? [];
-
-				return roles.some((roleName) => {
-					const role = Models.Roles.findOne(roleName, { fields: { scope: 1 } });
-					const roleScope = role?.scope;
-
-					if (!isValidScope(roleScope)) {
-						return false;
-					}
-
-					const model = Models[roleScope as keyof typeof Models];
-					return model.isUserInRole && model.isUserInRole(userId, roleName, scope);
-				});
+				const model = Models[roleScope as keyof typeof Models];
+				return model.isUserInRole && model.isUserInRole(userId, roleName, scope);
 			});
-		};
+		});
+	};
 
 const atLeastOne = createPermissionValidator(Array.prototype.some);
 

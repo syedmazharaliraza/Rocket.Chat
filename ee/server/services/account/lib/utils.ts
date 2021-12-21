@@ -17,7 +17,7 @@ export interface IHashedStampedToken {
 type Password =
 	| string
 	| {
-		digest: string;
+			digest: string;
 	  };
 
 export const getPassword = (password: Password): string => {

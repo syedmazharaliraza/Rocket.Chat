@@ -56,18 +56,18 @@ export interface IListRoomsFilter {
 
 export type ITeamUpdateData = { updateRoom?: boolean } & (
 	| {
-		name: string;
-		type?: TEAM_TYPE;
+			name: string;
+			type?: TEAM_TYPE;
 	  }
 	| {
-		name?: string;
-		type: TEAM_TYPE;
+			name?: string;
+			type: TEAM_TYPE;
 	  }
 );
 
 export type ITeamAutocompleteResult = Pick<
-IRoom,
-'_id' | 'fname' | 'teamId' | 'name' | 't' | 'avatarETag'
+	IRoom,
+	'_id' | 'fname' | 'teamId' | 'name' | 't' | 'avatarETag'
 >;
 
 export interface ITeamService {

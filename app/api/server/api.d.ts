@@ -21,15 +21,15 @@ type FailureResult<T, TStack = undefined, TErrorType = undefined, TErrorDetails 
 	body: T extends object
 		? { success: false } & T
 		: {
-			success: false;
-			error: T;
-			stack: TStack;
-			errorType: TErrorType;
-			details: TErrorDetails;
+				success: false;
+				error: T;
+				stack: TStack;
+				errorType: TErrorType;
+				details: TErrorDetails;
 		  } & (undefined extends TErrorType ? {} : { errorType: TErrorType }) &
-		(undefined extends TErrorDetails
-			? {}
-			: { details: TErrorDetails extends string ? unknown : TErrorDetails });
+				(undefined extends TErrorDetails
+					? {}
+					: { details: TErrorDetails extends string ? unknown : TErrorDetails });
 };
 
 type UnauthorizedResult<T> = {
@@ -58,14 +58,14 @@ export type NonEnterpriseTwoFactorOptions = {
 
 type Options =
 	| {
-		permissionsRequired?: string[];
-		authRequired?: boolean;
-		forceTwoFactorAuthenticationForNonEnterprise?: boolean;
+			permissionsRequired?: string[];
+			authRequired?: boolean;
+			forceTwoFactorAuthenticationForNonEnterprise?: boolean;
 	  }
 	| {
-		authRequired: true;
-		twoFactorRequired: true;
-		twoFactorOptions?: ITwoFactorOptions;
+			authRequired: true;
+			twoFactorRequired: true;
+			twoFactorOptions?: ITwoFactorOptions;
 	  };
 
 type Request = {
@@ -99,12 +99,12 @@ type ActionThis<TMethod extends Method, TPathPattern extends PathPattern, TOptio
 	getUserFromParams(): IUser;
 } & (TOptions extends { authRequired: true }
 	? {
-		readonly user: IUser;
-		readonly userId: string;
+			readonly user: IUser;
+			readonly userId: string;
 	  }
 	: {
-		readonly user: null;
-		readonly userId: null;
+			readonly user: null;
+			readonly userId: null;
 	  });
 
 export type ResultFor<TMethod extends Method, TPathPattern extends PathPattern> =
@@ -114,14 +114,14 @@ export type ResultFor<TMethod extends Method, TPathPattern extends PathPattern> 
 
 type Action<TMethod extends Method, TPathPattern extends PathPattern, TOptions> =
 	| ((
-		this: ActionThis<TMethod, TPathPattern, TOptions>,
+			this: ActionThis<TMethod, TPathPattern, TOptions>,
 	  ) => Promise<ResultFor<TMethod, TPathPattern>>)
 	| ((this: ActionThis<TMethod, TPathPattern, TOptions>) => ResultFor<TMethod, TPathPattern>);
 
 type Operation<TMethod extends Method, TPathPattern extends PathPattern, TEndpointOptions> =
 	| Action<TMethod, TPathPattern, TEndpointOptions>
 	| ({
-		action: Action<TMethod, TPathPattern, TEndpointOptions>;
+			action: Action<TMethod, TPathPattern, TEndpointOptions>;
 	  } & { twoFactorRequired: boolean });
 
 type Operations<TPathPattern extends PathPattern, TOptions extends Options = {}> = {

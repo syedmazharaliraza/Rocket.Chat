@@ -128,13 +128,13 @@ export class Client extends EventEmitter {
 
 	ping(id?: string): void {
 		this.send(
-			server.serialize({ [DDP_EVENTS.MSG]: DDP_EVENTS.PING, ...id && { [DDP_EVENTS.ID]: id } }),
+			server.serialize({ [DDP_EVENTS.MSG]: DDP_EVENTS.PING, ...(id && { [DDP_EVENTS.ID]: id }) }),
 		);
 	}
 
 	pong(id?: string): void {
 		this.send(
-			server.serialize({ [DDP_EVENTS.MSG]: DDP_EVENTS.PONG, ...id && { [DDP_EVENTS.ID]: id } }),
+			server.serialize({ [DDP_EVENTS.MSG]: DDP_EVENTS.PONG, ...(id && { [DDP_EVENTS.ID]: id }) }),
 		);
 	}
 

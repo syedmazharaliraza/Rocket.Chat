@@ -71,7 +71,7 @@ function handleStreamAction(
 
 	performingUsers.set(rid, roomActivities);
 }
-export const UserAction = new class {
+export const UserAction = new (class {
 	addStream(rid: string): void {
 		if (rooms.get(rid)) {
 			return;
@@ -175,4 +175,4 @@ export const UserAction = new class {
 	get(roomId: string): IRoomActivity | undefined {
 		return performingUsers.get(roomId);
 	}
-}();
+})();

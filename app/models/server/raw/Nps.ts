@@ -57,8 +57,8 @@ export class NpsRaw extends BaseRaw<T> {
 		createdBy,
 		status,
 	}: Pick<
-	INps,
-	'_id' | 'startAt' | 'expireAt' | 'createdBy' | 'status'
+		INps,
+		'_id' | 'startAt' | 'expireAt' | 'createdBy' | 'status'
 	>): Promise<UpdateWriteOpResult> {
 		return this.col.updateOne(
 			{

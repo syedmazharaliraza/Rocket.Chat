@@ -228,7 +228,7 @@ export class ListenersModule {
 			const value = {
 				_id: setting._id,
 				value: setting.value,
-				...isSettingColor(setting) && { editor: setting.editor },
+				...(isSettingColor(setting) && { editor: setting.editor }),
 				properties: setting.properties,
 				enterprise: setting.enterprise,
 				requiredOnWizard: setting.requiredOnWizard,

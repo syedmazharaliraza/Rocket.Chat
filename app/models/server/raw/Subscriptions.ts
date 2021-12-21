@@ -28,14 +28,14 @@ export class SubscriptionsRaw extends BaseRaw<T> {
 	async getBadgeCount(uid: string): Promise<number> {
 		const [result] = await this.col
 			.aggregate<{ total: number } | undefined>([
-			{ $match: { 'u._id': uid, 'archived': { $ne: true } } },
-			{
-				$group: {
-					_id: 'total',
-					total: { $sum: '$unread' },
+				{ $match: { 'u._id': uid, 'archived': { $ne: true } } },
+				{
+					$group: {
+						_id: 'total',
+						total: { $sum: '$unread' },
+					},
 				},
-			},
-		])
+			])
 			.toArray();
 
 		return result?.total || 0;
@@ -193,7 +193,7 @@ export class SubscriptionsRaw extends BaseRaw<T> {
 	): Promise<Cursor<P>> {
 		const query = {
 			roles: { $in: roles },
-			...rid && { rid },
+			...(rid && { rid }),
 		};
 
 		const subscriptions = await this.find(query).toArray();

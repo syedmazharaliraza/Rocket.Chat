@@ -40,12 +40,12 @@ type ExportFile = {
 
 type ExportInput =
 	| {
-		type: 'email';
-		data: ExportEmail;
+			type: 'email';
+			data: ExportEmail;
 	  }
 	| {
-		type: 'file';
-		data: ExportFile;
+			type: 'file';
+			data: ExportFile;
 	  };
 
 type ISentViaEmail = {
@@ -140,9 +140,9 @@ export const sendFile = async (data: ExportFile, user: IUser): Promise<void> => 
 			? {}
 			: {
 					ts: {
-					...data.dateFrom && { $gte: data.dateFrom },
-					...data.dateTo && { $lte: data.dateTo },
-				},
+						...(data.dateFrom && { $gte: data.dateFrom }),
+						...(data.dateTo && { $lte: data.dateTo }),
+					},
 			  };
 
 	const exportMessages = async (): Promise<void> => {

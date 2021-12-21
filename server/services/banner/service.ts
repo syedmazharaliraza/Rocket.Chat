@@ -84,7 +84,7 @@ export class BannerService extends ServiceClass implements IBannerService {
 		const bannerIds = banners.map(({ _id }) => _id);
 
 		const result = await this.BannersDismiss.findByUserIdAndBannerId<
-		Pick<IBannerDismiss, 'bannerId'>
+			Pick<IBannerDismiss, 'bannerId'>
 		>(userId, bannerIds, { projection: { bannerId: 1, _id: 0 } }).toArray();
 
 		const dismissed = new Set(result.map(({ bannerId }) => bannerId));

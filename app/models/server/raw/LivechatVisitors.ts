@@ -41,7 +41,7 @@ export class LivechatVisitorsRaw extends BaseRaw<ILivechatVisitor> {
 				$gte: new Date(start),
 				$lt: new Date(end),
 			},
-			...department && department !== 'undefined' && { department },
+			...(department && department !== 'undefined' && { department }),
 		};
 
 		return this.find(query, { projection: { _id: 1 } });
@@ -56,7 +56,7 @@ export class LivechatVisitorsRaw extends BaseRaw<ILivechatVisitor> {
 		P & {
 			custom_name: string;
 		}
-		> {
+	> {
 		if (!Array.isArray(exceptions)) {
 			exceptions = [exceptions];
 		}

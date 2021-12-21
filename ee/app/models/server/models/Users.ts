@@ -22,24 +22,24 @@ const getUnavailableAgents = function (
 	// if department is provided, remove the agents that are not from the selected department
 	const departmentFilter = departmentId
 		? [
-			{
-				$lookup: {
-					from: 'rocketchat_livechat_department_agents',
-					let: { departmentId: '$departmentId', agentId: '$agentId' },
-					pipeline: [
-						{
-							$match: { $expr: { $eq: ['$$agentId', '$_id'] } },
-						},
-						{
-							$match: { $expr: { $eq: ['$$departmentId', departmentId] } },
-						},
-					],
-					as: 'department',
+				{
+					$lookup: {
+						from: 'rocketchat_livechat_department_agents',
+						let: { departmentId: '$departmentId', agentId: '$agentId' },
+						pipeline: [
+							{
+								$match: { $expr: { $eq: ['$$agentId', '$_id'] } },
+							},
+							{
+								$match: { $expr: { $eq: ['$$departmentId', departmentId] } },
+							},
+						],
+						as: 'department',
+					},
 				},
-			},
-			{
-				$match: { department: { $size: 1 } },
-			},
+				{
+					$match: { department: { $size: 1 } },
+				},
 		  ]
 		: [];
 
@@ -85,7 +85,7 @@ const getUnavailableAgents = function (
 					},
 				},
 			},
-			...customFilter ? [customFilter] : [],
+			...(customFilter ? [customFilter] : []),
 			{
 				$sort: {
 					'queueInfo.chats': 1,

@@ -42,7 +42,7 @@ export class Authorization extends ServiceClass implements IAuthorization {
 
 	private rolesHasPermissionCached = mem(this.rolesHasPermission.bind(this), {
 		cacheKey: JSON.stringify,
-		...process.env.TEST_MODE === 'true' && { maxAge: 1 },
+		...(process.env.TEST_MODE === 'true' && { maxAge: 1 }),
 	});
 
 	constructor(db: Db) {
@@ -165,10 +165,10 @@ export class Authorization extends ServiceClass implements IAuthorization {
 			(await this.Users.findOneById(uid, { projection: { roles: 1 } })) || {};
 		const { roles: subscriptionsRoles = [] } =
 			(scope &&
-				await Subscriptions.findOne<Pick<ISubscription, 'roles'>>(
+				(await Subscriptions.findOne<Pick<ISubscription, 'roles'>>(
 					{ 'rid': scope, 'u._id': uid },
 					{ projection: { roles: 1 } },
-				)) ||
+				))) ||
 			{};
 		return [...userRoles, ...subscriptionsRoles].sort((a, b) => a.localeCompare(b));
 	}

@@ -76,7 +76,7 @@ export const resetDefaultBusinessHourIfNeeded = async (): Promise<void> => {
 			return;
 		}
 		const defaultBusinessHour = await LivechatBusinessHours.findOneDefaultBusinessHour<
-		Pick<ILivechatBusinessHour, '_id'>
+			Pick<ILivechatBusinessHour, '_id'>
 		>({ projection: { _id: 1 } });
 		if (!defaultBusinessHour) {
 			return;

@@ -81,9 +81,9 @@ export class AnalyticsRaw extends BaseRaw<T> {
 		end: IAnalytic['date'];
 		options?: { sort?: SortOptionObject<T>; count?: number };
 	}): AggregationCursor<{
-			_id: IAnalytic['date'];
-			messages: number;
-		}> {
+		_id: IAnalytic['date'];
+		messages: number;
+	}> {
 		return this.col.aggregate<{
 			_id: IAnalytic['date'];
 			messages: number;
@@ -100,8 +100,8 @@ export class AnalyticsRaw extends BaseRaw<T> {
 					messages: { $sum: '$messages' },
 				},
 			},
-			...options.sort ? [{ $sort: options.sort }] : [],
-			...options.count ? [{ $limit: options.count }] : [],
+			...(options.sort ? [{ $sort: options.sort }] : []),
+			...(options.count ? [{ $limit: options.count }] : []),
 		]);
 	}
 
@@ -112,9 +112,9 @@ export class AnalyticsRaw extends BaseRaw<T> {
 		start: IAnalytic['date'];
 		end: IAnalytic['date'];
 	}): AggregationCursor<{
-			t: IRoom['t'];
-			messages: number;
-		}> {
+		t: IRoom['t'];
+		messages: number;
+	}> {
 		const params = [
 			{
 				$match: {
@@ -148,11 +148,11 @@ export class AnalyticsRaw extends BaseRaw<T> {
 		end: IAnalytic['date'];
 		options?: { sort?: SortOptionObject<T>; count?: number };
 	}): AggregationCursor<{
-			t: IRoom['t'];
-			name: string;
-			messages: number;
-			usernames: string[];
-		}> {
+		t: IRoom['t'];
+		name: string;
+		messages: number;
+		usernames: string[];
+	}> {
 		return this.col.aggregate([
 			{
 				$match: {
@@ -175,8 +175,8 @@ export class AnalyticsRaw extends BaseRaw<T> {
 					messages: 1,
 				},
 			},
-			...options.sort ? [{ $sort: options.sort }] : [],
-			...options.count ? [{ $limit: options.count }] : [],
+			...(options.sort ? [{ $sort: options.sort }] : []),
+			...(options.count ? [{ $limit: options.count }] : []),
 		]);
 	}
 
@@ -189,9 +189,9 @@ export class AnalyticsRaw extends BaseRaw<T> {
 		end: IAnalytic['date'];
 		options?: { sort?: SortOptionObject<T>; count?: number };
 	}): AggregationCursor<{
-			_id: IAnalytic['date'];
-			users: number;
-		}> {
+		_id: IAnalytic['date'];
+		users: number;
+	}> {
 		return this.col.aggregate<{
 			_id: IAnalytic['date'];
 			users: number;
@@ -208,8 +208,8 @@ export class AnalyticsRaw extends BaseRaw<T> {
 					users: { $sum: '$users' },
 				},
 			},
-			...options.sort ? [{ $sort: options.sort }] : [],
-			...options.count ? [{ $limit: options.count }] : [],
+			...(options.sort ? [{ $sort: options.sort }] : []),
+			...(options.count ? [{ $limit: options.count }] : []),
 		]);
 	}
 

@@ -28,17 +28,17 @@ callbacks.add(
 				? {
 						$and: [
 							{
-							$or: [
-								{
+								$or: [
+									{
 										'livechat.maxNumberSimultaneousChat': { $exists: false },
 									},
-								{ 'livechat.maxNumberSimultaneousChat': 0 },
-								{ 'livechat.maxNumberSimultaneousChat': '' },
+									{ 'livechat.maxNumberSimultaneousChat': 0 },
+									{ 'livechat.maxNumberSimultaneousChat': '' },
 									{ 'livechat.maxNumberSimultaneousChat': null },
 								],
-						},
-						{ 'queueInfo.chats': { $gte: maxChatsPerSetting } },
-					],
+							},
+							{ 'queueInfo.chats': { $gte: maxChatsPerSetting } },
+						],
 				  }
 				: // dummy filter meaning: don't match anything
 				  { _id: '' };

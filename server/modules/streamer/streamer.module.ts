@@ -201,7 +201,7 @@ export abstract class Streamer extends EventEmitter implements IStreamer {
 			throw new Error('invalid-event-name');
 		}
 
-		if (await this.isReadAllowed(publication, eventName, args) !== true) {
+		if ((await this.isReadAllowed(publication, eventName, args)) !== true) {
 			publication.stop();
 			throw new Error('not-allowed');
 		}
@@ -264,7 +264,7 @@ export abstract class Streamer extends EventEmitter implements IStreamer {
 
 		const method: Record<string, (eventName: string, ...args: any[]) => any> = {
 			async [this.subscriptionName](this: IPublication, eventName, ...args): Promise<void> {
-				if (await isWriteAllowed(this, eventName, args) !== true) {
+				if ((await isWriteAllowed(this, eventName, args)) !== true) {
 					return;
 				}
 

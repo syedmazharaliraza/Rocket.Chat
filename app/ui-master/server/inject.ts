@@ -11,9 +11,9 @@ import { getURL } from '../../utils/server';
 type Injection =
 	| string
 	| {
-		content: string;
-		type: 'JS' | 'CSS';
-		tag: string;
+			content: string;
+			type: 'JS' | 'CSS';
+			tag: string;
 	  };
 
 export const headInjections = new ReactiveDict();
@@ -42,15 +42,15 @@ const callback: NextHandleFunction = (req, res, next) => {
 
 		const serve =
 			(contentType: string) =>
-				(content: string, cacheControl = 'public, max-age=31536000'): void => {
-					res.writeHead(200, {
-						'Content-type': contentType,
-						'cache-control': cacheControl,
-						'Content-Length': content.length,
-					});
-					res.write(content);
-					res.end();
-				};
+			(content: string, cacheControl = 'public, max-age=31536000'): void => {
+				res.writeHead(200, {
+					'Content-type': contentType,
+					'cache-control': cacheControl,
+					'Content-Length': content.length,
+				});
+				res.write(content);
+				res.end();
+			};
 
 		const serveStaticJS = serve('application/javascript; charset=UTF-8');
 		const serveStaticCSS = serve('text/css; charset=UTF-8');

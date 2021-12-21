@@ -4,8 +4,8 @@ export function getWebdavCredentials(account: ServerCredentials): ServerCredenti
 	const cred = account.token
 		? { token: account.token }
 		: {
-			username: account.username,
-			password: account.password,
+				username: account.username,
+				password: account.password,
 		  };
 	return cred;
 }

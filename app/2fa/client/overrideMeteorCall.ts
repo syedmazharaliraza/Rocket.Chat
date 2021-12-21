@@ -14,25 +14,25 @@ type Callback = {
 
 const callWithTotp =
 	(methodName: string, args: unknown[], callback: Callback) =>
-		(twoFactorCode: string, twoFactorMethod: string): unknown =>
-			call(
-				methodName,
-				...args,
-				{ twoFactorCode, twoFactorMethod },
-				(error: unknown, result: unknown): void => {
-					if (isTotpInvalidError(error)) {
-						(error as { toastrShowed?: true }).toastrShowed = true;
-						dispatchToastMessage({
-							type: 'error',
-							message: t('Invalid_two_factor_code'),
-						});
-						callback(error);
-						return;
-					}
+	(twoFactorCode: string, twoFactorMethod: string): unknown =>
+		call(
+			methodName,
+			...args,
+			{ twoFactorCode, twoFactorMethod },
+			(error: unknown, result: unknown): void => {
+				if (isTotpInvalidError(error)) {
+					(error as { toastrShowed?: true }).toastrShowed = true;
+					dispatchToastMessage({
+						type: 'error',
+						message: t('Invalid_two_factor_code'),
+					});
+					callback(error);
+					return;
+				}
 
-					callback(error, result);
-				},
-			);
+				callback(error, result);
+			},
+		);
 
 const callWithoutTotp = (methodName: string, args: unknown[], callback: Callback) => (): unknown =>
 	call(methodName, ...args, (error: unknown, result: unknown): void => {

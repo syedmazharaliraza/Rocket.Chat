@@ -120,7 +120,7 @@ export class LivechatAgentActivityRaw extends BaseRaw<ILivechatAgentActivity> {
 				_id: 0,
 				username: '$_id.username',
 				availableTimeInSeconds: 1,
-				...fullReport && { serviceHistory: 1 },
+				...(fullReport && { serviceHistory: 1 }),
 			},
 		};
 

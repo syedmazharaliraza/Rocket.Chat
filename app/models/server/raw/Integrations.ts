@@ -36,7 +36,7 @@ export class IntegrationsRaw extends BaseRaw<IIntegration> {
 	}): Promise<IIntegration | null> {
 		return this.findOne({
 			_id,
-			...createdBy && { '_createdBy._id': createdBy },
+			...(createdBy && { '_createdBy._id': createdBy }),
 		});
 	}
 

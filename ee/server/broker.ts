@@ -83,7 +83,7 @@ class NetworkBroker implements IBroker {
 	async call(method: string, data: any): Promise<any> {
 		await this.started;
 
-		if (!(this.isActionWhitelisted(method) || await this.allowed)) {
+		if (!(this.isActionWhitelisted(method) || (await this.allowed))) {
 			return this.localBroker.call(method, data);
 		}
 
@@ -104,7 +104,7 @@ class NetworkBroker implements IBroker {
 	async waitAndCall(method: string, data: any): Promise<any> {
 		await this.started;
 
-		if (!(this.isActionWhitelisted(method) || await this.allowed)) {
+		if (!(this.isActionWhitelisted(method) || (await this.allowed))) {
 			return this.localBroker.call(method, data);
 		}
 
@@ -211,7 +211,7 @@ class NetworkBroker implements IBroker {
 						ctx,
 					},
 					async (): Promise<any> => {
-						if (this.isActionWhitelisted(`${name}.${method}`) || await this.allowed) {
+						if (this.isActionWhitelisted(`${name}.${method}`) || (await this.allowed)) {
 							return i[method](...ctx.params);
 						}
 					},
@@ -225,7 +225,7 @@ class NetworkBroker implements IBroker {
 		event: T,
 		...args: Parameters<EventSignatures[T]>
 	): Promise<void> {
-		if (!(this.isEventWhitelisted(event) || await this.allowed)) {
+		if (!(this.isEventWhitelisted(event) || (await this.allowed))) {
 			return this.localBroker.broadcast(event, ...args);
 		}
 		return this.broker.broadcast(event, args);

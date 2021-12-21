@@ -76,7 +76,7 @@ const migrateCollection = async (): Promise<void> => {
 		},
 	};
 	if (
-		await LivechatBusinessHours.find({ type: LivechatBusinessHourTypes.DEFAULT }).count() === 0
+		(await LivechatBusinessHours.find({ type: LivechatBusinessHourTypes.DEFAULT }).count()) === 0
 	) {
 		LivechatBusinessHours.insertOne(businessHour);
 	} else {

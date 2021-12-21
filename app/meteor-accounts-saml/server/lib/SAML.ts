@@ -69,7 +69,7 @@ export class SAML {
 	}
 
 	public static async hasCredential(credentialToken: string): Promise<boolean> {
-		return await CredentialTokens.findOneNotExpiredById(credentialToken) != null;
+		return (await CredentialTokens.findOneNotExpiredById(credentialToken)) != null;
 	}
 
 	public static async retrieveCredential(

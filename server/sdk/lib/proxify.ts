@@ -20,8 +20,8 @@ function handler<T extends object>(namespace: string, waitService: boolean): Pro
 	return {
 		get:
 			(_target: T, prop: string): any =>
-				(...params: any): Promise<any> =>
-					api[waitService ? 'waitAndCall' : 'call'](`${namespace}.${prop}`, params),
+			(...params: any): Promise<any> =>
+				api[waitService ? 'waitAndCall' : 'call'](`${namespace}.${prop}`, params),
 	};
 }
 

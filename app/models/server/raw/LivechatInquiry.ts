@@ -12,7 +12,7 @@ export class LivechatInquiryRaw extends BaseRaw<ILivechatInquiryRecord> {
 			status: LivechatInquiryStatus.QUEUED,
 		};
 		return this.findOne(query) as unknown as Promise<
-		(ILivechatInquiryRecord & { status: LivechatInquiryStatus.QUEUED }) | null
+			(ILivechatInquiryRecord & { status: LivechatInquiryStatus.QUEUED }) | null
 		>;
 	}
 

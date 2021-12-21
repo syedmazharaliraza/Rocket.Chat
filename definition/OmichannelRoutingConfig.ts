@@ -12,9 +12,9 @@ export type OmichannelRoutingConfig = {
 
 export type Inquiries =
 	| {
-		enabled: true;
-		queue: Array<IRoom>;
+			enabled: true;
+			queue: Array<IRoom>;
 	  }
 	| {
-		enabled: false;
+			enabled: false;
 	  };

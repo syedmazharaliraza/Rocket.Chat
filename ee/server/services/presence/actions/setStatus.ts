@@ -13,7 +13,7 @@ export async function setStatus(
 	const query = { _id: uid };
 
 	const UserSession = await getCollection<IUserSession>(Collections.UserSession);
-	const userSessions = await UserSession.findOne(query) || { connections: [] };
+	const userSessions = (await UserSession.findOne(query)) || { connections: [] };
 
 	const { status, statusConnection } = processPresenceAndStatus(
 		userSessions.connections,
@@ -24,14 +24,14 @@ export async function setStatus(
 		statusDefault,
 		status,
 		statusConnection,
-		...typeof statusText !== 'undefined'
+		...(typeof statusText !== 'undefined'
 			? {
-				// TODO logic duplicated from Rocket.Chat core
-				statusText: String(statusText || '')
-					.trim()
-					.substr(0, 120),
+					// TODO logic duplicated from Rocket.Chat core
+					statusText: String(statusText || '')
+						.trim()
+						.substr(0, 120),
 			  }
-			: {},
+			: {}),
 	};
 
 	const User = await getCollection(Collections.User);

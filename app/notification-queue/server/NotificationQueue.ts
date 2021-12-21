@@ -132,11 +132,11 @@ class NotificationClass {
 	}): Promise<void> {
 		const receiver =
 			user ||
-			await Users.findOneById<Pick<IUser, 'statusConnection'>>(uid, {
+			(await Users.findOneById<Pick<IUser, 'statusConnection'>>(uid, {
 				projection: {
 					statusConnection: 1,
 				},
-			});
+			}));
 
 		if (!receiver) {
 			return;

@@ -66,7 +66,7 @@ export class NPSService extends ServiceClass implements INPSService {
 
 		const npsSending = await this.Nps.getOpenExpiredAlreadySending();
 
-		const nps = npsSending || await this.Nps.getOpenExpiredAndStartSending();
+		const nps = npsSending || (await this.Nps.getOpenExpiredAndStartSending());
 		if (!nps) {
 			return;
 		}

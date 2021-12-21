@@ -33,7 +33,7 @@ export const addAsToken = (
 		token,
 		type,
 		text: html,
-		...extra && { ...extra },
+		...(extra && { ...extra }),
 	});
 
 	return token;

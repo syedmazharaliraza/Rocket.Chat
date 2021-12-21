@@ -114,7 +114,7 @@ export class MultipleBusinessHoursBehavior
 	async onAddAgentToDepartment(options: Record<string, any> = {}): Promise<any> {
 		const { departmentId, agentsId } = options;
 		const department = await this.DepartmentsRepository.findOneById<
-		Pick<ILivechatDepartment, 'businessHourId'>
+			Pick<ILivechatDepartment, 'businessHourId'>
 		>(departmentId, { projection: { businessHourId: 1 } });
 		if (!department || !agentsId.length) {
 			return options;
@@ -142,7 +142,7 @@ export class MultipleBusinessHoursBehavior
 	async onRemoveAgentFromDepartment(options: Record<string, any> = {}): Promise<any> {
 		const { departmentId, agentsId } = options;
 		const department = await this.DepartmentsRepository.findOneById<
-		Pick<ILivechatDepartment, 'businessHourId'>
+			Pick<ILivechatDepartment, 'businessHourId'>
 		>(departmentId, { fields: { businessHourId: 1 } });
 		if (!department || !agentsId.length) {
 			return options;
@@ -167,7 +167,7 @@ export class MultipleBusinessHoursBehavior
 		const agentIdsWithoutDepartment = [];
 		const agentIdsToRemoveCurrentBusinessHour = [];
 		for (const agentId of agentsIds) {
-			if (await this.DepartmentsAgentsRepository.findByAgentId(agentId).count() === 0) {
+			if ((await this.DepartmentsAgentsRepository.findByAgentId(agentId).count()) === 0) {
 				// eslint-disable-line no-await-in-loop
 				agentIdsWithoutDepartment.push(agentId);
 			}

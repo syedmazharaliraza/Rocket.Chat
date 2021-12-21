@@ -200,7 +200,7 @@ API.v1.addRoute(
 
 				if (
 					isSettingsUpdatePropDefault(this.bodyParams) &&
-					await Settings.updateValueNotHiddenById(this.urlParams._id, this.bodyParams.value)
+					(await Settings.updateValueNotHiddenById(this.urlParams._id, this.bodyParams.value))
 				) {
 					const s = await Settings.findOneNotHiddenById(this.urlParams._id);
 					if (!s) {

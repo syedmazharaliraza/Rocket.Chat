@@ -36,9 +36,9 @@ export class TeamMemberRaw extends BaseRaw<T> {
 	findByUserId<P>(
 		userId: string,
 		options?:
-		| undefined
-		| WithoutProjection<FindOneOptions<ITeamMember>>
-		| FindOneOptions<P extends ITeamMember ? ITeamMember : P>,
+			| undefined
+			| WithoutProjection<FindOneOptions<ITeamMember>>
+			| FindOneOptions<P extends ITeamMember ? ITeamMember : P>,
 	): Cursor<P> | Cursor<ITeamMember> {
 		return options ? this.col.find({ userId }, options) : this.col.find({ userId }, options);
 	}
@@ -61,9 +61,9 @@ export class TeamMemberRaw extends BaseRaw<T> {
 		userId: string,
 		teamId: string,
 		options?:
-		| undefined
-		| WithoutProjection<FindOneOptions<ITeamMember>>
-		| FindOneOptions<P extends ITeamMember ? ITeamMember : P>,
+			| undefined
+			| WithoutProjection<FindOneOptions<ITeamMember>>
+			| FindOneOptions<P extends ITeamMember ? ITeamMember : P>,
 	): Promise<P | null | ITeamMember> {
 		return options
 			? this.col.findOne({ userId, teamId }, options)
@@ -82,9 +82,9 @@ export class TeamMemberRaw extends BaseRaw<T> {
 	findByTeamId<P>(
 		teamId: string,
 		options?:
-		| undefined
-		| WithoutProjection<FindOneOptions<ITeamMember>>
-		| FindOneOptions<P extends ITeamMember ? ITeamMember : P>,
+			| undefined
+			| WithoutProjection<FindOneOptions<ITeamMember>>
+			| FindOneOptions<P extends ITeamMember ? ITeamMember : P>,
 	): Cursor<P> | Cursor<ITeamMember> {
 		return options ? this.col.find({ teamId }, options) : this.col.find({ teamId }, options);
 	}
@@ -101,9 +101,9 @@ export class TeamMemberRaw extends BaseRaw<T> {
 	findByTeamIds<P>(
 		teamIds: Array<string>,
 		options?:
-		| undefined
-		| WithoutProjection<FindOneOptions<ITeamMember>>
-		| FindOneOptions<P extends ITeamMember ? ITeamMember : P>,
+			| undefined
+			| WithoutProjection<FindOneOptions<ITeamMember>>
+			| FindOneOptions<P extends ITeamMember ? ITeamMember : P>,
 	): Cursor<P> | Cursor<ITeamMember> {
 		return options
 			? this.col.find({ teamId: { $in: teamIds } }, options)
@@ -124,9 +124,9 @@ export class TeamMemberRaw extends BaseRaw<T> {
 		teamId: string,
 		role: string,
 		options?:
-		| undefined
-		| WithoutProjection<FindOneOptions<ITeamMember>>
-		| FindOneOptions<P extends ITeamMember ? ITeamMember : P>,
+			| undefined
+			| WithoutProjection<FindOneOptions<ITeamMember>>
+			| FindOneOptions<P extends ITeamMember ? ITeamMember : P>,
 	): Cursor<P> | Cursor<ITeamMember> {
 		return options
 			? this.col.find({ teamId, roles: role }, options)

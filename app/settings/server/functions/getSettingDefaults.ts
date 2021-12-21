@@ -25,7 +25,7 @@ export const getSettingDefaults = (
 		ts: new Date(),
 		createdAt: new Date(),
 		...options,
-		...options.enableQuery && { enableQuery: JSON.stringify(options.enableQuery) },
+		...(options.enableQuery && { enableQuery: JSON.stringify(options.enableQuery) }),
 		i18nLabel: options.i18nLabel || _id,
 		hidden: options.hidden || hiddenSettings.has(_id),
 		blocked: options.blocked || blockedSettings.has(_id),
@@ -33,9 +33,9 @@ export const getSettingDefaults = (
 		type: options.type || 'string',
 		env: options.env || false,
 		public: options.public || false,
-		...options.displayQuery && { displayQuery: JSON.stringify(options.displayQuery) },
-		...isSettingColor(setting as ISetting) && {
+		...(options.displayQuery && { displayQuery: JSON.stringify(options.displayQuery) }),
+		...(isSettingColor(setting as ISetting) && {
 			packageEditor: (setting as ISettingColor).editor,
-		},
+		}),
 	};
 };

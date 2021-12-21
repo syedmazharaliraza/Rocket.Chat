@@ -237,7 +237,7 @@ export const upsertPermissions = async (): Promise<void> => {
 			[key: string]: IPermission;
 		} = {};
 
-		const selector = { level: 'settings' as const, ...settingId && { settingId } };
+		const selector = { level: 'settings' as const, ...(settingId && { settingId }) };
 
 		await Permissions.find(selector).forEach(function (permission: IPermission) {
 			previousSettingPermissions[permission._id] = permission;

@@ -114,8 +114,8 @@ export class AppLivechatBridge extends LivechatBridge {
 		const closeData: any = {
 			room: this.orch.getConverters()?.get('rooms').convertAppRoom(room),
 			comment,
-			...user && { user },
-			...visitor && { visitor },
+			...(user && { user }),
+			...(visitor && { visitor }),
 		};
 
 		return Livechat.closeRoom(closeData);

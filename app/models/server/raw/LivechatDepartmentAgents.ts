@@ -19,9 +19,9 @@ export class LivechatDepartmentAgentsRaw extends BaseRaw<ILivechatDepartmentAgen
 	findUsersInQueue<P>(
 		usersList: string[],
 		options?:
-		| undefined
-		| WithoutProjection<FindOneOptions<ILivechatDepartmentAgents>>
-		| FindOneOptions<P extends ILivechatDepartmentAgents ? ILivechatDepartmentAgents : P>,
+			| undefined
+			| WithoutProjection<FindOneOptions<ILivechatDepartmentAgents>>
+			| FindOneOptions<P extends ILivechatDepartmentAgents ? ILivechatDepartmentAgents : P>,
 	): Cursor<ILivechatDepartmentAgents> | Cursor<P> {
 		const query: FilterQuery<ILivechatDepartmentAgents> = {};
 
@@ -58,9 +58,9 @@ export class LivechatDepartmentAgentsRaw extends BaseRaw<ILivechatDepartmentAgen
 	findAgentsByDepartmentId<P>(
 		departmentId: string,
 		options?:
-		| undefined
-		| WithoutProjection<FindOneOptions<ILivechatDepartmentAgents>>
-		| FindOneOptions<P extends ILivechatDepartmentAgents ? ILivechatDepartmentAgents : P>,
+			| undefined
+			| WithoutProjection<FindOneOptions<ILivechatDepartmentAgents>>
+			| FindOneOptions<P extends ILivechatDepartmentAgents ? ILivechatDepartmentAgents : P>,
 	): Cursor<ILivechatDepartmentAgents> | Cursor<P> {
 		const query = { departmentId };
 
@@ -86,9 +86,9 @@ export class LivechatDepartmentAgentsRaw extends BaseRaw<ILivechatDepartmentAgen
 	findActiveDepartmentsByAgentId<P>(
 		agentId: string,
 		options?:
-		| undefined
-		| WithoutProjection<FindOneOptions<ILivechatDepartmentAgents>>
-		| FindOneOptions<P extends ILivechatDepartmentAgents ? ILivechatDepartmentAgents : P>,
+			| undefined
+			| WithoutProjection<FindOneOptions<ILivechatDepartmentAgents>>
+			| FindOneOptions<P extends ILivechatDepartmentAgents ? ILivechatDepartmentAgents : P>,
 	): Cursor<ILivechatDepartmentAgents> | Cursor<P> {
 		const query = {
 			agentId,

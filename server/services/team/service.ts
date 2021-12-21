@@ -195,7 +195,7 @@ export class TeamService extends ServiceClass implements ITeamService {
 
 	async findBySubscribedUserIds(userId: string, callerId?: string): Promise<ITeam[]> {
 		const unfilteredTeams = await this.TeamMembersModel.findByUserId<
-		Pick<ITeamMember, 'roles' | 'teamId'>
+			Pick<ITeamMember, 'roles' | 'teamId'>
 		>(userId, { projection: { teamId: 1, roles: 1 } }).toArray();
 		const unfilteredTeamIds = unfilteredTeams.map(({ teamId }) => teamId);
 
@@ -248,9 +248,9 @@ export class TeamService extends ServiceClass implements ITeamService {
 		userId: string,
 		term: string | RegExp,
 		options?:
-		| undefined
-		| WithoutProjection<FindOneOptions<ITeam>>
-		| FindOneOptions<P extends ITeam ? ITeam : P>,
+			| undefined
+			| WithoutProjection<FindOneOptions<ITeam>>
+			| FindOneOptions<P extends ITeam ? ITeam : P>,
 	): Promise<ITeam[] | P[]> {
 		if (typeof term === 'string') {
 			term = new RegExp(`^${escapeRegExp(term)}`, 'i');
@@ -287,7 +287,7 @@ export class TeamService extends ServiceClass implements ITeamService {
 		const cursor = this.TeamModel.findByIds(
 			teamIds,
 			{
-				...sort && { sort },
+				...(sort && { sort }),
 				limit: count,
 				skip: offset,
 			},
@@ -357,9 +357,9 @@ export class TeamService extends ServiceClass implements ITeamService {
 	async listByNames<P>(
 		names: Array<string>,
 		options?:
-		| undefined
-		| WithoutProjection<FindOneOptions<ITeam>>
-		| FindOneOptions<P extends ITeam ? ITeam : P>,
+			| undefined
+			| WithoutProjection<FindOneOptions<ITeam>>
+			| FindOneOptions<P extends ITeam ? ITeam : P>,
 	): Promise<P[] | ITeam[]> {
 		if (options === undefined) {
 			return this.TeamModel.findByNames(names).toArray();
@@ -409,7 +409,7 @@ export class TeamService extends ServiceClass implements ITeamService {
 				throw new Error('room-already-on-team');
 			}
 
-			if (!await this.SubscriptionsModel.isUserInRole(uid, 'owner', room._id)) {
+			if (!(await this.SubscriptionsModel.isUserInRole(uid, 'owner', room._id))) {
 				throw new Error('error-no-owner-channel');
 			}
 
@@ -529,9 +529,9 @@ export class TeamService extends ServiceClass implements ITeamService {
 	listTeamsBySubscriberUserId<P>(
 		uid: string,
 		options?:
-		| undefined
-		| WithoutProjection<FindOneOptions<ITeamMember>>
-		| FindOneOptions<P extends ITeamMember ? ITeamMember : P>,
+			| undefined
+			| WithoutProjection<FindOneOptions<ITeamMember>>
+			| FindOneOptions<P extends ITeamMember ? ITeamMember : P>,
 	): Promise<P[] | ITeamMember[]> {
 		if (options) {
 			this.TeamMembersModel.findByUserId(uid, options).toArray();
@@ -895,9 +895,9 @@ export class TeamService extends ServiceClass implements ITeamService {
 
 	async getAllPublicTeams<P>(
 		options?:
-		| undefined
-		| WithoutProjection<FindOneOptions<ITeam>>
-		| FindOneOptions<P extends ITeam ? ITeam : P>,
+			| undefined
+			| WithoutProjection<FindOneOptions<ITeam>>
+			| FindOneOptions<P extends ITeam ? ITeam : P>,
 	): Promise<ITeam[] | P[]> {
 		return options
 			? this.TeamModel.findByType(TEAM_TYPE.PUBLIC, options).toArray()
@@ -926,9 +926,9 @@ export class TeamService extends ServiceClass implements ITeamService {
 	async getOneByName<P>(
 		teamName: string | RegExp,
 		options?:
-		| undefined
-		| WithoutProjection<FindOneOptions<ITeam>>
-		| FindOneOptions<P extends ITeam ? ITeam : P>,
+			| undefined
+			| WithoutProjection<FindOneOptions<ITeam>>
+			| FindOneOptions<P extends ITeam ? ITeam : P>,
 	): Promise<ITeam | null | P> {
 		if (!options) {
 			return this.TeamModel.findOneByName(teamName);
@@ -966,7 +966,7 @@ export class TeamService extends ServiceClass implements ITeamService {
 			return false;
 		}
 
-		return !!await this.TeamMembersModel.updateRolesByTeamIdAndUserId(teamId, userId, roles);
+		return !!(await this.TeamMembersModel.updateRolesByTeamIdAndUserId(teamId, userId, roles));
 	}
 
 	async removeRolesFromMember(
@@ -983,7 +983,7 @@ export class TeamService extends ServiceClass implements ITeamService {
 			return false;
 		}
 
-		return !!await this.TeamMembersModel.removeRolesByTeamIdAndUserId(teamId, userId, roles);
+		return !!(await this.TeamMembersModel.removeRolesByTeamIdAndUserId(teamId, userId, roles));
 	}
 
 	async getInfoByName(teamName: string): Promise<Omit<ITeam, 'usernames'> | null> {
@@ -1024,11 +1024,11 @@ export class TeamService extends ServiceClass implements ITeamService {
 	}
 
 	async deleteById(teamId: string): Promise<boolean> {
-		return !!await this.TeamModel.deleteOneById(teamId);
+		return !!(await this.TeamModel.deleteOneById(teamId));
 	}
 
 	async deleteByName(teamName: string): Promise<boolean> {
-		return !!await this.TeamModel.deleteOneByName(teamName);
+		return !!(await this.TeamModel.deleteOneByName(teamName));
 	}
 
 	async getStatistics(): Promise<ITeamStats> {

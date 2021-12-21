@@ -249,12 +249,12 @@ export class ImportDataConverter {
 		// #ToDo: #TODO: Move this to the model class
 		const updateData: Record<string, any> = {
 			$set: {
-				...userData.roles && { roles: userData.roles },
-				...userData.type && { type: userData.type },
-				...userData.statusText && { statusText: userData.statusText },
-				...userData.bio && { bio: userData.bio },
-				...userData.services?.ldap && { ldap: true },
-				...userData.avatarUrl && { _pendingAvatarUrl: userData.avatarUrl },
+				...(userData.roles && { roles: userData.roles }),
+				...(userData.type && { type: userData.type }),
+				...(userData.statusText && { statusText: userData.statusText }),
+				...(userData.bio && { bio: userData.bio }),
+				...(userData.services?.ldap && { ldap: true }),
+				...(userData.avatarUrl && { _pendingAvatarUrl: userData.avatarUrl }),
 			},
 		};
 
@@ -289,14 +289,14 @@ export class ImportDataConverter {
 		}`;
 		const userId = userData.emails.length
 			? Accounts.createUser({
-				email: userData.emails[0],
-				password,
+					email: userData.emails[0],
+					password,
 			  })
 			: Accounts.createUser({
-				username: userData.username,
-				password,
-				// @ts-ignore
-				joinDefaultChannelsSilenced: true,
+					username: userData.username,
+					password,
+					// @ts-ignore
+					joinDefaultChannelsSilenced: true,
 			  });
 
 		const user = Users.findOneById(userId, {});
@@ -824,7 +824,7 @@ export class ImportDataConverter {
 						: Meteor.call(
 								roomData.t === 'p' ? 'createPrivateGroup' : 'createChannel',
 								roomData.name,
-							members,
+								members,
 						  );
 
 				roomData._id = roomInfo.rid;

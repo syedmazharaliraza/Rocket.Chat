@@ -162,14 +162,14 @@ export const aggregates = {
 			devices: ISession['device'][];
 			_computedAt: string;
 		}
-		> {
+	> {
 		return collection.aggregate<
-		Pick<ISession, 'mostImportantRole' | 'userId' | 'day' | 'year' | 'month' | 'type'> & {
-			time: number;
-			sessions: number;
-			devices: ISession['device'][];
-			_computedAt: string;
-		}
+			Pick<ISession, 'mostImportantRole' | 'userId' | 'day' | 'year' | 'month' | 'type'> & {
+				time: number;
+				sessions: number;
+				devices: ISession['device'][];
+				_computedAt: string;
+			}
 		>(
 			[
 				{
@@ -799,66 +799,66 @@ export class SessionsRaw extends BaseRaw<ISession> {
 	}
 
 	async getActiveUsersOfPeriodByDayBetweenDates({ start, end }: DestructuredRange): Promise<
-	{
-		day: number;
-		month: number;
-		year: number;
-		usersList: IUser['_id'][];
-		users: number;
-	}[]
-	> {
-		return this.col
-			.aggregate<{
+		{
 			day: number;
 			month: number;
 			year: number;
 			usersList: IUser['_id'][];
 			users: number;
-		}>([
-			{
-				$match: {
-					...matchBasedOnDate(start, end),
-					type: 'user_daily',
-					mostImportantRole: { $ne: 'anonymous' },
-				},
-			},
-			{
-				$group: {
-					_id: {
-						day: '$day',
-						month: '$month',
-						year: '$year',
-						userId: '$userId',
+		}[]
+	> {
+		return this.col
+			.aggregate<{
+				day: number;
+				month: number;
+				year: number;
+				usersList: IUser['_id'][];
+				users: number;
+			}>([
+				{
+					$match: {
+						...matchBasedOnDate(start, end),
+						type: 'user_daily',
+						mostImportantRole: { $ne: 'anonymous' },
 					},
 				},
-			},
-			{
-				$group: {
-					_id: {
-						day: '$_id.day',
-						month: '$_id.month',
-						year: '$_id.year',
+				{
+					$group: {
+						_id: {
+							day: '$day',
+							month: '$month',
+							year: '$year',
+							userId: '$userId',
+						},
 					},
-					usersList: {
-						$addToSet: '$_id.userId',
+				},
+				{
+					$group: {
+						_id: {
+							day: '$_id.day',
+							month: '$_id.month',
+							year: '$_id.year',
+						},
+						usersList: {
+							$addToSet: '$_id.userId',
+						},
+						users: { $sum: 1 },
 					},
-					users: { $sum: 1 },
 				},
-			},
-			{
-				$project: {
-					_id: 0,
-					...getProjectionByFullDate(),
-					usersList: 1,
-					users: 1,
+				{
+					$project: {
+						_id: 0,
+						...getProjectionByFullDate(),
+						usersList: 1,
+						users: 1,
+					},
 				},
-			},
-			{
-				$sort: {
-					...getSortByFullDate(),
+				{
+					$sort: {
+						...getSortByFullDate(),
+					},
 				},
-			},
-		])
+			])
 			.toArray();
 	}
 
@@ -871,7 +871,7 @@ export class SessionsRaw extends BaseRaw<ISession> {
 			hour: number;
 			users: number;
 		}[]
-		> {
+	> {
 		const match = {
 			$match: {
 				type: 'computed-session',
@@ -904,72 +904,72 @@ export class SessionsRaw extends BaseRaw<ISession> {
 		};
 		return this.col
 			.aggregate<{
-			hour: number;
-			users: number;
-		}>([
-			match,
-			rangeProject,
-			unwind,
-			groups.listGroup,
-			groups.countGroup,
-			presentationProject,
-			sort,
-		])
+				hour: number;
+				users: number;
+			}>([
+				match,
+				rangeProject,
+				unwind,
+				groups.listGroup,
+				groups.countGroup,
+				presentationProject,
+				sort,
+			])
 			.toArray();
 	}
 
 	async getTotalOfSessionsByDayBetweenDates({ start, end }: DestructuredRange): Promise<
-	{
-		day: number;
-		month: number;
-		year: number;
-		users: number;
-	}[]
-	> {
-		return this.col
-			.aggregate<{
+		{
 			day: number;
 			month: number;
 			year: number;
 			users: number;
-		}>([
-			{
-				$match: {
-					...matchBasedOnDate(start, end),
-					type: 'user_daily',
-					mostImportantRole: { $ne: 'anonymous' },
+		}[]
+	> {
+		return this.col
+			.aggregate<{
+				day: number;
+				month: number;
+				year: number;
+				users: number;
+			}>([
+				{
+					$match: {
+						...matchBasedOnDate(start, end),
+						type: 'user_daily',
+						mostImportantRole: { $ne: 'anonymous' },
+					},
 				},
-			},
-			{
-				$group: {
-					_id: { year: '$year', month: '$month', day: '$day' },
-					users: { $sum: 1 },
+				{
+					$group: {
+						_id: { year: '$year', month: '$month', day: '$day' },
+						users: { $sum: 1 },
+					},
 				},
-			},
-			{
-				$project: {
-					_id: 0,
-					...getProjectionByFullDate(),
-					users: 1,
+				{
+					$project: {
+						_id: 0,
+						...getProjectionByFullDate(),
+						users: 1,
+					},
 				},
-			},
-			{
-				$sort: {
-					...getSortByFullDate(),
+				{
+					$sort: {
+						...getSortByFullDate(),
+					},
 				},
-			},
-		])
+			])
 			.toArray();
 	}
 
 	async getTotalOfSessionByHourAndDayBetweenDates({ start, end }: DateRange): Promise<
-	{
-		hour: number;
-		day: number;
-		month: number;
-		year: number;
-		users: number;
-	}[]
+		{
+			hour: number;
+			day: number;
+			month: number;
+			year: number;
+			users: number;
+		}[]
 	> {
 		const match = {
 			$match: {
@@ -1011,20 +1011,20 @@ export class SessionsRaw extends BaseRaw<ISession> {
 
 		return this.col
 			.aggregate<{
-			hour: number;
-			day: number;
-			month: number;
-			year: number;
-			users: number;
-		}>([
-			match,
-			rangeProject,
-			unwind,
-			groups.listGroup,
-			groups.countGroup,
-			presentationProject,
-			sort,
-		])
+				hour: number;
+				day: number;
+				month: number;
+				year: number;
+				users: number;
+			}>([
+				match,
+				rangeProject,
+				unwind,
+				groups.listGroup,
+				groups.countGroup,
+				presentationProject,
+				sort,
+			])
 			.toArray();
 	}
 

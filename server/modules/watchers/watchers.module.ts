@@ -72,16 +72,16 @@ type BroadcastCallback = <T extends keyof EventSignatures>(
 
 const hasKeys =
 	(requiredKeys: string[]): ((data?: Record<string, any>) => boolean) =>
-		(data?: Record<string, any>): boolean => {
-			if (!data) {
-				return false;
-			}
+	(data?: Record<string, any>): boolean => {
+		if (!data) {
+			return false;
+		}
 
-			return Object.keys(data)
-				.filter((key) => key !== '_id')
-				.map((key) => key.split('.')[0])
-				.some((key) => requiredKeys.includes(key));
-		};
+		return Object.keys(data)
+			.filter((key) => key !== '_id')
+			.map((key) => key.split('.')[0])
+			.some((key) => requiredKeys.includes(key));
+	};
 
 const hasRoomFields = hasKeys(Object.keys(roomFields));
 const hasSubscriptionFields = hasKeys(Object.keys(subscriptionFields));
@@ -132,7 +132,7 @@ export function initWatchers(
 				}
 
 				if (message._hidden !== true && message.imported == null) {
-					const UseRealName = await getSettingCached('UI_Use_Real_Name') === true;
+					const UseRealName = (await getSettingCached('UI_Use_Real_Name')) === true;
 
 					if (UseRealName) {
 						if (message.u?._id) {
@@ -168,7 +168,7 @@ export function initWatchers(
 
 				// Override data cuz we do not publish all fields
 				const subscription = await Subscriptions.findOneById<
-				Pick<ISubscription, keyof typeof subscriptionFields>
+					Pick<ISubscription, keyof typeof subscriptionFields>
 				>(id, { projection: subscriptionFields });
 				if (!subscription) {
 					return;
@@ -195,7 +195,7 @@ export function initWatchers(
 		}
 
 		const role =
-			clientAction === 'removed' ? { _id: id, name: id } : data || await Roles.findOneById(id);
+			clientAction === 'removed' ? { _id: id, name: id } : data || (await Roles.findOneById(id));
 
 		if (!role) {
 			return;
@@ -234,7 +234,7 @@ export function initWatchers(
 				break;
 
 			case 'removed':
-				data = await LivechatInquiry.trashFindOneById(id) ?? undefined;
+				data = (await LivechatInquiry.trashFindOneById(id)) ?? undefined;
 				break;
 		}
 
@@ -248,7 +248,7 @@ export function initWatchers(
 	watch<ILivechatDepartmentAgents>(LivechatDepartmentAgents, async ({ clientAction, id, diff }) => {
 		if (clientAction === 'removed') {
 			const data = await LivechatDepartmentAgents.trashFindOneById<
-			Pick<ILivechatDepartmentAgents, 'agentId' | 'departmentId'>
+				Pick<ILivechatDepartmentAgents, 'agentId' | 'departmentId'>
 			>(id, { projection: { agentId: 1, departmentId: 1 } });
 			if (!data) {
 				return;
@@ -258,7 +258,7 @@ export function initWatchers(
 		}
 
 		const data = await LivechatDepartmentAgents.findOneById<
-		Pick<ILivechatDepartmentAgents, 'agentId' | 'departmentId'>
+			Pick<ILivechatDepartmentAgents, 'agentId' | 'departmentId'>
 		>(id, { projection: { agentId: 1, departmentId: 1 } });
 		if (!data) {
 			return;
@@ -354,7 +354,7 @@ export function initWatchers(
 
 	watch<ILoginServiceConfiguration>(LoginServiceConfiguration, async ({ clientAction, id }) => {
 		const data = await LoginServiceConfiguration.findOne<
-		Omit<ILoginServiceConfiguration, 'secret'>
+			Omit<ILoginServiceConfiguration, 'secret'>
 		>(id, { projection: { secret: 0 } });
 		if (!data) {
 			return;
@@ -371,7 +371,7 @@ export function initWatchers(
 		switch (clientAction) {
 			case 'updated': {
 				const history = await IntegrationHistory.findOneById<
-				Pick<IIntegrationHistory, 'integration'>
+					Pick<IIntegrationHistory, 'integration'>
 				>(id, { projection: { 'integration._id': 1 } });
 				if (!history || !history.integration) {
 					return;

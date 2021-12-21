@@ -16,7 +16,7 @@ export class AppEnvironmentalVariableBridge extends EnvironmentalVariableBridge 
 			`The App ${appId} is getting the environmental variable value ${envVarName}.`,
 		);
 
-		if (!await this.isReadable(envVarName, appId)) {
+		if (!(await this.isReadable(envVarName, appId))) {
 			throw new Error(`The environmental variable "${envVarName}" is not readable.`);
 		}
 
@@ -36,7 +36,7 @@ export class AppEnvironmentalVariableBridge extends EnvironmentalVariableBridge 
 			`The App ${appId} is checking if the environmental variable is set ${envVarName}.`,
 		);
 
-		if (!await this.isReadable(envVarName, appId)) {
+		if (!(await this.isReadable(envVarName, appId))) {
 			throw new Error(`The environmental variable "${envVarName}" is not readable.`);
 		}
 

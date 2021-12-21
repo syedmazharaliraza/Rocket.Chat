@@ -41,12 +41,12 @@ export const replace = (str: string, data: { [key: string]: unknown } = {}): str
 		Site_URL: settings.get<string>('Site_Url'),
 		// eslint-disable-next-line @typescript-eslint/camelcase
 		Site_URL_Slash: settings.get<string>('Site_Url')?.replace(/\/?$/, '/'),
-		...data.name
+		...(data.name
 			? {
-				fname: s.strLeft(String(data.name), ' '),
-				lname: s.strRightBack(String(data.name), ' '),
+					fname: s.strLeft(String(data.name), ' '),
+					lname: s.strRightBack(String(data.name), ' '),
 			  }
-			: {},
+			: {}),
 		...data,
 	};
 

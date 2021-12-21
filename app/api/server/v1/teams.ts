@@ -539,7 +539,7 @@ API.v1.addRoute(
 				return API.v1.failure('invalid-user');
 			}
 
-			if (!await Team.removeMembers(this.userId, team._id, [{ userId }])) {
+			if (!(await Team.removeMembers(this.userId, team._id, [{ userId }]))) {
 				return API.v1.failure();
 			}
 

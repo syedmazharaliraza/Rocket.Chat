@@ -67,7 +67,7 @@ API.v1.addRoute(
 
 			const { name, scope, description, mandatory2fa } = this.bodyParams;
 
-			if (!await hasPermissionAsync(Meteor.userId(), 'access-permissions')) {
+			if (!(await hasPermissionAsync(Meteor.userId(), 'access-permissions'))) {
 				throw new Meteor.Error('error-action-not-allowed', 'Accessing permissions is not allowed');
 			}
 
@@ -160,10 +160,10 @@ API.v1.addRoute(
 			if (!role) {
 				throw new Meteor.Error('error-param-not-provided', 'Query param "role" is required');
 			}
-			if (!await hasPermissionAsync(this.userId, 'access-permissions')) {
+			if (!(await hasPermissionAsync(this.userId, 'access-permissions'))) {
 				throw new Meteor.Error('error-not-allowed', 'Not allowed');
 			}
-			if (roomId && !await hasPermissionAsync(this.userId, 'view-other-user-channels')) {
+			if (roomId && !(await hasPermissionAsync(this.userId, 'view-other-user-channels'))) {
 				throw new Meteor.Error('error-not-allowed', 'Not allowed');
 			}
 			const users = await getUsersInRole(role, roomId, {
@@ -262,7 +262,7 @@ API.v1.addRoute(
 				throw new Meteor.Error('error-invalid-role-properties', 'The role properties are invalid.');
 			}
 
-			if (!await hasPermissionAsync(this.userId, 'access-permissions')) {
+			if (!(await hasPermissionAsync(this.userId, 'access-permissions'))) {
 				throw new Meteor.Error('error-action-not-allowed', 'Accessing permissions is not allowed');
 			}
 
@@ -278,7 +278,7 @@ API.v1.addRoute(
 
 			const existingUsers = await Roles.findUsersInRole(role.name, role.scope);
 
-			if (existingUsers && await existingUsers.count() > 0) {
+			if (existingUsers && (await existingUsers.count()) > 0) {
 				throw new Meteor.Error('error-role-in-use', "Cannot delete role because it's in use");
 			}
 
@@ -301,7 +301,7 @@ API.v1.addRoute(
 
 			const { roleName, username, scope } = bodyParams;
 
-			if (!await hasPermissionAsync(this.userId, 'access-permissions')) {
+			if (!(await hasPermissionAsync(this.userId, 'access-permissions'))) {
 				throw new Meteor.Error('error-not-allowed', 'Accessing permissions is not allowed');
 			}
 
@@ -317,7 +317,7 @@ API.v1.addRoute(
 				throw new Meteor.Error('error-invalid-roleId', 'This role does not exist');
 			}
 
-			if (!await hasAnyRoleAsync(user._id, [role.name], scope)) {
+			if (!(await hasAnyRoleAsync(user._id, [role.name], scope))) {
 				throw new Meteor.Error('error-user-not-in-role', 'User is not in this role');
 			}
 

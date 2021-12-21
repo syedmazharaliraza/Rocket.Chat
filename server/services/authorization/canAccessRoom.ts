@@ -37,9 +37,9 @@ const roomAccessValidators: RoomAccessValidator[] = [
 		// otherwise access is allowed only to members of the team
 		const membership =
 			user?._id &&
-			await TeamMembers.findOneByUserIdAndTeamId(user._id, room.teamId, {
+			(await TeamMembers.findOneByUserIdAndTeamId(user._id, room.teamId, {
 				projection: { _id: 1 },
-			});
+			}));
 		return !!membership;
 	},
 

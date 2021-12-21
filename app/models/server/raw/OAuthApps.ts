@@ -10,8 +10,8 @@ export class OAuthAppsRaw extends BaseRaw<T> {
 		appId: string;
 	}): ReturnType<BaseRaw<T>['findOne']> {
 		return this.findOne({
-			...appId && { _id: appId },
-			...clientId && { clientId },
+			...(appId && { _id: appId }),
+			...(clientId && { clientId }),
 		});
 	}
 }

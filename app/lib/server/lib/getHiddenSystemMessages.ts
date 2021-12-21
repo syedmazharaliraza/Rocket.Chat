@@ -11,7 +11,7 @@ settings.watch<string[]>('Hide_System_Messages', function (values) {
 	const hiddenTypes = values.reduce(
 		(array: string[], value: string) => [
 			...array,
-			...value === 'mute_unmute' ? ['user-muted', 'user-unmuted'] : [value],
+			...(value === 'mute_unmute' ? ['user-muted', 'user-unmuted'] : [value]),
 		],
 		[],
 	);

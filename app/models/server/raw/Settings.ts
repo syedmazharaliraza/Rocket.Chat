@@ -126,17 +126,17 @@ export class SettingsRaw extends BaseRaw<ISetting> {
 	): Cursor<
 		T extends ISettingColor
 			? Pick<
-			T,
-			| '_id'
-			| 'value'
-			| 'editor'
-			| 'enterprise'
-			| 'invalidValue'
-			| 'modules'
-			| 'requiredOnWizard'
+					T,
+					| '_id'
+					| 'value'
+					| 'editor'
+					| 'enterprise'
+					| 'invalidValue'
+					| 'modules'
+					| 'requiredOnWizard'
 			  >
 			: Pick<T, '_id' | 'value' | 'enterprise' | 'invalidValue' | 'modules' | 'requiredOnWizard'>
-		> {
+	> {
 		const filter: FilterQuery<ISetting> = {
 			hidden: { $ne: true },
 			public: true,

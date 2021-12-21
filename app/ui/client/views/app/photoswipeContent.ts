@@ -122,45 +122,45 @@ const defaultGalleryOptions: PhotoSwipeUiDefault.Options = {
 
 const createEventListenerFor =
 	(className: string) =>
-		(event: JQuery.ClickEvent): void => {
-			event.preventDefault();
-			event.stopPropagation();
+	(event: JQuery.ClickEvent): void => {
+		event.preventDefault();
+		event.stopPropagation();
 
-			const { currentTarget } = event;
+		const { currentTarget } = event;
 
-			Array.from(document.querySelectorAll(className))
-				.sort((a, b) => {
-					if (a === currentTarget) {
-						return -1;
-					}
+		Array.from(document.querySelectorAll(className))
+			.sort((a, b) => {
+				if (a === currentTarget) {
+					return -1;
+				}
 
-					if (b === currentTarget) {
-						return 1;
-					}
+				if (b === currentTarget) {
+					return 1;
+				}
 
-					return 0;
-				})
-				.map((element) => fromElementToSlide(element))
-				.reduce(
-					(p, curr) =>
-						p
-							.then(() => curr)
-							.then(async (slide) => {
-								if (!slide) {
-									return;
-								}
+				return 0;
+			})
+			.map((element) => fromElementToSlide(element))
+			.reduce(
+				(p, curr) =>
+					p
+						.then(() => curr)
+						.then(async (slide) => {
+							if (!slide) {
+								return;
+							}
 
-								if (!currentGallery) {
-									return initGallery([slide], defaultGalleryOptions);
-								}
+							if (!currentGallery) {
+								return initGallery([slide], defaultGalleryOptions);
+							}
 
-								currentGallery.items.push(slide);
-								currentGallery.invalidateCurrItems();
-								currentGallery.updateSize(true);
-							}),
-					Promise.resolve(),
-				);
-		};
+							currentGallery.items.push(slide);
+							currentGallery.invalidateCurrItems();
+							currentGallery.updateSize(true);
+						}),
+				Promise.resolve(),
+			);
+	};
 
 Meteor.startup(() => {
 	$(document).on('click', '.gallery-item', createEventListenerFor('.gallery-item'));

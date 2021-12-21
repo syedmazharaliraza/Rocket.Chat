@@ -190,12 +190,12 @@ export interface ICachedSettings {
  */
 export class CachedSettings
 	extends Emitter<
-	{
-		'*': [string, SettingValue];
-	} & {
-		ready: undefined;
-		[k: string]: SettingValue;
-	}
+		{
+			'*': [string, SettingValue];
+		} & {
+			ready: undefined;
+			[k: string]: SettingValue;
+		}
 	>
 	implements ICachedSettings
 {

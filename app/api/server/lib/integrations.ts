@@ -36,7 +36,7 @@ export const findOneIntegration = async ({
 	if (!integration) {
 		throw new Error('The integration does not exists.');
 	}
-	if (!await hasIntegrationsPermission(userId, integration)) {
+	if (!(await hasIntegrationsPermission(userId, integration))) {
 		throw new Error('not-authorized');
 	}
 	return integration;

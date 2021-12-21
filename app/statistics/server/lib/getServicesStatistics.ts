@@ -2,12 +2,12 @@ import { settings } from '../../../settings/server';
 import { Users } from '../../../models/server';
 
 function getCustomOAuthServices(): Record<
-string,
-{
-	enabled: boolean;
-	mergeRoles: boolean;
-	users: number;
-}
+	string,
+	{
+		enabled: boolean;
+		mergeRoles: boolean;
+		users: number;
+	}
 > {
 	const customOauth = settings.getByRegexp(/Accounts_OAuth_Custom-[^-]+$/im);
 	return Object.fromEntries(

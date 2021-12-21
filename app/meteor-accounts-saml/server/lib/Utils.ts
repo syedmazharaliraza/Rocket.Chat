@@ -302,8 +302,8 @@ export class SAMLUtils {
 
 				attributeMap = {
 					fieldName,
-					...regex && { regex },
-					...template && { template },
+					...(regex && { regex }),
+					...(template && { template }),
 				};
 			} else if (typeof attribute === 'string') {
 				attributeMap = {
