@@ -189,7 +189,7 @@ export class SAMLUtils {
 				'StatusMessage',
 			)[0];
 
-			if (statusMessage && statusMessage.firstChild && statusMessage.firstChild.textContent) {
+			if (statusMessage?.firstChild?.textContent) {
 				messageText = statusMessage.firstChild.textContent;
 			}
 
@@ -381,7 +381,7 @@ export class SAMLUtils {
 		if (mapping.regex && mainValue && mainValue.match) {
 			let regexValue;
 			const match = mainValue.match(new RegExp(mapping.regex));
-			if (match && match.length) {
+			if (match?.length) {
 				if (match.length >= 2) {
 					regexValue = match[1];
 				} else {

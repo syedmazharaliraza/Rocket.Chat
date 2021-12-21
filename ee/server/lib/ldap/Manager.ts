@@ -433,12 +433,9 @@ export class LDAPEEManager extends LDAPManager {
 			.filter(({ name }) => !teamNames.includes(name))
 			.map(({ _id }) => _id);
 
-		const currentTeams = await Team.listTeamsBySubscriberUserId(user._id, {
-			projection: { teamId: 1 },
-		});
-		const currentTeamIds = currentTeams && currentTeams.map(({ teamId }) => teamId);
-		const teamsToRemove =
-			currentTeamIds && currentTeamIds.filter((teamId) => notInTeamIds.includes(teamId));
+		const currentTeams = await Team.listTeamsBySubscriberUserId(user._id, { projection: { teamId: 1 } });
+		const currentTeamIds = currentTeams?.map(({ teamId }) => teamId);
+		const teamsToRemove = currentTeamIds?.filter((teamId) => notInTeamIds.includes(teamId));
 		const teamsToAdd = inTeamIds.filter((teamId) => !currentTeamIds?.includes(teamId));
 
 		await Team.insertMemberOnTeams(user._id, teamsToAdd);

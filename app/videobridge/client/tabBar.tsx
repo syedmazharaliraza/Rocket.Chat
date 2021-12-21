@@ -14,7 +14,7 @@ addAction('bbb_video', ({ room }) => {
 	const enabled = useSetting('bigbluebutton_Enabled');
 	const t = useTranslation();
 
-	const live = room && room.streamingOptions && room.streamingOptions.type === 'call';
+	const live = room?.streamingOptions && room.streamingOptions.type === 'call';
 
 	const enabledDirect = useSetting('bigbluebutton_enable_d');
 	const enabledGroup = useSetting('bigbluebutton_enable_p');
@@ -88,7 +88,7 @@ addAction('video', ({ room }) => {
 	);
 
 	const currentTime = new Date().getTime();
-	const jitsiTimeout = new Date((room && room.jitsiTimeout) || currentTime).getTime();
+	const jitsiTimeout = new Date(room?.jitsiTimeout || currentTime).getTime();
 	const live = jitsiTimeout > currentTime || null;
 	const user = useUser();
 	const username = user ? user.username : '';

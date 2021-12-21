@@ -7,9 +7,10 @@ import { getWorkspaceAccessToken, getUserCloudAccessToken } from '../../../cloud
 import { settings } from '../../../settings/server';
 import { Info } from '../../../utils';
 import { Users } from '../../../models/server';
+import { Settings } from '../../../models/server/raw';
 import { Apps } from '../orchestrator';
 import { formatAppInstanceForRest } from '../../lib/misc/formatAppInstanceForRest';
-import { Settings } from '../../../models/server/raw';
+import { actionButtonsHandler } from './endpoints/actionButtonsHandler';
 
 const appsEngineVersionForMarketplace = Info.marketplaceApiVersion.replace(/-.*/g, '');
 const getDefaultHeaders = () => ({
@@ -61,12 +62,34 @@ export class AppsRestApi {
 			return API.v1.failure();
 		};
 
-		this.api.addRoute(
-			'',
-			{ authRequired: true, permissionsRequired: ['manage-apps'] },
-			{
-				get() {
-					const baseUrl = orchestrator.getMarketplaceUrl();
+		this.api.addRoute('actionButtons', ...actionButtonsHandler(this));
+
+		// WE NEED TO MOVE EACH ENDPOINT HANDLER TO IT'S OWN FILE
+		this.api.addRoute('', { authRequired: true, permissionsRequired: ['manage-apps'] }, {
+			get() {
+				const baseUrl = orchestrator.getMarketplaceUrl();
+
+				// Gets the Apps from the marketplace
+				if (this.queryParams.marketplace) {
+					const headers = getDefaultHeaders();
+					const token = Promise.await(getWorkspaceAccessToken());
+					if (token) {
+						headers.Authorization = `Bearer ${ token }`;
+					}
+
+					let result;
+					try {
+						result = HTTP.get(`${ baseUrl }/v1/apps`, {
+							headers,
+						});
+					} catch (e) {
+						return handleError('Unable to access Marketplace. Does the server has access to the internet?', e);
+					}
+
+					if (!result || result.statusCode !== 200) {
+						orchestrator.getRocketChatLogger().error('Error getting the Apps:', result.data);
+						return API.v1.failure();
+					}
 
 					// Gets the Apps from the marketplace
 					if (this.queryParams.marketplace) {

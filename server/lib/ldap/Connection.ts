@@ -222,21 +222,17 @@ export class LDAPConnection {
 
 		if (this.options.searchPageSize > 0) {
 			let count = 0;
-			await this.doPagedSearch<T>(
-				this.options.baseDN,
-				searchOptions,
-				this.options.searchPageSize,
-				(error, entries: ldapjs.SearchEntry[], { end, next } = { end: false, next: undefined }) => {
-					if (error) {
-						endCallback && endCallback(error);
-						return;
-					}
+			await this.doPagedSearch<T>(this.options.baseDN, searchOptions, this.options.searchPageSize, (error, entries: ldapjs.SearchEntry[], { end, next } = { end: false, next: undefined }) => {
+				if (error) {
+					endCallback?.(error);
+					return;
+				}
 
-					count += entries.length;
-					dataCallback && dataCallback(entries);
-					if (end) {
-						endCallback && endCallback();
-					}
+				count += entries.length;
+				dataCallback?.(entries);
+				if (end) {
+					endCallback?.();
+				}
 
 					if (next) {
 						next(count);
@@ -247,15 +243,10 @@ export class LDAPConnection {
 			return;
 		}
 
-		await this.doAsyncSearch(
-			this.options.baseDN,
-			searchOptions,
-			(error, result) => {
-				dataCallback && dataCallback(result);
-				endCallback && endCallback(error);
-			},
-			entryCallback,
-		);
+		await this.doAsyncSearch(this.options.baseDN, searchOptions, (error, result) => {
+			dataCallback?.(result);
+			endCallback?.(error);
+		}, entryCallback);
 	}
 
 	public async authenticate(dn: string, password: string): Promise<boolean> {
@@ -540,9 +531,8 @@ export class LDAPConnection {
 			next: () => {
 				// Reset idle timer
 				this._updateIdle();
-				next && next();
-			},
-		});
+				next?.();
+			} });
 	}
 
 	private async doPagedSearch<T = ldapjs.SearchEntry>(

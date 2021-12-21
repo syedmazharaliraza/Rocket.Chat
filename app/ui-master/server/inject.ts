@@ -25,8 +25,7 @@ const callback: NextHandleFunction = (req, res, next) => {
 	}
 	try {
 		const rawPath = parseRequest(req);
-		const pathname =
-			rawPath !== undefined && rawPath.pathname && decodeURIComponent(rawPath.pathname);
+		const pathname = rawPath?.pathname && decodeURIComponent(rawPath.pathname);
 
 		if (!pathname) {
 			next();
