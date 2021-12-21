@@ -281,9 +281,7 @@ const appsRoutes = (orch) => (req, res) => {
 				triggerId,
 				rid,
 				mid,
-				payload: {
-					context,
-				},
+				payload: { context },
 			} = req.body;
 
 			const room = orch.getConverters().get('rooms').convertById(rid);

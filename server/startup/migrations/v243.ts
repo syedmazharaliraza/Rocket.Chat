@@ -11,11 +11,14 @@ addMigration({
 
 		await Settings.removeById('Accounts_Default_User_Preferences_mobileNotifications');
 		if (mobileNotificationsSetting?.value) {
-			Settings.update({
-				_id: 'Accounts_Default_User_Preferences_pushNotifications',
-			}, {
-				$set: {
-					value: mobileNotificationsSetting.value,
+			Settings.update(
+				{
+					_id: 'Accounts_Default_User_Preferences_pushNotifications',
+				},
+				{
+					$set: {
+						value: mobileNotificationsSetting.value,
+					},
 				},
 				{
 					upsert: true,

@@ -6,9 +6,12 @@ addMigration({
 	async up() {
 		const setting = await Settings.findOne({ _id: 'Message_SetNameToAliasEnabled' });
 		if (setting?.value) {
-			await Settings.update({ _id: 'UI_Use_Real_Name' }, {
-				$set: {
-					value: true,
+			await Settings.update(
+				{ _id: 'UI_Use_Real_Name' },
+				{
+					$set: {
+						value: true,
+					},
 				},
 			);
 		}

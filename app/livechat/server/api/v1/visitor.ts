@@ -107,7 +107,7 @@ API.v1.addRoute('livechat/visitor/:token', {
 			},
 		}).fetch();
 
-		if (rooms && rooms.length) {
+		if (rooms?.length) {
 			throw new Meteor.Error('visitor-has-open-rooms', 'Cannot remove visitors with opened rooms');
 		}
 

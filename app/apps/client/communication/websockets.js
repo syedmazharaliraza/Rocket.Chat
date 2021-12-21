@@ -57,7 +57,7 @@ export class AppWebsocketReceiver extends Emitter {
 
 	onCommandRemovedOrDisabled = (command) => {
 		delete slashCommands.commands[command];
-	}
+	};
 
 	onActionsChanged = () => loadButtons();
 }
