@@ -15,21 +15,21 @@ export const filterBusinessHoursThatMustBeOpened = async (
 	return businessHours
 		.filter(
 			(businessHour) =>
-				businessHour.active
-				&& businessHour.workHours
+				businessHour.active &&
+				businessHour.workHours
 					.filter((hour) => hour.open)
 					.some((hour) => {
 						const localTimeStart = moment(
-							`${ hour.start.cron.dayOfWeek }:${ hour.start.cron.time }`,
+							`${hour.start.cron.dayOfWeek}:${hour.start.cron.time}`,
 							'dddd:HH:mm',
 						);
 						const localTimeFinish = moment(
-							`${ hour.finish.cron.dayOfWeek }:${ hour.finish.cron.time }`,
+							`${hour.finish.cron.dayOfWeek}:${hour.finish.cron.time}`,
 							'dddd:HH:mm',
 						);
 						return (
-							currentTime.isSameOrAfter(localTimeStart)
-							&& currentTime.isSameOrBefore(localTimeFinish)
+							currentTime.isSameOrAfter(localTimeStart) &&
+							currentTime.isSameOrBefore(localTimeFinish)
 						);
 					}),
 		)
@@ -43,7 +43,8 @@ export const openBusinessHourDefault = async (): Promise<void> => {
 	await Users.removeBusinessHoursFromAllUsers();
 	const currentTime = moment(moment().format('dddd:HH:mm'), 'dddd:HH:mm');
 	const day = currentTime.format('dddd');
-	const activeBusinessHours =		await LivechatBusinessHours.findDefaultActiveAndOpenBusinessHoursByDay(day, {
+	const activeBusinessHours =
+		await LivechatBusinessHours.findDefaultActiveAndOpenBusinessHoursByDay(day, {
 			fields: {
 				workHours: 1,
 				timezone: 1,

@@ -26,10 +26,10 @@ export async function setStatus(
 		statusConnection,
 		...typeof statusText !== 'undefined'
 			? {
-					// TODO logic duplicated from Rocket.Chat core
-					statusText: String(statusText || '')
-						.trim()
-						.substr(0, 120),
+				// TODO logic duplicated from Rocket.Chat core
+				statusText: String(statusText || '')
+					.trim()
+					.substr(0, 120),
 			  }
 			: {},
 	};
@@ -55,7 +55,7 @@ export async function setConnectionStatus(
 	session: string,
 ): Promise<boolean> {
 	const query = {
-		_id: uid,
+		'_id': uid,
 		'connections.id': session,
 	};
 

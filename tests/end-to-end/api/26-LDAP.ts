@@ -3,7 +3,7 @@ import type { Response } from 'supertest';
 
 import { getCredentials, api, request, credentials } from '../../data/api-data.js';
 
-describe('LDAP', function() {
+describe('LDAP', function () {
 	this.retries(0);
 
 	before((done) => getCredentials(done));

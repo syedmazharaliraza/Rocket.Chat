@@ -25,7 +25,7 @@ addAction('thread', (options) => {
 	const threadsEnabled = useSetting('Threads_enabled');
 	return useMemo(
 		() =>
-			(threadsEnabled
+			threadsEnabled
 				? {
 						groups: ['channel', 'group', 'direct', 'direct_multiple', 'team'],
 						id: 'thread',
@@ -47,7 +47,7 @@ addAction('thread', (options) => {
 						},
 						order: 2,
 				  }
-				: null),
+				: null,
 		[threadsEnabled, room.tunread?.length, room.tunreadUser?.length, room.tunreadGroup?.length],
 	);
 });

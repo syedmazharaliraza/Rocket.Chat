@@ -8,7 +8,7 @@ import './logQueue';
 // logger.info('user', Meteor.user()); // will print: {"level":30,"time":1629814080968,"msg":"user {\"username\": \"foo\"}"}
 function logMethod(this: P.Logger, args: unknown[], method: any): void {
 	if (args.length > 1) {
-		args[0] = `${ args[0] }${ ' %j'.repeat(args.length - 1) }`;
+		args[0] = `${args[0]}${' %j'.repeat(args.length - 1)}`;
 	}
 	return method.apply(this, args);
 }

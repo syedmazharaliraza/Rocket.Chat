@@ -168,7 +168,7 @@ export class SAMLServiceProvider {
 
 				target += querystring.stringify(samlRequest);
 
-				SAMLUtils.log(`requestToUrl: ${ target }`);
+				SAMLUtils.log(`requestToUrl: ${target}`);
 
 				if (operation === 'logout') {
 					// in case of logout we want to be redirected back to the Meteor app.

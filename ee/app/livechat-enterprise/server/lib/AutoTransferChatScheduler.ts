@@ -35,7 +35,7 @@ class AutoTransferChatSchedulerClass {
 	public async scheduleRoom(roomId: string, timeout: number): Promise<void> {
 		await this.unscheduleRoom(roomId);
 
-		const jobName = `${ SCHEDULER_NAME }-${ roomId }`;
+		const jobName = `${SCHEDULER_NAME}-${roomId}`;
 		const when = new Date();
 		when.setSeconds(when.getSeconds() + timeout);
 
@@ -45,7 +45,7 @@ class AutoTransferChatSchedulerClass {
 	}
 
 	public async unscheduleRoom(roomId: string): Promise<void> {
-		const jobName = `${ SCHEDULER_NAME }-${ roomId }`;
+		const jobName = `${SCHEDULER_NAME}-${roomId}`;
 
 		await LivechatRooms.unsetAutoTransferOngoingById(roomId);
 		await this.scheduler.cancel({ name: jobName });

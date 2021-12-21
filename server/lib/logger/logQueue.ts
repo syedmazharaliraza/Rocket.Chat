@@ -43,7 +43,7 @@ function queueWrite(...args: any): boolean {
 
 	const date = new Date();
 	const item = {
-		id: `logid-${ queueSize }`,
+		id: `logid-${queueSize}`,
 		data: str,
 		ts: date,
 	};

@@ -11,7 +11,7 @@ type AgentMetadata = {
 };
 
 // get next agent ignoring the ones reached the max amount of active chats
-const getUnavailableAgents = function(
+const getUnavailableAgents = function (
 	_: any,
 	departmentId: string,
 	customFilter: { [k: string]: any }[],
@@ -63,11 +63,11 @@ const getUnavailableAgents = function(
 			},
 			{
 				$project: {
-					agentId: '$_id',
+					'agentId': '$_id',
 					'livechat.maxNumberSimultaneousChat': 1,
-					username: 1,
-					lastAssignTime: 1,
-					lastRoutingTime: 1,
+					'username': 1,
+					'lastAssignTime': 1,
+					'lastRoutingTime': 1,
 					'queueInfo.chats': {
 						$size: {
 							$filter: {
@@ -89,9 +89,9 @@ const getUnavailableAgents = function(
 			{
 				$sort: {
 					'queueInfo.chats': 1,
-					lastAssignTime: 1,
-					lastRoutingTime: 1,
-					username: 1,
+					'lastAssignTime': 1,
+					'lastRoutingTime': 1,
+					'username': 1,
 				},
 			},
 		])

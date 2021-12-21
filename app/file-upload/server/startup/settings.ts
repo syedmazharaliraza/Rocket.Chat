@@ -1,6 +1,6 @@
 import { settingsRegistry } from '../../../settings/server';
 
-settingsRegistry.addGroup('FileUpload', function() {
+settingsRegistry.addGroup('FileUpload', function () {
 	this.add('FileUpload_Enabled', true, {
 		type: 'boolean',
 		public: true,
@@ -81,7 +81,7 @@ settingsRegistry.addGroup('FileUpload', function() {
 		public: true,
 	});
 
-	this.section('Amazon S3', function() {
+	this.section('Amazon S3', function () {
 		this.add('FileUpload_S3_Bucket', '', {
 			type: 'string',
 			enableQuery: {
@@ -174,7 +174,7 @@ settingsRegistry.addGroup('FileUpload', function() {
 		});
 	});
 
-	this.section('Google Cloud Storage', function() {
+	this.section('Google Cloud Storage', function () {
 		this.add('FileUpload_GoogleStorage_Bucket', '', {
 			type: 'string',
 			private: true,
@@ -219,7 +219,7 @@ settingsRegistry.addGroup('FileUpload', function() {
 		});
 	});
 
-	this.section('File System', function() {
+	this.section('File System', function () {
 		this.add('FileUpload_FileSystemPath', '', {
 			type: 'string',
 			enableQuery: {
@@ -229,7 +229,7 @@ settingsRegistry.addGroup('FileUpload', function() {
 		});
 	});
 
-	this.section('WebDAV', function() {
+	this.section('WebDAV', function () {
 		this.add('FileUpload_Webdav_Upload_Folder_Path', '', {
 			type: 'string',
 			enableQuery: {

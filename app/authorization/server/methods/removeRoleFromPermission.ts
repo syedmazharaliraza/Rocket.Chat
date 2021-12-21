@@ -16,10 +16,10 @@ Meteor.methods({
 		}
 
 		if (
-			!uid
-			|| !hasPermission(uid, 'access-permissions')
-			|| (permission.level === CONSTANTS.SETTINGS_LEVEL
-				&& !hasPermission(uid, 'access-setting-permissions'))
+			!uid ||
+			!hasPermission(uid, 'access-permissions') ||
+			(permission.level === CONSTANTS.SETTINGS_LEVEL &&
+				!hasPermission(uid, 'access-setting-permissions'))
 		) {
 			throw new Meteor.Error('error-action-not-allowed', 'Removing permission is not allowed', {
 				method: 'authorization:removeRoleFromPermission',

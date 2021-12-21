@@ -60,10 +60,10 @@ Meteor.methods({
 
 		Push.send({
 			from: 'push',
-			title: `@${ user.username }`,
+			title: `@${user.username}`,
 			text: TAPi18n.__('This_is_a_push_test_messsage'),
 			apn: {
-				text: `@${ user.username }:\n${ TAPi18n.__('This_is_a_push_test_messsage') }`,
+				text: `@${user.username}:\n${TAPi18n.__('This_is_a_push_test_messsage')}`,
 			},
 			sound: 'default',
 			userId: user._id,
@@ -76,13 +76,14 @@ Meteor.methods({
 	},
 });
 
-settings.watch<boolean>('Push_enable', async function(enabled) {
+settings.watch<boolean>('Push_enable', async function (enabled) {
 	if (!enabled) {
 		return;
 	}
-	const gateways =		settings.get('Push_enable_gateway')
-		&& settings.get('Register_Server')
-		&& settings.get('Cloud_Service_Agree_PrivacyTerms')
+	const gateways =
+		settings.get('Push_enable_gateway') &&
+		settings.get('Register_Server') &&
+		settings.get('Cloud_Service_Agree_PrivacyTerms')
 			? settings.get<string>('Push_gateway').split('\n')
 			: undefined;
 
@@ -128,10 +129,10 @@ settings.watch<boolean>('Push_enable', async function(enabled) {
 		}
 
 		if (
-			!gcm.apiKey
-			|| gcm.apiKey.trim() === ''
-			|| !gcm.projectNumber
-			|| gcm.projectNumber.trim() === ''
+			!gcm.apiKey ||
+			gcm.apiKey.trim() === '' ||
+			!gcm.projectNumber ||
+			gcm.projectNumber.trim() === ''
 		) {
 			gcm = undefined;
 		}
@@ -144,7 +145,7 @@ settings.watch<boolean>('Push_enable', async function(enabled) {
 		gateways,
 		uniqueId: settings.get('uniqueID'),
 		getAuthorization() {
-			return `Bearer ${ Promise.await(getWorkspaceAccessToken()) }`;
+			return `Bearer ${Promise.await(getWorkspaceAccessToken())}`;
 		},
 	});
 });

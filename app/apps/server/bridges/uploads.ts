@@ -21,13 +21,13 @@ export class AppUploadBridge extends UploadBridge {
 	}
 
 	protected async getById(id: string, appId: string): Promise<IUpload> {
-		this.orch.debugLog(`The App ${ appId } is getting the upload: "${ id }"`);
+		this.orch.debugLog(`The App ${appId} is getting the upload: "${id}"`);
 
 		return this.orch.getConverters()?.get('uploads').convertById(id);
 	}
 
 	protected async getBuffer(upload: IUpload, appId: string): Promise<Buffer> {
-		this.orch.debugLog(`The App ${ appId } is getting the upload: "${ upload.id }"`);
+		this.orch.debugLog(`The App ${appId} is getting the upload: "${upload.id}"`);
 
 		const rocketChatUpload = this.orch.getConverters()?.get('uploads').convertToRocketChat(upload);
 
@@ -47,7 +47,7 @@ export class AppUploadBridge extends UploadBridge {
 		buffer: Buffer,
 		appId: string,
 	): Promise<IUpload> {
-		this.orch.debugLog(`The App ${ appId } is creating an upload "${ details.name }"`);
+		this.orch.debugLog(`The App ${appId} is creating an upload "${details.name}"`);
 
 		if (!details.userId && !details.visitorToken) {
 			throw new Error('Missing user to perform the upload operation');
@@ -62,7 +62,7 @@ export class AppUploadBridge extends UploadBridge {
 				try {
 					Meteor.runAsUser(details.userId, () => {
 						const uploadedFile = fileStore.insertSync(getUploadDetails(details), buffer);
-						this.orch.debugLog(`The App ${ appId } has created an upload`, uploadedFile);
+						this.orch.debugLog(`The App ${appId} has created an upload`, uploadedFile);
 						if (details.visitorToken) {
 							Meteor.call(
 								'sendFileLivechatMessage',

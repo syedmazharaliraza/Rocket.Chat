@@ -25,7 +25,7 @@ const rooms = new Map<string, Function>();
 
 const performingUsers = new ReactiveDict<IActionsObject>();
 
-const shownName = function(user: IUser | null | undefined): string | undefined {
+const shownName = function (user: IUser | null | undefined): string | undefined {
 	if (!user) {
 		return;
 	}

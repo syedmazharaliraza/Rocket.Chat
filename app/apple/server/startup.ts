@@ -2,8 +2,8 @@ import { ServiceConfiguration } from 'meteor/service-configuration';
 
 import { settings, settingsRegistry } from '../../settings/server';
 
-settingsRegistry.addGroup('OAuth', function() {
-	this.section('Apple', function() {
+settingsRegistry.addGroup('OAuth', function () {
+	this.section('Apple', function () {
 		this.add('Accounts_OAuth_Apple', false, { type: 'boolean', public: true });
 	});
 });

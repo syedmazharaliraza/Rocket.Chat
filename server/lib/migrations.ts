@@ -50,8 +50,8 @@ export function getControl(): IControl {
 	}) as IControl;
 
 	return (
-		control
-		|| setControl({
+		control ||
+		setControl({
 			version: 0,
 			locked: false,
 		})
@@ -132,14 +132,14 @@ function showError(version: number, control: IControl, e: any): void {
 			'Please make sure you are running the latest version and try again.',
 			'If the problem persists, please contact support.',
 			'',
-			`This Rocket.Chat version: ${ Info.version }`,
-			`Database locked at version: ${ control.version }`,
-			`Database target version: ${ version }`,
+			`This Rocket.Chat version: ${Info.version}`,
+			`Database locked at version: ${control.version}`,
+			`Database target version: ${version}`,
 			'',
-			`Commit: ${ Info.commit.hash }`,
-			`Date: ${ Info.commit.date }`,
-			`Branch: ${ Info.commit.branch }`,
-			`Tag: ${ Info.commit.tag }`,
+			`Commit: ${Info.commit.hash}`,
+			`Date: ${Info.commit.date}`,
+			`Branch: ${Info.commit.branch}`,
+			`Tag: ${Info.commit.tag}`,
 		].join('\n'),
 	);
 }
@@ -147,12 +147,12 @@ function showError(version: number, control: IControl, e: any): void {
 // run the actual migration
 function migrate(direction: 'up' | 'down', migration: IMigration): void {
 	if (typeof migration[direction] !== 'function') {
-		throw new Error(`Cannot migrate ${ direction } on version ${ migration.version }`);
+		throw new Error(`Cannot migrate ${direction} on version ${migration.version}`);
 	}
 
 	log.startup(
-		`Running ${ direction }() on version ${ migration.version }${
-			migration.name ? `(${ migration.name })` : ''
+		`Running ${direction}() on version ${migration.version}${
+			migration.name ? `(${migration.name})` : ''
 		}`,
 	);
 
@@ -183,7 +183,8 @@ export function migrateDatabase(targetVersion: 'latest' | number, subcommands?: 
 		return true;
 	}
 
-	const version =		targetVersion === 'latest'
+	const version =
+		targetVersion === 'latest'
 			? orderedMigrations[orderedMigrations.length - 1].version
 			: targetVersion;
 
@@ -191,9 +192,9 @@ export function migrateDatabase(targetVersion: 'latest' | number, subcommands?: 
 	// const { version } = orderedMigrations[orderedMigrations.length - 1];
 
 	if (!lock()) {
-		const msg = `Not migrating, control is locked. Attempt ${ currentAttempt }/${ maxAttempts }`;
+		const msg = `Not migrating, control is locked. Attempt ${currentAttempt}/${maxAttempts}`;
 		if (currentAttempt <= maxAttempts) {
-			log.warn(`${ msg }. Trying again in ${ retryInterval } seconds.`);
+			log.warn(`${msg}. Trying again in ${retryInterval} seconds.`);
 
 			(Meteor as unknown as any)._sleepForMs(retryInterval * 1000);
 
@@ -208,25 +209,25 @@ export function migrateDatabase(targetVersion: 'latest' | number, subcommands?: 
 				'Please make sure you are running the latest version and try again.',
 				'If the problem persists, please contact support.',
 				'',
-				`This Rocket.Chat version: ${ Info.version }`,
-				`Database locked at version: ${ control.version }`,
-				`Database target version: ${ version }`,
+				`This Rocket.Chat version: ${Info.version}`,
+				`Database locked at version: ${control.version}`,
+				`Database target version: ${version}`,
 				'',
-				`Commit: ${ Info.commit.hash }`,
-				`Date: ${ Info.commit.date }`,
-				`Branch: ${ Info.commit.branch }`,
-				`Tag: ${ Info.commit.tag }`,
+				`Commit: ${Info.commit.hash}`,
+				`Date: ${Info.commit.date}`,
+				`Branch: ${Info.commit.branch}`,
+				`Tag: ${Info.commit.tag}`,
 			].join('\n'),
 		);
 		process.exit(1);
 	}
 
 	if (subcommands?.includes('rerun')) {
-		log.startup(`Rerunning version ${ targetVersion }`);
+		log.startup(`Rerunning version ${targetVersion}`);
 		const migration = orderedMigrations.find((migration) => migration.version === targetVersion);
 
 		if (!migration) {
-			throw new Error(`Cannot rerun migration ${ targetVersion }`);
+			throw new Error(`Cannot rerun migration ${targetVersion}`);
 		}
 
 		try {
@@ -242,23 +243,23 @@ export function migrateDatabase(targetVersion: 'latest' | number, subcommands?: 
 	}
 
 	if (currentVersion === version) {
-		log.startup(`Not migrating, already at version ${ version }`);
+		log.startup(`Not migrating, already at version ${version}`);
 		unlock(currentVersion);
 		return true;
 	}
 
 	const startIdx = orderedMigrations.findIndex((migration) => migration.version === currentVersion);
 	if (startIdx === -1) {
-		throw new Error(`Can't find migration version ${ currentVersion }`);
+		throw new Error(`Can't find migration version ${currentVersion}`);
 	}
 
 	const endIdx = orderedMigrations.findIndex((migration) => migration.version === version);
 	if (endIdx === -1) {
-		throw new Error(`Can't find migration version ${ version }`);
+		throw new Error(`Can't find migration version ${version}`);
 	}
 
 	log.startup(
-		`Migrating from version ${ orderedMigrations[startIdx].version } -> ${ orderedMigrations[endIdx].version }`,
+		`Migrating from version ${orderedMigrations[startIdx].version} -> ${orderedMigrations[endIdx].version}`,
 	);
 
 	try {
@@ -296,7 +297,8 @@ export function migrateDatabase(targetVersion: 'latest' | number, subcommands?: 
 	return true;
 }
 
-export const onFreshInstall =	getControl().version !== 0
+export const onFreshInstall =
+	getControl().version !== 0
 		? (): void => {
 			/* noop */
 		  }

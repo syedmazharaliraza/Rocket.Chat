@@ -75,7 +75,7 @@ Meteor.methods({
 		);
 
 		const updatedRoom = LivechatRooms.findOneById(roomId);
-		updatedRoom
-			&& Meteor.defer(() => callbacks.run('livechat:afterOnHoldChatResumed', updatedRoom));
+		updatedRoom &&
+			Meteor.defer(() => callbacks.run('livechat:afterOnHoldChatResumed', updatedRoom));
 	},
 });

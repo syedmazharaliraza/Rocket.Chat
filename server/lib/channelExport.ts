@@ -58,7 +58,7 @@ export const sendViaEmail = (data: ExportEmail, user: IUser): ISentViaEmail => {
 	const missing = [...data.toUsers].filter(Boolean);
 
 	Users.findUsersByUsernames(data.toUsers, {
-		fields: { username: 1, 'emails.address': 1 },
+		fields: { 'username': 1, 'emails.address': 1 },
 	}).forEach((user: IUser) => {
 		const emailAddress = user.emails?.[0].address;
 
@@ -95,11 +95,11 @@ export const sendViaEmail = (data: ExportEmail, user: IUser): ISentViaEmail => {
 		sort: { ts: 1 },
 	})
 		.fetch()
-		.map(function(message: any) {
+		.map(function (message: any) {
 			const dateTime = moment(message.ts).locale(lang).format('L LT');
 			return `<p style='margin-bottom: 5px'><b>${
 				message.u.username
-			}</b> <span style='color: #aaa; font-size: 12px'>${ dateTime }</span><br/>${ Message.parse(message, data.language) }</p>`;
+			}</b> <span style='color: #aaa; font-size: 12px'>${dateTime}</span><br/>${Message.parse(message, data.language)}</p>`;
 		})
 		.join('');
 
@@ -117,7 +117,7 @@ export const sendViaEmail = (data: ExportEmail, user: IUser): ISentViaEmail => {
 export const sendFile = async (data: ExportFile, user: IUser): Promise<void> => {
 	const exportType = data.format;
 
-	const baseDir = `/tmp/exportFile-${ Random.id() }`;
+	const baseDir = `/tmp/exportFile-${Random.id()}`;
 
 	const exportPath = baseDir;
 	const assetsPath = path.join(baseDir, 'assets');
@@ -127,7 +127,7 @@ export const sendFile = async (data: ExportFile, user: IUser): Promise<void> => 
 
 	const roomData = getRoomData(data.rid);
 
-	roomData.targetFile = `${ (data.format === 'json' && roomData.roomName) || roomData.roomId }.${
+	roomData.targetFile = `${(data.format === 'json' && roomData.roomName) || roomData.roomId}.${
 		data.format
 	}`;
 
@@ -135,7 +135,8 @@ export const sendFile = async (data: ExportFile, user: IUser): Promise<void> => 
 
 	const roomsToExport = [roomData];
 
-	const filter =		!data.dateFrom && !data.dateTo
+	const filter =
+		!data.dateFrom && !data.dateTo
 			? {}
 			: {
 					ts: {
@@ -171,7 +172,7 @@ export const sendFile = async (data: ExportFile, user: IUser): Promise<void> => 
 		await copyFile(attachmentData, assetsPath);
 	}
 
-	const exportFile = `${ baseDir }-export.zip`;
+	const exportFile = `${baseDir}-export.zip`;
 	await makeZipFile(exportPath, exportFile);
 
 	const file = await uploadZipFile(exportFile, user._id, exportType);

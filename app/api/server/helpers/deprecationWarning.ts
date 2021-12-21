@@ -10,7 +10,7 @@ export function deprecationWarning<T>({
 	versionWillBeRemoved?: string;
 	response: T;
 }): T {
-	const warningMessage = `The endpoint "${ endpoint }" is deprecated and will be removed after version ${ versionWillBeRemoved }`;
+	const warningMessage = `The endpoint "${endpoint}" is deprecated and will be removed after version ${versionWillBeRemoved}`;
 	apiDeprecationLogger.warn(warningMessage);
 	if (process.env.NODE_ENV === 'development') {
 		return {

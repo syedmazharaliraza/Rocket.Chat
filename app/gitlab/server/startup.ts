@@ -1,7 +1,7 @@
 import { settingsRegistry } from '../../settings/server';
 
-settingsRegistry.addGroup('OAuth', function() {
-	this.section('GitLab', function() {
+settingsRegistry.addGroup('OAuth', function () {
+	this.section('GitLab', function () {
 		const enableQuery = {
 			_id: 'Accounts_OAuth_Gitlab',
 			value: true,

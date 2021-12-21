@@ -19,7 +19,7 @@ export class FederationKeysRaw extends BaseRaw<T> {
 	}
 
 	loadKey(keyData: NodeRSA.Key, type: T['type']): NodeRSA {
-		return new NodeRSA(keyData, `pkcs8-${ type }-pem`);
+		return new NodeRSA(keyData, `pkcs8-${type}-pem`);
 	}
 
 	async generateKeys(): Promise<{

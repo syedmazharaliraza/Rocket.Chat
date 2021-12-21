@@ -42,7 +42,7 @@ export class Server extends EventEmitter {
 					return this.result(client, packet, result.result);
 				}
 
-				throw new Error(`Method '${ packet.method }' doesn't exist`);
+				throw new Error(`Method '${packet.method}' doesn't exist`);
 			}
 			const fn = this._methods.get(packet.method);
 
@@ -69,7 +69,7 @@ export class Server extends EventEmitter {
 	async subscribe(client: Client, packet: IPacket): Promise<void> {
 		try {
 			if (!this._subscriptions.has(packet.name)) {
-				throw new Error(`Subscription '${ packet.name }' doesn't exist`);
+				throw new Error(`Subscription '${packet.name}' doesn't exist`);
 			}
 			const fn = this._subscriptions.get(packet.name);
 			if (!fn) {
@@ -92,7 +92,7 @@ export class Server extends EventEmitter {
 	}
 
 	stream(stream: string, fn: SubscriptionFn): void {
-		return this.publish(`stream-${ stream }`, fn);
+		return this.publish(`stream-${stream}`, fn);
 	}
 
 	result(client: Client, { id }: IPacket, result?: any, error?: string): void {

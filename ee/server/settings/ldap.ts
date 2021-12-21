@@ -1,7 +1,7 @@
 import { settingsRegistry } from '../../../app/settings/server';
 
 export function addSettings(): void {
-	settingsRegistry.addGroup('LDAP', function() {
+	settingsRegistry.addGroup('LDAP', function () {
 		const enableQuery = { _id: 'LDAP_Enable', value: true };
 
 		this.with(
@@ -10,8 +10,8 @@ export function addSettings(): void {
 				enterprise: true,
 				modules: ['ldap-enterprise'],
 			},
-			function() {
-				this.section('LDAP_DataSync_BackgroundSync', function() {
+			function () {
+				this.section('LDAP_DataSync_BackgroundSync', function () {
 					this.add('LDAP_Background_Sync', false, {
 						type: 'boolean',
 						enableQuery,
@@ -51,7 +51,7 @@ export function addSettings(): void {
 					});
 				});
 
-				this.section('LDAP_DataSync_Advanced', function() {
+				this.section('LDAP_DataSync_Advanced', function () {
 					this.add('LDAP_Sync_User_Active_State', 'disable', {
 						type: 'select',
 						values: [
@@ -71,7 +71,7 @@ export function addSettings(): void {
 					});
 				});
 
-				this.section('LDAP_DataSync_AutoLogout', function() {
+				this.section('LDAP_DataSync_AutoLogout', function () {
 					this.add('LDAP_Sync_AutoLogout_Enabled', false, {
 						type: 'boolean',
 						enableQuery,
@@ -85,7 +85,7 @@ export function addSettings(): void {
 					});
 				});
 
-				this.section('LDAP_DataSync_CustomFields', function() {
+				this.section('LDAP_DataSync_CustomFields', function () {
 					this.add('LDAP_Sync_Custom_Fields', false, {
 						type: 'boolean',
 						enableQuery,
@@ -100,7 +100,7 @@ export function addSettings(): void {
 					});
 				});
 
-				this.section('LDAP_DataSync_Roles', function() {
+				this.section('LDAP_DataSync_Roles', function () {
 					this.add('LDAP_Sync_User_Data_Roles', false, {
 						type: 'boolean',
 						enableQuery,
@@ -143,7 +143,7 @@ export function addSettings(): void {
 					);
 				});
 
-				this.section('LDAP_DataSync_Channels', function() {
+				this.section('LDAP_DataSync_Channels', function () {
 					this.add('LDAP_Sync_User_Data_Channels', false, {
 						type: 'boolean',
 						enableQuery,
@@ -197,7 +197,7 @@ export function addSettings(): void {
 					});
 				});
 
-				this.section('LDAP_DataSync_Teams', function() {
+				this.section('LDAP_DataSync_Teams', function () {
 					this.add('LDAP_Enable_LDAP_Groups_To_RC_Teams', false, {
 						type: 'boolean',
 						enableQuery: { _id: 'LDAP_Enable', value: true },

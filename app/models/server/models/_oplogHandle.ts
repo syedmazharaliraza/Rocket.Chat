@@ -28,9 +28,9 @@ class CustomOplogHandle {
 			const { version, storageEngine } = await mongo.db.command({ serverStatus: 1 });
 
 			if (
-				!storageEngine
-				|| storageEngine.name !== 'wiredTiger'
-				|| !semver.satisfies(semver.coerce(version) || '', '>=3.6.0')
+				!storageEngine ||
+				storageEngine.name !== 'wiredTiger' ||
+				!semver.satisfies(semver.coerce(version) || '', '>=3.6.0')
 			) {
 				return false;
 			}
@@ -56,7 +56,7 @@ class CustomOplogHandle {
 		try {
 			urlParsed = await urlParser(oplogUrl);
 		} catch (e) {
-			throw Error(`Error parsing database URL (${ oplogUrl })`);
+			throw Error(`Error parsing database URL (${oplogUrl})`);
 		}
 
 		if (!this.usingChangeStream && (!oplogUrl || urlParsed.defaultDatabase !== 'local')) {
@@ -110,7 +110,7 @@ class CustomOplogHandle {
 
 		const oplogSelector = {
 			ns: new RegExp(
-				`^(?:${ [escapeRegExp(`${ this.dbName }.`), escapeRegExp('admin.$cmd')].join('|') })`,
+				`^(?:${[escapeRegExp(`${this.dbName}.`), escapeRegExp('admin.$cmd')].join('|')})`,
 			),
 
 			op: { $in: ['i', 'u', 'd'] },
@@ -141,7 +141,7 @@ class CustomOplogHandle {
 			'data',
 			Meteor.bindEnvironment((buffer) => {
 				const doc = buffer as any;
-				if (doc.ns === `${ this.dbName }.${ query.collection }`) {
+				if (doc.ns === `${this.dbName}.${query.collection}`) {
 					callback({
 						id: doc.op === 'u' ? doc.o2._id : doc.o._id,
 						op: doc,

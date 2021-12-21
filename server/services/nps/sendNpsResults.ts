@@ -23,9 +23,9 @@ export const sendNpsResults = Meteor.bindEnvironment(function sendNpsResults(
 	const npsUrl = settings.get('Nps_Url');
 
 	try {
-		return HTTP.post(`${ npsUrl }/v1/surveys/${ npsId }/results`, {
+		return HTTP.post(`${npsUrl}/v1/surveys/${npsId}/results`, {
 			headers: {
-				Authorization: `Bearer ${ token }`,
+				Authorization: `Bearer ${token}`,
 			},
 			data,
 		});

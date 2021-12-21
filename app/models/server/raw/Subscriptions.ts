@@ -28,7 +28,7 @@ export class SubscriptionsRaw extends BaseRaw<T> {
 	async getBadgeCount(uid: string): Promise<number> {
 		const [result] = await this.col
 			.aggregate<{ total: number } | undefined>([
-			{ $match: { 'u._id': uid, archived: { $ne: true } } },
+			{ $match: { 'u._id': uid, 'archived': { $ne: true } } },
 			{
 				$group: {
 					_id: 'total',
@@ -61,7 +61,7 @@ export class SubscriptionsRaw extends BaseRaw<T> {
 	): Cursor<T> {
 		const query = {
 			'u._id': userId,
-			rid: {
+			'rid': {
 				$in: roomIds,
 			},
 		};
@@ -75,7 +75,7 @@ export class SubscriptionsRaw extends BaseRaw<T> {
 		options: FindOneOptions<T> = {},
 	): Cursor<T> {
 		const query = {
-			rid: roomId,
+			'rid': roomId,
 			'u._id': {
 				$ne: userId,
 			},
@@ -90,7 +90,7 @@ export class SubscriptionsRaw extends BaseRaw<T> {
 		options: FindOneOptions<T> = {},
 	): Cursor<T> {
 		const query = {
-			rid: roomId,
+			'rid': roomId,
 			'servedBy._id': {
 				$ne: userId,
 			},
@@ -122,7 +122,7 @@ export class SubscriptionsRaw extends BaseRaw<T> {
 		const query = {
 			'u._id': uid,
 			rid,
-			roles: roleName,
+			'roles': roleName,
 		};
 
 		return this.findOne(query, { projection: { roles: 1 } });
@@ -212,8 +212,8 @@ export class SubscriptionsRaw extends BaseRaw<T> {
 	): Promise<UpdateWriteOpResult> {
 		if (!Array.isArray(roles)) {
 			roles = [roles];
-			process.env.NODE_ENV === 'development'
-				&& console.warn('[WARN] Subscriptions.addRolesByUserId: roles should be an array');
+			process.env.NODE_ENV === 'development' &&
+				console.warn('[WARN] Subscriptions.addRolesByUserId: roles should be an array');
 		}
 
 		const query = {

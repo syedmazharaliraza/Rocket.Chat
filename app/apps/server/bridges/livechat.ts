@@ -31,7 +31,7 @@ export class AppLivechatBridge extends LivechatBridge {
 	}
 
 	protected async createMessage(message: ILivechatMessage, appId: string): Promise<string> {
-		this.orch.debugLog(`The App ${ appId } is creating a new message.`);
+		this.orch.debugLog(`The App ${appId} is creating a new message.`);
 
 		if (!message.token) {
 			throw new Error('Invalid token for livechat message');
@@ -54,13 +54,13 @@ export class AppLivechatBridge extends LivechatBridge {
 	}
 
 	protected async getMessageById(messageId: string, appId: string): Promise<ILivechatMessage> {
-		this.orch.debugLog(`The App ${ appId } is getting the message: "${ messageId }"`);
+		this.orch.debugLog(`The App ${appId} is getting the message: "${messageId}"`);
 
 		return this.orch.getConverters()?.get('messages').convertById(messageId);
 	}
 
 	protected async updateMessage(message: ILivechatMessage, appId: string): Promise<void> {
-		this.orch.debugLog(`The App ${ appId } is updating a message.`);
+		this.orch.debugLog(`The App ${appId} is updating a message.`);
 
 		const data = {
 			guest: message.visitor,
@@ -75,7 +75,7 @@ export class AppLivechatBridge extends LivechatBridge {
 		agent: IUser,
 		appId: string,
 	): Promise<ILivechatRoom> {
-		this.orch.debugLog(`The App ${ appId } is creating a livechat room.`);
+		this.orch.debugLog(`The App ${appId} is creating a livechat room.`);
 
 		let agentRoom;
 		if (agent && agent.id) {
@@ -106,7 +106,7 @@ export class AppLivechatBridge extends LivechatBridge {
 		closer: IUser | undefined,
 		appId: string,
 	): Promise<boolean> {
-		this.orch.debugLog(`The App ${ appId } is closing a livechat room.`);
+		this.orch.debugLog(`The App ${appId} is closing a livechat room.`);
 
 		const user = closer && this.orch.getConverters()?.get('users').convertById(closer.id);
 		const visitor = this.orch.getConverters()?.get('visitors').convertAppVisitor(room.visitor);
@@ -126,7 +126,7 @@ export class AppLivechatBridge extends LivechatBridge {
 		departmentId: string | null,
 		appId: string,
 	): Promise<Array<ILivechatRoom>> {
-		this.orch.debugLog(`The App ${ appId } is looking for livechat visitors.`);
+		this.orch.debugLog(`The App ${appId} is looking for livechat visitors.`);
 
 		if (!visitor) {
 			return [];
@@ -150,7 +150,7 @@ export class AppLivechatBridge extends LivechatBridge {
 	}
 
 	protected async createVisitor(visitor: IVisitor, appId: string): Promise<string> {
-		this.orch.debugLog(`The App ${ appId } is creating a livechat visitor.`);
+		this.orch.debugLog(`The App ${appId} is creating a livechat visitor.`);
 
 		const registerData = {
 			department: visitor.department,
@@ -179,7 +179,7 @@ export class AppLivechatBridge extends LivechatBridge {
 		transferData: ILivechatTransferData,
 		appId: string,
 	): Promise<boolean> {
-		this.orch.debugLog(`The App ${ appId } is transfering a livechat.`);
+		this.orch.debugLog(`The App ${appId} is transfering a livechat.`);
 
 		if (!visitor) {
 			throw new Error('Invalid visitor, cannot transfer');
@@ -221,7 +221,7 @@ export class AppLivechatBridge extends LivechatBridge {
 	}
 
 	protected async findVisitors(query: object, appId: string): Promise<Array<IVisitor>> {
-		this.orch.debugLog(`The App ${ appId } is looking for livechat visitors.`);
+		this.orch.debugLog(`The App ${appId} is looking for livechat visitors.`);
 
 		if (this.orch.isDebugging()) {
 			console.warn(
@@ -237,13 +237,13 @@ export class AppLivechatBridge extends LivechatBridge {
 	}
 
 	protected async findVisitorById(id: string, appId: string): Promise<IVisitor | undefined> {
-		this.orch.debugLog(`The App ${ appId } is looking for livechat visitors.`);
+		this.orch.debugLog(`The App ${appId} is looking for livechat visitors.`);
 
 		return this.orch.getConverters()?.get('visitors').convertById(id);
 	}
 
 	protected async findVisitorByEmail(email: string, appId: string): Promise<IVisitor | undefined> {
-		this.orch.debugLog(`The App ${ appId } is looking for livechat visitors.`);
+		this.orch.debugLog(`The App ${appId} is looking for livechat visitors.`);
 
 		return this.orch
 			.getConverters()
@@ -252,7 +252,7 @@ export class AppLivechatBridge extends LivechatBridge {
 	}
 
 	protected async findVisitorByToken(token: string, appId: string): Promise<IVisitor | undefined> {
-		this.orch.debugLog(`The App ${ appId } is looking for livechat visitors.`);
+		this.orch.debugLog(`The App ${appId} is looking for livechat visitors.`);
 
 		return this.orch
 			.getConverters()
@@ -264,7 +264,7 @@ export class AppLivechatBridge extends LivechatBridge {
 		phoneNumber: string,
 		appId: string,
 	): Promise<IVisitor | undefined> {
-		this.orch.debugLog(`The App ${ appId } is looking for livechat visitors.`);
+		this.orch.debugLog(`The App ${appId} is looking for livechat visitors.`);
 
 		return this.orch
 			.getConverters()
@@ -276,7 +276,7 @@ export class AppLivechatBridge extends LivechatBridge {
 		value: string,
 		appId: string,
 	): Promise<IDepartment | undefined> {
-		this.orch.debugLog(`The App ${ appId } is looking for livechat departments.`);
+		this.orch.debugLog(`The App ${appId} is looking for livechat departments.`);
 
 		return this.orch
 			.getConverters()
@@ -285,7 +285,7 @@ export class AppLivechatBridge extends LivechatBridge {
 	}
 
 	protected async findDepartmentsEnabledWithAgents(appId: string): Promise<Array<IDepartment>> {
-		this.orch.debugLog(`The App ${ appId } is looking for livechat departments.`);
+		this.orch.debugLog(`The App ${appId} is looking for livechat departments.`);
 
 		const converter = this.orch.getConverters()?.get('departments');
 		const boundConverter = converter.convertDepartment.bind(converter);
@@ -297,7 +297,7 @@ export class AppLivechatBridge extends LivechatBridge {
 		appId: string,
 		roomId: string,
 	): Promise<Array<IMessage>> {
-		this.orch.debugLog(`The App ${ appId } is getting the transcript for livechat room ${ roomId }.`);
+		this.orch.debugLog(`The App ${appId} is getting the transcript for livechat room ${roomId}.`);
 		const messageConverter = this.orch.getConverters()?.get('messages');
 
 		if (!messageConverter) {
@@ -313,7 +313,7 @@ export class AppLivechatBridge extends LivechatBridge {
 		data: { token: IVisitor['token']; key: string; value: string; overwrite: boolean },
 		appId: string,
 	): Promise<number> {
-		this.orch.debugLog(`The App ${ appId } is setting livechat visitor's custom fields.`);
+		this.orch.debugLog(`The App ${appId} is setting livechat visitor's custom fields.`);
 
 		return Livechat.setCustomFields(data);
 	}

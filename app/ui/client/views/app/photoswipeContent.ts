@@ -113,14 +113,15 @@ const defaultGalleryOptions: PhotoSwipeUiDefault.Options = {
 	index: 0,
 	addCaptionHTMLFn(item: Slide, captionEl: HTMLElement): boolean {
 		captionEl.children[0].innerHTML = `
-			${ escapeHTML(item.title ?? '') }<br/>
-			<small>${ escapeHTML(item.description ?? '') }</small>
+			${escapeHTML(item.title ?? '')}<br/>
+			<small>${escapeHTML(item.description ?? '')}</small>
 		`;
 		return true;
 	},
 };
 
-const createEventListenerFor =	(className: string) =>
+const createEventListenerFor =
+	(className: string) =>
 		(event: JQuery.ClickEvent): void => {
 			event.preventDefault();
 			event.stopPropagation();

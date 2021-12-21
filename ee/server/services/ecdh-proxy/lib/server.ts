@@ -42,7 +42,7 @@ const _processResponse = async (session: ServerSession, responseData: Buffer): P
 const proxyHostname = process.env.PROXY_HOST || 'localhost';
 const proxyPort = process.env.PROXY_PORT || 3000;
 
-const proxy = async function(
+const proxy = async function (
 	req: Request,
 	res: Response,
 	session?: ServerSession,
@@ -63,7 +63,7 @@ const proxy = async function(
 		delete options.headers['content-length'];
 	}
 
-	const connector = http.request(options, async function(serverResponse) {
+	const connector = http.request(options, async function (serverResponse) {
 		serverResponse.pause();
 		if (serverResponse.statusCode) {
 			res.writeHead(serverResponse.statusCode, serverResponse.headers);
@@ -131,7 +131,7 @@ app.post('/api/ecdh_proxy/echo', async (req, res) => {
 });
 
 const httpServer = app.listen(port, () => {
-	console.log(`Proxy listening at http://localhost:${ port }`);
+	console.log(`Proxy listening at http://localhost:${port}`);
 });
 
 const wss = new WebSocket.Server({ server: httpServer });
@@ -155,7 +155,7 @@ wss.on('connection', async (ws, req) => {
 	const session = await getSessionCached(cookies.ecdhSession);
 
 	const proxy = new WebSocket(
-		`ws://${ proxyHostname }:${ proxyPort }${ req.url }` /* , { agent: req.agent } */,
+		`ws://${proxyHostname}:${proxyPort}${req.url}` /* , { agent: req.agent } */,
 	);
 
 	ws.on('message', async (data: string) => {
@@ -220,7 +220,7 @@ const xhrDataResponseProcess: typeof _processResponse = async (session, response
 		data[index] = await session.encrypt(item);
 	}
 
-	return `${ data.join('\n') }\n`;
+	return `${data.join('\n')}\n`;
 };
 
 app.use('/sockjs/:id1/:id2/xhr_send', async (req, res) => {

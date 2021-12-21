@@ -70,7 +70,8 @@ type BroadcastCallback = <T extends keyof EventSignatures>(
 	...args: Parameters<EventSignatures[T]>
 ) => Promise<void>;
 
-const hasKeys =	(requiredKeys: string[]): ((data?: Record<string, any>) => boolean) =>
+const hasKeys =
+	(requiredKeys: string[]): ((data?: Record<string, any>) => boolean) =>
 		(data?: Record<string, any>): boolean => {
 			if (!data) {
 				return false;
@@ -193,7 +194,8 @@ export function initWatchers(
 			return;
 		}
 
-		const role =			clientAction === 'removed' ? { _id: id, name: id } : data || await Roles.findOneById(id);
+		const role =
+			clientAction === 'removed' ? { _id: id, name: id } : data || await Roles.findOneById(id);
 
 		if (!role) {
 			return;

@@ -8,16 +8,16 @@ Meteor.methods({
 		let integration;
 
 		if (
-			hasPermission(this.userId, 'manage-outgoing-integrations')
-			|| hasPermission(this.userId, 'manage-outgoing-integrations', 'bot')
+			hasPermission(this.userId, 'manage-outgoing-integrations') ||
+			hasPermission(this.userId, 'manage-outgoing-integrations', 'bot')
 		) {
 			integration = Integrations.findOneById(integrationId);
 		} else if (
-			hasPermission(this.userId, 'manage-own-outgoing-integrations')
-			|| hasPermission(this.userId, 'manage-own-outgoing-integrations', 'bot')
+			hasPermission(this.userId, 'manage-own-outgoing-integrations') ||
+			hasPermission(this.userId, 'manage-own-outgoing-integrations', 'bot')
 		) {
 			integration = Integrations.findOne({
-				_id: integrationId,
+				'_id': integrationId,
 				'_createdBy._id': this.userId,
 			});
 		} else {

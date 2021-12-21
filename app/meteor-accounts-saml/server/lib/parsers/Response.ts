@@ -19,7 +19,7 @@ export class ResponseParser {
 
 	public validate(xml: string, callback: IResponseValidateCallback): void {
 		// We currently use RelayState to save SAML provider
-		SAMLUtils.log(`Validating response with relay state: ${ xml }`);
+		SAMLUtils.log(`Validating response with relay state: ${xml}`);
 
 		const doc = new xmldom.DOMParser().parseFromString(xml, 'text/xml');
 		if (!doc) {
@@ -51,7 +51,7 @@ export class ResponseParser {
 				return callback(new Error(statusValidateObj.message), null, false);
 			}
 
-			return callback(new Error(`Status is: ${ statusValidateObj.statusCode }`), null, false);
+			return callback(new Error(`Status is: ${statusValidateObj.statusCode}`), null, false);
 		}
 		SAMLUtils.log('Status ok');
 
@@ -119,7 +119,7 @@ export class ResponseParser {
 		if (authnStatement) {
 			if (authnStatement.hasAttribute('SessionIndex')) {
 				profile.sessionIndex = authnStatement.getAttribute('SessionIndex');
-				SAMLUtils.log(`Session Index: ${ profile.sessionIndex }`);
+				SAMLUtils.log(`Session Index: ${profile.sessionIndex}`);
 			} else {
 				SAMLUtils.log('No Session Index Found');
 			}
@@ -138,10 +138,10 @@ export class ResponseParser {
 		}
 
 		if (
-			!profile.email
-			&& profile.nameID
-			&& profile.nameIDFormat
-			&& profile.nameIDFormat.indexOf('emailAddress') >= 0
+			!profile.email &&
+			profile.nameID &&
+			profile.nameIDFormat &&
+			profile.nameIDFormat.indexOf('emailAddress') >= 0
 		) {
 			profile.email = profile.nameID;
 		}
@@ -172,7 +172,7 @@ export class ResponseParser {
 		SAMLUtils.log('Verify status');
 		const statusValidateObj = SAMLUtils.validateStatus(doc);
 		if (!statusValidateObj.success) {
-			return callback(new Error(`Status is: ${ statusValidateObj.statusCode }`), null, false);
+			return callback(new Error(`Status is: ${statusValidateObj.statusCode}`), null, false);
 		}
 		SAMLUtils.log('Status ok');
 
@@ -201,7 +201,7 @@ export class ResponseParser {
 		if (typeof encAssertion !== 'undefined') {
 			const options = { key: this.serviceProviderOptions.privateKey };
 			const encData = encAssertion.getElementsByTagNameNS('*', 'EncryptedData')[0];
-			xmlenc.decrypt(encData, options, function(err, result) {
+			xmlenc.decrypt(encData, options, function (err, result) {
 				if (err) {
 					SAMLUtils.error(err);
 				}
@@ -292,7 +292,8 @@ export class ResponseParser {
 	}
 
 	private validateSignatureChildren(xml: string, cert: string, parent: XmlParent): boolean {
-		const xpathSigQuery =			".//*[local-name(.)='Signature' and namespace-uri(.)='http://www.w3.org/2000/09/xmldsig#']";
+		const xpathSigQuery =
+			".//*[local-name(.)='Signature' and namespace-uri(.)='http://www.w3.org/2000/09/xmldsig#']";
 		const signatures = xmlCrypto.xpath(parent, xpathSigQuery) as Array<Element>;
 		let signature = null;
 
@@ -387,8 +388,8 @@ export class ResponseParser {
 				'SubjectConfirmationData',
 			)[0];
 			if (
-				subjectConfirmationData
-				&& !this.validateNotBeforeNotOnOrAfterAssertions(subjectConfirmationData)
+				subjectConfirmationData &&
+				!this.validateNotBeforeNotOnOrAfterAssertions(subjectConfirmationData)
 			) {
 				throw new Error('NotBefore / NotOnOrAfter assertion failed');
 			}
@@ -441,12 +442,12 @@ export class ResponseParser {
 	}
 
 	private mapAttributes(attributeStatement: Element, profile: Record<string, any>): void {
-		SAMLUtils.log(`Attribute Statement found in SAML response: ${ attributeStatement }`);
+		SAMLUtils.log(`Attribute Statement found in SAML response: ${attributeStatement}`);
 		const attributes = attributeStatement.getElementsByTagNameNS(
 			'urn:oasis:names:tc:SAML:2.0:assertion',
 			'Attribute',
 		);
-		SAMLUtils.log(`Attributes will be processed: ${ attributes.length }`);
+		SAMLUtils.log(`Attributes will be processed: ${attributes.length}`);
 
 		if (attributes) {
 			for (let i = 0; i < attributes.length; i++) {
@@ -466,8 +467,8 @@ export class ResponseParser {
 
 				const key = attributes[i].getAttribute('Name');
 				if (key) {
-					SAMLUtils.log(`Name:  ${ attributes[i] }`);
-					SAMLUtils.log(`Adding attribute from SAML response to profile: ${ key } = ${ value }`);
+					SAMLUtils.log(`Name:  ${attributes[i]}`);
+					SAMLUtils.log(`Adding attribute from SAML response to profile: ${key} = ${value}`);
 					profile[key] = value;
 				}
 			}

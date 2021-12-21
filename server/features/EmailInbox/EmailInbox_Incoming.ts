@@ -31,11 +31,11 @@ const language = settings.get<string>('Language') || 'en';
 const t = (s: string): string => TAPi18n.__(s, { lng: language });
 
 function getGuestByEmail(email: string, name: string, department = ''): any {
-	logger.debug(`Attempt to register a guest for ${ email } on department: ${ department }`);
+	logger.debug(`Attempt to register a guest for ${email} on department: ${department}`);
 	const guest = LivechatVisitors.findOneGuestByEmailAddress(email);
 
 	if (guest) {
-		logger.debug(`Guest with email ${ email } found with id ${ guest._id }`);
+		logger.debug(`Guest with email ${email} found with id ${guest._id}`);
 		if (guest.department !== department) {
 			logger.debug({
 				msg: 'Switching departments for guest',
@@ -70,7 +70,7 @@ function getGuestByEmail(email: string, name: string, department = ''): any {
 	});
 
 	const newGuest = LivechatVisitors.findOneById(userId, {});
-	logger.debug(`Guest ${ userId } for visitor ${ email } created`);
+	logger.debug(`Guest ${userId} for visitor ${email} created`);
 	if (newGuest) {
 		return newGuest;
 	}
@@ -93,12 +93,12 @@ async function uploadAttachment(
 
 	const fileStore = FileUpload.getStore('Uploads');
 	return new Promise((resolve, reject) => {
-		fileStore.insert(details, attachment.content, function(err: any, file: any) {
+		fileStore.insert(details, attachment.content, function (err: any, file: any) {
 			if (err) {
 				reject(new Error(err));
 			}
 
-			const url = FileUpload.getPath(`${ file._id }/${ encodeURI(file.name) }`);
+			const url = FileUpload.getPath(`${file._id}/${encodeURI(file.name)}`);
 
 			const attachment: FileAttachment = {
 				title: file.name,
@@ -135,7 +135,7 @@ export async function onEmailReceived(
 	department = '',
 ): Promise<void> {
 	logger.debug(
-		`New email conversation received on inbox ${ inbox }. Will be assigned to department ${ department }`,
+		`New email conversation received on inbox ${inbox}. Will be assigned to department ${department}`,
 	);
 	if (!email.from?.value?.[0]?.address) {
 		return;
@@ -145,11 +145,11 @@ export async function onEmailReceived(
 
 	const thread = references?.[0] ?? email.messageId;
 
-	logger.debug(`Fetching guest for visitor ${ email.from.value[0].address }`);
+	logger.debug(`Fetching guest for visitor ${email.from.value[0].address}`);
 	const guest = getGuestByEmail(email.from.value[0].address, email.from.value[0].name, department);
 
 	logger.debug(
-		`Guest ${ guest._id } obtained. Attempting to find or create a room on department ${ department }`,
+		`Guest ${guest._id} obtained. Attempting to find or create a room on department ${department}`,
 	);
 
 	let room = LivechatRooms.findOneByVisitorTokenAndEmailThreadAndDepartment(
@@ -166,7 +166,7 @@ export async function onEmailReceived(
 	});
 
 	if (room?.closedAt) {
-		logger.debug(`Room ${ room?._id } is closed. Reopening`);
+		logger.debug(`Room ${room?._id} is closed. Reopening`);
 		room = await QueueManager.unarchiveRoom(room);
 	}
 
@@ -181,7 +181,7 @@ export async function onEmailReceived(
 	const msgId = Random.id();
 
 	logger.debug(
-		`Sending email message to room ${ rid } for visitor ${ guest._id }. Conversation assigned to department ${ department }`,
+		`Sending email message to room ${rid} for visitor ${guest._id}. Conversation assigned to department ${department}`,
 	);
 	Livechat.sendMessage({
 		guest,
@@ -209,7 +209,7 @@ export async function onEmailReceived(
 					elements: [
 						{
 							type: 'mrkdwn',
-							text: `**${ t('From') }:** ${ email.from.text }\n**${ t('Subject') }:** ${ email.subject }`,
+							text: `**${t('From')}:** ${email.from.text}\n**${t('Subject')}:** ${email.subject}`,
 						},
 					],
 				},

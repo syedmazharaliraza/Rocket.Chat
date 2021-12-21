@@ -20,12 +20,12 @@ const handleAfterTakeInquiryCallback = async (inquiry: any = {}): Promise<any> =
 
 	const room = LivechatRooms.findOneById(rid, { autoTransferredAt: 1, autoTransferOngoing: 1 });
 	if (!room || room.autoTransferredAt || room.autoTransferOngoing) {
-		cbLogger.debug(`Skipping callback. Room ${ room._id } already being transfered or not found`);
+		cbLogger.debug(`Skipping callback. Room ${room._id} already being transfered or not found`);
 		return inquiry;
 	}
 
 	cbLogger.debug(
-		`Callback success. Room ${ room._id } will be scheduled to be auto transfered after ${ autoTransferTimeout } seconds`,
+		`Callback success. Room ${room._id} will be scheduled to be auto transfered after ${autoTransferTimeout} seconds`,
 	);
 	await AutoTransferChatScheduler.scheduleRoom(rid, autoTransferTimeout as number);
 
@@ -75,7 +75,7 @@ const handleAfterCloseRoom = async (room: any = {}): Promise<any> => {
 	return room;
 };
 
-settings.watch('Livechat_auto_transfer_chat_timeout', function(value) {
+settings.watch('Livechat_auto_transfer_chat_timeout', function (value) {
 	autoTransferTimeout = value as number;
 	if (!autoTransferTimeout || autoTransferTimeout === 0) {
 		callbacks.remove('livechat.afterTakeInquiry', 'livechat-auto-transfer-job-inquiry');

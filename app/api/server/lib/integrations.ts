@@ -9,12 +9,12 @@ const hasIntegrationsPermission = async (
 ): Promise<boolean> => {
 	const type = integration.type === 'webhook-incoming' ? 'incoming' : 'outgoing';
 
-	if (await hasPermissionAsync(userId, `manage-${ type }-integrations`)) {
+	if (await hasPermissionAsync(userId, `manage-${type}-integrations`)) {
 		return true;
 	}
 
 	if (userId === integration._createdBy._id) {
-		return hasPermissionAsync(userId, `manage-own-${ type }-integrations`);
+		return hasPermissionAsync(userId, `manage-own-${type}-integrations`);
 	}
 
 	return false;

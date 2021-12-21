@@ -12,7 +12,7 @@ settingsRegistry.add('uniqueID', process.env.DEPLOYMENT_ID || Random.id(), {
 // When you define a setting and want to add a description, you don't need to automatically define the i18nDescription
 // if you add a node to the i18n.json with the same setting name but with `_Description` it will automatically work.
 
-settingsRegistry.addGroup('Accounts', function() {
+settingsRegistry.addGroup('Accounts', function () {
 	this.add('Accounts_AllowAnonymousRead', false, {
 		type: 'boolean',
 		public: true,
@@ -124,7 +124,7 @@ settingsRegistry.addGroup('Accounts', function() {
 		i18nLabel: 'Accounts_AllowInvisibleStatusOption',
 	});
 
-	this.section('Registration', function() {
+	this.section('Registration', function () {
 		this.add('Accounts_Send_Email_When_Activating', true, {
 			type: 'boolean',
 		});
@@ -250,7 +250,7 @@ settingsRegistry.addGroup('Accounts', function() {
 		});
 	});
 
-	this.section('Accounts_Default_User_Preferences', function() {
+	this.section('Accounts_Default_User_Preferences', function () {
 		this.add('Accounts_Default_User_Preferences_enableAutoAway', true, {
 			type: 'boolean',
 			public: true,
@@ -521,7 +521,7 @@ settingsRegistry.addGroup('Accounts', function() {
 		});
 	});
 
-	this.section('Avatar', function() {
+	this.section('Avatar', function () {
 		this.add('Accounts_AvatarResize', true, {
 			type: 'boolean',
 		});
@@ -558,7 +558,7 @@ settingsRegistry.addGroup('Accounts', function() {
 		});
 	});
 
-	this.section('Password_Policy', function() {
+	this.section('Password_Policy', function () {
 		this.add('Accounts_Password_Policy_Enabled', false, {
 			type: 'boolean',
 		});
@@ -609,7 +609,7 @@ settingsRegistry.addGroup('Accounts', function() {
 		});
 	});
 
-	this.section('Password_History', function() {
+	this.section('Password_History', function () {
 		this.add('Accounts_Password_History_Enabled', false, {
 			type: 'boolean',
 			i18nLabel: 'Enable_Password_History',
@@ -630,8 +630,8 @@ settingsRegistry.addGroup('Accounts', function() {
 	});
 });
 
-settingsRegistry.addGroup('OAuth', function() {
-	this.section('Facebook', function() {
+settingsRegistry.addGroup('OAuth', function () {
+	this.section('Facebook', function () {
 		const enableQuery = {
 			_id: 'Accounts_OAuth_Facebook',
 			value: true,
@@ -655,7 +655,7 @@ settingsRegistry.addGroup('OAuth', function() {
 			enableQuery,
 		});
 	});
-	this.section('Google', function() {
+	this.section('Google', function () {
 		const enableQuery = {
 			_id: 'Accounts_OAuth_Google',
 			value: true,
@@ -679,7 +679,7 @@ settingsRegistry.addGroup('OAuth', function() {
 			enableQuery,
 		});
 	});
-	this.section('GitHub', function() {
+	this.section('GitHub', function () {
 		const enableQuery = {
 			_id: 'Accounts_OAuth_Github',
 			value: true,
@@ -703,7 +703,7 @@ settingsRegistry.addGroup('OAuth', function() {
 			enableQuery,
 		});
 	});
-	this.section('Linkedin', function() {
+	this.section('Linkedin', function () {
 		const enableQuery = {
 			_id: 'Accounts_OAuth_Linkedin',
 			value: true,
@@ -727,7 +727,7 @@ settingsRegistry.addGroup('OAuth', function() {
 			enableQuery,
 		});
 	});
-	this.section('Meteor', function() {
+	this.section('Meteor', function () {
 		const enableQuery = {
 			_id: 'Accounts_OAuth_Meteor',
 			value: true,
@@ -751,7 +751,7 @@ settingsRegistry.addGroup('OAuth', function() {
 			enableQuery,
 		});
 	});
-	this.section('Twitter', function() {
+	this.section('Twitter', function () {
 		const enableQuery = {
 			_id: 'Accounts_OAuth_Twitter',
 			value: true,
@@ -775,7 +775,7 @@ settingsRegistry.addGroup('OAuth', function() {
 			enableQuery,
 		});
 	});
-	return this.section('Proxy', function() {
+	return this.section('Proxy', function () {
 		this.add('Accounts_OAuth_Proxy_host', 'https://oauth-proxy.rocket.chat', {
 			type: 'string',
 			public: true,
@@ -787,7 +787,7 @@ settingsRegistry.addGroup('OAuth', function() {
 	});
 });
 
-settingsRegistry.addGroup('General', function() {
+settingsRegistry.addGroup('General', function () {
 	this.add('Show_Setup_Wizard', 'pending', {
 		type: 'select',
 		public: true,
@@ -811,8 +811,8 @@ settingsRegistry.addGroup('General', function() {
 	// eslint-disable-next-line @typescript-eslint/camelcase
 	this.add(
 		'Site_Url',
-		typeof (global as any).__meteor_runtime_config__ !== 'undefined'
-			&& (global as any).__meteor_runtime_config__ !== null
+		typeof (global as any).__meteor_runtime_config__ !== 'undefined' &&
+			(global as any).__meteor_runtime_config__ !== null
 			? (global as any).__meteor_runtime_config__.ROOT_URL
 			: null,
 		{
@@ -999,7 +999,7 @@ settingsRegistry.addGroup('General', function() {
 		type: 'boolean',
 		alert: 'This_feature_is_currently_in_alpha',
 	});
-	this.section('UTF8', function() {
+	this.section('UTF8', function () {
 		this.add('UTF8_User_Names_Validation', '[0-9a-zA-Z-_.]+', {
 			type: 'string',
 			public: true,
@@ -1015,26 +1015,26 @@ settingsRegistry.addGroup('General', function() {
 			public: true,
 		});
 	});
-	this.section('Reporting', function() {
+	this.section('Reporting', function () {
 		return this.add('Statistics_reporting', true, {
 			type: 'boolean',
 		});
 	});
-	this.section('Notifications', function() {
+	this.section('Notifications', function () {
 		this.add('Notifications_Max_Room_Members', 100, {
 			type: 'int',
 			public: true,
 			i18nDescription: 'Notifications_Max_Room_Members_Description',
 		});
 	});
-	this.section('REST API', function() {
+	this.section('REST API', function () {
 		return this.add('API_User_Limit', 500, {
 			type: 'int',
 			public: true,
 			i18nDescription: 'API_User_Limit',
 		});
 	});
-	this.section('Iframe_Integration', function() {
+	this.section('Iframe_Integration', function () {
 		this.add('Iframe_Integration_send_enable', false, {
 			type: 'boolean',
 			public: true,
@@ -1060,23 +1060,23 @@ settingsRegistry.addGroup('General', function() {
 			},
 		});
 	});
-	this.section('Translations', function() {
+	this.section('Translations', function () {
 		return this.add('Custom_Translations', '', {
 			type: 'code',
 			public: true,
 		});
 	});
-	this.section('Stream_Cast', function() {
+	this.section('Stream_Cast', function () {
 		return this.add('Stream_Cast_Address', '', {
 			type: 'string',
 		});
 	});
-	this.section('NPS', function() {
+	this.section('NPS', function () {
 		this.add('NPS_survey_enabled', true, {
 			type: 'boolean',
 		});
 	});
-	this.section('Timezone', function() {
+	this.section('Timezone', function () {
 		this.add('Default_Timezone_For_Reporting', 'server', {
 			type: 'select',
 			values: [
@@ -1104,8 +1104,8 @@ settingsRegistry.addGroup('General', function() {
 	});
 });
 
-settingsRegistry.addGroup('Message', function() {
-	this.section('Message_Attachments', function() {
+settingsRegistry.addGroup('Message', function () {
+	this.section('Message_Attachments', function () {
 		this.add('Message_Attachments_GroupAttach', false, {
 			type: 'boolean',
 			public: true,
@@ -1146,7 +1146,7 @@ settingsRegistry.addGroup('Message', function() {
 			i18nDescription: 'Message_Attachments_Strip_ExifDescription',
 		});
 	});
-	this.section('Message_Audio', function() {
+	this.section('Message_Audio', function () {
 		this.add('Message_AudioRecorderEnabled', true, {
 			type: 'boolean',
 			public: true,
@@ -1328,7 +1328,7 @@ settingsRegistry.addGroup('Message', function() {
 	);
 });
 
-settingsRegistry.addGroup('Meta', function() {
+settingsRegistry.addGroup('Meta', function () {
 	this.add('Meta_language', '', {
 		type: 'string',
 	});
@@ -1354,12 +1354,12 @@ settingsRegistry.addGroup('Meta', function() {
 	});
 });
 
-settingsRegistry.addGroup('Mobile', function() {
+settingsRegistry.addGroup('Mobile', function () {
 	this.add('Allow_Save_Media_to_Gallery', true, {
 		type: 'boolean',
 		public: true,
 	});
-	this.section('Screen_Lock', function() {
+	this.section('Screen_Lock', function () {
 		this.add('Force_Screen_Lock', false, {
 			type: 'boolean',
 			i18nDescription: 'Force_Screen_Lock_description',
@@ -1385,7 +1385,7 @@ const pushEnabledWithoutGateway = [
 	},
 ];
 
-settingsRegistry.addGroup('Push', function() {
+settingsRegistry.addGroup('Push', function () {
 	this.add('Push_enable', true, {
 		type: 'boolean',
 		public: true,
@@ -1440,7 +1440,7 @@ settingsRegistry.addGroup('Push', function() {
 			value: true,
 		},
 	});
-	this.section('Certificates_and_Keys', function() {
+	this.section('Certificates_and_Keys', function () {
 		this.add('Push_apn_passphrase', '', {
 			type: 'string',
 			enableQuery: [],
@@ -1487,7 +1487,7 @@ settingsRegistry.addGroup('Push', function() {
 			secret: true,
 		});
 	});
-	return this.section('Privacy', function() {
+	return this.section('Privacy', function () {
 		this.add('Push_show_username_room', true, {
 			type: 'boolean',
 			public: true,
@@ -1505,8 +1505,8 @@ settingsRegistry.addGroup('Push', function() {
 	});
 });
 
-settingsRegistry.addGroup('Layout', function() {
-	this.section('Content', function() {
+settingsRegistry.addGroup('Layout', function () {
+	this.section('Content', function () {
 		this.add('Layout_Home_Title', 'Home', {
 			type: 'string',
 			public: true,
@@ -1575,7 +1575,7 @@ settingsRegistry.addGroup('Layout', function() {
 			},
 		);
 	});
-	this.section('Custom_Scripts', function() {
+	this.section('Custom_Scripts', function () {
 		this.add('Custom_Script_On_Logout', '//Add your script', {
 			type: 'code',
 			multiline: true,
@@ -1592,7 +1592,7 @@ settingsRegistry.addGroup('Layout', function() {
 			public: true,
 		});
 	});
-	return this.section('User_Interface', function() {
+	return this.section('User_Interface', function () {
 		this.add('UI_DisplayRoles', true, {
 			type: 'boolean',
 			public: true,
@@ -1644,7 +1644,7 @@ settingsRegistry.addGroup('Layout', function() {
 	});
 });
 
-settingsRegistry.addGroup('Logs', function() {
+settingsRegistry.addGroup('Logs', function () {
 	this.add('Log_Level', '0', {
 		type: 'select',
 		values: [
@@ -1691,7 +1691,7 @@ settingsRegistry.addGroup('Logs', function() {
 		},
 	});
 
-	this.section('Prometheus', function() {
+	this.section('Prometheus', function () {
 		this.add('Prometheus_Enabled', false, {
 			type: 'boolean',
 			i18nLabel: 'Enabled',
@@ -1714,8 +1714,8 @@ settingsRegistry.addGroup('Logs', function() {
 	});
 });
 
-settingsRegistry.addGroup('Setup_Wizard', function() {
-	this.section('Organization_Info', function() {
+settingsRegistry.addGroup('Setup_Wizard', function () {
+	this.section('Organization_Info', function () {
 		this.add('Organization_Type', '', {
 			type: 'select',
 			values: [
@@ -2902,7 +2902,7 @@ settingsRegistry.addGroup('Setup_Wizard', function() {
 		});
 	});
 
-	this.section('Cloud_Info', function() {
+	this.section('Cloud_Info', function () {
 		this.add('Nps_Url', 'https://nps.rocket.chat', {
 			type: 'string',
 			hidden: true,
@@ -3052,8 +3052,8 @@ settingsRegistry.addGroup('Setup_Wizard', function() {
 	});
 });
 
-settingsRegistry.addGroup('Rate Limiter', function() {
-	this.section('DDP_Rate_Limiter', function() {
+settingsRegistry.addGroup('Rate Limiter', function () {
+	this.section('DDP_Rate_Limiter', function () {
 		this.add('DDP_Rate_Limit_IP_Enabled', true, { type: 'boolean' });
 		this.add('DDP_Rate_Limit_IP_Requests_Allowed', 120000, {
 			type: 'int',
@@ -3105,7 +3105,7 @@ settingsRegistry.addGroup('Rate Limiter', function() {
 		});
 	});
 
-	this.section('API_Rate_Limiter', function() {
+	this.section('API_Rate_Limiter', function () {
 		this.add('API_Enable_Rate_Limiter', true, { type: 'boolean' });
 		this.add('API_Enable_Rate_Limiter_Dev', true, {
 			type: 'boolean',
@@ -3121,7 +3121,7 @@ settingsRegistry.addGroup('Rate Limiter', function() {
 		});
 	});
 
-	this.section('Feature_Limiting', function() {
+	this.section('Feature_Limiting', function () {
 		this.add('Rate_Limiter_Limit_RegisterUser', 1, {
 			type: 'int',
 			enableQuery: { _id: 'API_Enable_Rate_Limiter', value: true },
@@ -3129,7 +3129,7 @@ settingsRegistry.addGroup('Rate Limiter', function() {
 	});
 });
 
-settingsRegistry.addGroup('Troubleshoot', function() {
+settingsRegistry.addGroup('Troubleshoot', function () {
 	this.add('Troubleshoot_Disable_Notifications', false, {
 		type: 'boolean',
 		alert: 'Troubleshoot_Disable_Notifications_Alert',

@@ -176,7 +176,8 @@ export class ImportDataConverter {
 		const newEmailList: Array<IUserEmail> = [];
 
 		for (const email of userData.emails) {
-			const verified =				verifyEmails || existingEmails.find((ee) => ee.address === email)?.verified || false;
+			const verified =
+				verifyEmails || existingEmails.find((ee) => ee.address === email)?.verified || false;
 
 			newEmailList.push({
 				address: email,
@@ -204,7 +205,7 @@ export class ImportDataConverter {
 					continue;
 				}
 
-				updateData.$set[`services.${ serviceKey }.${ key }`] = service[key];
+				updateData.$set[`services.${serviceKey}.${key}`] = service[key];
 			}
 		}
 	}
@@ -220,7 +221,7 @@ export class ImportDataConverter {
 					continue;
 				}
 
-				const keyPath = `${ currentPath }.${ key }`;
+				const keyPath = `${currentPath}.${key}`;
 				if (typeof source[key] === 'object' && !Array.isArray(source[key])) {
 					subset(source[key], keyPath);
 					continue;
@@ -283,7 +284,7 @@ export class ImportDataConverter {
 	}
 
 	insertUser(userData: IImportUser): IUser {
-		const password = `${ Date.now() }${ userData.name || '' }${
+		const password = `${Date.now()}${userData.name || ''}${
 			userData.emails.length ? userData.emails[0].toUpperCase() : ''
 		}`;
 		const userId = userData.emails.length
@@ -488,7 +489,7 @@ export class ImportDataConverter {
 				throw new Error('importer-message-mentioned-username-not-found');
 			}
 
-			message.msg = message.msg.replace(new RegExp(`\@${ importId }`, 'gi'), `@${ data.username }`);
+			message.msg = message.msg.replace(new RegExp(`\@${importId}`, 'gi'), `@${data.username}`);
 
 			result.push({
 				_id: data._id,
@@ -512,11 +513,11 @@ export class ImportDataConverter {
 			const _id = this.findImportedRoomId(importId);
 
 			if (!_id || !name) {
-				this._logger.warn(`Mentioned room not found: ${ importId }`);
+				this._logger.warn(`Mentioned room not found: ${importId}`);
 				continue;
 			}
 
-			message.msg = message.msg.replace(new RegExp(`\#${ importId }`, 'gi'), `#${ name }`);
+			message.msg = message.msg.replace(new RegExp(`\#${importId}`, 'gi'), `#${name}`);
 
 			result.push({
 				_id,
@@ -547,7 +548,7 @@ export class ImportDataConverter {
 
 				const creator = this.findImportedUser(m.u._id);
 				if (!creator) {
-					this._logger.warn(`Imported user not found: ${ m.u._id }`);
+					this._logger.warn(`Imported user not found: ${m.u._id}`);
 					throw new Error('importer-message-unknown-user');
 				}
 
@@ -601,7 +602,7 @@ export class ImportDataConverter {
 					insertMessage(creator, msgObj, rid, true);
 				} catch (e) {
 					this._logger.warn(
-						`Failed to import message with timestamp ${ String(msgObj.ts) } to room ${ rid }`,
+						`Failed to import message with timestamp ${String(msgObj.ts)} to room ${rid}`,
 					);
 					this._logger.error(e);
 				}
@@ -618,7 +619,7 @@ export class ImportDataConverter {
 			try {
 				Rooms.resetLastMessageById(rid);
 			} catch (e) {
-				this._logger.warn(`Failed to update last message of room ${ rid }`);
+				this._logger.warn(`Failed to update last message of room ${rid}`);
 				this._logger.error(e);
 			}
 		}
@@ -734,7 +735,8 @@ export class ImportDataConverter {
 			return this._userDisplayNameCache.get(importId);
 		}
 
-		const user =			importId === 'rocket.cat'
+		const user =
+			importId === 'rocket.cat'
 				? Users.findOneById('rocket.cat', options)
 				: Users.findOneByImportId(importId, options);
 		if (user) {
@@ -808,7 +810,7 @@ export class ImportDataConverter {
 
 		if (roomData.t === 'd') {
 			if (members.length < roomData.users.length) {
-				this._logger.warn(`One or more imported users not found: ${ roomData.users }`);
+				this._logger.warn(`One or more imported users not found: ${roomData.users}`);
 				throw new Error('importer-channel-missing-users');
 			}
 		}
@@ -816,7 +818,8 @@ export class ImportDataConverter {
 		// Create the channel
 		try {
 			Meteor.runAsUser(creatorId, () => {
-				const roomInfo =					roomData.t === 'd'
+				const roomInfo =
+					roomData.t === 'd'
 						? Meteor.call('createDirectMessage', ...members)
 						: Meteor.call(
 								roomData.t === 'p' ? 'createPrivateGroup' : 'createChannel',

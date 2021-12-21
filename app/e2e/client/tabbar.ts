@@ -25,7 +25,7 @@ addAction('e2e', ({ room }) => {
 
 	return useMemo(
 		() =>
-			(e2eEnabled && hasPermission
+			e2eEnabled && hasPermission
 				? {
 						groups: ['direct', 'direct_multiple', 'group', 'team'],
 						id: 'e2e',
@@ -34,7 +34,7 @@ addAction('e2e', ({ room }) => {
 						order: 13,
 						action,
 				  }
-				: null),
+				: null,
 		[action, e2eEnabled, enabledOnRoom, hasPermission],
 	);
 });

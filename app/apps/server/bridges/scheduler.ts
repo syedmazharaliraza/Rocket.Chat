@@ -78,7 +78,7 @@ export class AppSchedulerBridge extends SchedulerBridge {
 		appId: string,
 	): Promise<void | Array<string>> {
 		const runAfterRegister: Promise<string>[] = [];
-		this.orch.debugLog(`The App ${ appId } is registering job processors`, processors);
+		this.orch.debugLog(`The App ${appId} is registering job processors`, processors);
 		processors.forEach(({ id, processor, startupSetting }: IProcessor) => {
 			this.scheduler.define(id, _callProcessor(processor));
 
@@ -112,9 +112,9 @@ export class AppSchedulerBridge extends SchedulerBridge {
 					this.orch
 						.getRocketChatLogger()
 						.error(
-							`Invalid startup setting type (${ String(
+							`Invalid startup setting type (${String(
 								(startupSetting as any).type,
-							) }) for the processor ${ id }`,
+							)}) for the processor ${id}`,
 						);
 					break;
 			}
@@ -140,7 +140,7 @@ export class AppSchedulerBridge extends SchedulerBridge {
 		{ id, when, data }: IOnetimeSchedule,
 		appId: string,
 	): Promise<void | string> {
-		this.orch.debugLog(`The App ${ appId } is scheduling an onetime job (processor ${ id })`);
+		this.orch.debugLog(`The App ${appId} is scheduling an onetime job (processor ${id})`);
 		try {
 			await this.startScheduler();
 			const job = await this.scheduler.schedule(when, id, this.decorateJobData(data, appId));
@@ -176,7 +176,7 @@ export class AppSchedulerBridge extends SchedulerBridge {
 		{ id, interval, skipImmediate = false, data }: IRecurringSchedule,
 		appId: string,
 	): Promise<void | string> {
-		this.orch.debugLog(`The App ${ appId } is scheduling a recurring job (processor ${ id })`);
+		this.orch.debugLog(`The App ${appId} is scheduling a recurring job (processor ${id})`);
 		try {
 			await this.startScheduler();
 			const job = await this.scheduler.every(interval, id, this.decorateJobData(data, appId), {
@@ -197,7 +197,7 @@ export class AppSchedulerBridge extends SchedulerBridge {
 	 * @returns Promise<void>
 	 */
 	protected async cancelJob(jobId: string, appId: string): Promise<void> {
-		this.orch.debugLog(`The App ${ appId } is canceling a job`, jobId);
+		this.orch.debugLog(`The App ${appId} is canceling a job`, jobId);
 		await this.startScheduler();
 
 		let cancelQuery;
@@ -223,9 +223,9 @@ export class AppSchedulerBridge extends SchedulerBridge {
 	 * @returns Promise<void>
 	 */
 	protected async cancelAllJobs(appId: string): Promise<void> {
-		this.orch.debugLog(`Canceling all jobs of App ${ appId }`);
+		this.orch.debugLog(`Canceling all jobs of App ${appId}`);
 		await this.startScheduler();
-		const matcher = new RegExp(`_${ appId }$`);
+		const matcher = new RegExp(`_${appId}$`);
 		try {
 			await this.scheduler.cancel({ name: { $regex: matcher } });
 		} catch (e) {

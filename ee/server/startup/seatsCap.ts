@@ -76,7 +76,8 @@ callbacks.add(
 			return;
 		}
 
-		const wasGuest =			currentUserData?.roles?.length === 1 && currentUserData.roles.includes('guest');
+		const wasGuest =
+			currentUserData?.roles?.length === 1 && currentUserData.roles.includes('guest');
 		if (!wasGuest) {
 			return;
 		}

@@ -36,7 +36,8 @@ export class LocalBroker implements IBroker {
 			this.events.removeListener(eventName, instance.emit);
 		});
 
-		const methods =			instance.constructor?.name === 'Object'
+		const methods =
+			instance.constructor?.name === 'Object'
 				? Object.getOwnPropertyNames(instance)
 				: Object.getOwnPropertyNames(Object.getPrototypeOf(instance));
 		for (const method of methods) {
@@ -44,7 +45,7 @@ export class LocalBroker implements IBroker {
 				continue;
 			}
 
-			this.methods.delete(`${ namespace }.${ method }`);
+			this.methods.delete(`${namespace}.${method}`);
 		}
 	}
 
@@ -57,7 +58,8 @@ export class LocalBroker implements IBroker {
 			});
 		});
 
-		const methods =			instance.constructor?.name === 'Object'
+		const methods =
+			instance.constructor?.name === 'Object'
 				? Object.getOwnPropertyNames(instance)
 				: Object.getOwnPropertyNames(Object.getPrototypeOf(instance));
 		for (const method of methods) {
@@ -66,7 +68,7 @@ export class LocalBroker implements IBroker {
 			}
 			const i = instance as any;
 
-			this.methods.set(`${ namespace }.${ method }`, i[method].bind(i));
+			this.methods.set(`${namespace}.${method}`, i[method].bind(i));
 		}
 	}
 

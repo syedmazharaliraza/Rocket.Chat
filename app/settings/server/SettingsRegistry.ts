@@ -52,7 +52,7 @@ export const SettingsEvents = new Emitter<{
 const getGroupDefaults = (_id: string, options: ISettingAddGroupOptions = {}): ISettingGroup => ({
 	_id,
 	i18nLabel: _id,
-	i18nDescription: `${ _id }_Description`,
+	i18nDescription: `${_id}_Description`,
 	...options,
 	sorter: options.sorter || 0,
 	blocked: blockedSettings.has(_id),
@@ -76,7 +76,8 @@ type addGroupCallback = (this: {
 
 type ISettingAddOptions = Partial<ISetting>;
 
-const compareSettingsIgnoringKeys =	(keys: Array<keyof ISetting>) =>
+const compareSettingsIgnoringKeys =
+	(keys: Array<keyof ISetting>) =>
 		(a: ISetting, b: ISetting): boolean =>
 			[...new Set([...Object.keys(a), ...Object.keys(b)])]
 				.filter((key) => !keys.includes(key as keyof ISetting))
@@ -116,7 +117,7 @@ export class SettingsRegistry {
 			throw new Error('Invalid arguments');
 		}
 
-		const sorterKey = group && section ? `${ group }_${ section }` : group;
+		const sorterKey = group && section ? `${group}_${section}` : group;
 
 		if (sorterKey && this._sorter[sorterKey] == null) {
 			if (group && section) {
@@ -145,8 +146,8 @@ export class SettingsRegistry {
 		);
 
 		if (isSettingEnterprise(settingFromCode) && !('invalidValue' in settingFromCode)) {
-			SystemLogger.error(`Enterprise setting ${ _id } is missing the invalidValue option`);
-			throw new Error(`Enterprise setting ${ _id } is missing the invalidValue option`);
+			SystemLogger.error(`Enterprise setting ${_id} is missing the invalidValue option`);
+			throw new Error(`Enterprise setting ${_id} is missing the invalidValue option`);
 		}
 
 		const settingStored = this.store.getSetting(_id);
@@ -155,7 +156,7 @@ export class SettingsRegistry {
 		try {
 			validateSetting(settingFromCode._id, settingFromCode.type, settingFromCode.value);
 		} catch (e) {
-			IS_DEVELOPMENT && SystemLogger.error(`Invalid setting code ${ _id }: ${ (e as Error).message }`);
+			IS_DEVELOPMENT && SystemLogger.error(`Invalid setting code ${_id}: ${(e as Error).message}`);
 		}
 
 		const isOverwritten = settingFromCode !== settingOverwritten;
@@ -193,8 +194,8 @@ export class SettingsRegistry {
 			try {
 				validateSetting(settingFromCode._id, settingFromCode.type, settingStored?.value);
 			} catch (e) {
-				IS_DEVELOPMENT
-					&& SystemLogger.error(`Invalid setting stored ${ _id }: ${ (e as Error).message }`);
+				IS_DEVELOPMENT &&
+					SystemLogger.error(`Invalid setting stored ${_id}: ${(e as Error).message}`);
 			}
 			return;
 		}
@@ -225,7 +226,8 @@ export class SettingsRegistry {
 
 		const callback = groupOptions instanceof Function ? groupOptions : cb;
 
-		const options =			groupOptions instanceof Function
+		const options =
+			groupOptions instanceof Function
 				? getGroupDefaults(_id, { sorter: this._sorter[_id] })
 				: getGroupDefaults(_id, { sorter: this._sorter[_id], ...groupOptions });
 
@@ -239,12 +241,14 @@ export class SettingsRegistry {
 			return;
 		}
 
-		const addWith =			(preset: ISettingAddOptions) =>
+		const addWith =
+			(preset: ISettingAddOptions) =>
 				(id: string, value: SettingValue, options: ISettingAddOptions = {}): void => {
 					const mergedOptions = { ...preset, ...options };
 					this.add(id, value, mergedOptions);
 				};
-		const sectionSetWith =			(preset: ISettingAddOptions) =>
+		const sectionSetWith =
+			(preset: ISettingAddOptions) =>
 				(options: ISettingAddOptions, cb: addSectionCallback): void => {
 					const mergedOptions = { ...preset, ...options };
 					cb.call({
@@ -252,7 +256,8 @@ export class SettingsRegistry {
 						with: sectionSetWith(mergedOptions),
 					});
 				};
-		const sectionWith =			(preset: ISettingAddOptions) =>
+		const sectionWith =
+			(preset: ISettingAddOptions) =>
 				(section: string, cb: addSectionCallback): void => {
 					const mergedOptions = { ...preset, section };
 					cb.call({
@@ -261,7 +266,8 @@ export class SettingsRegistry {
 					});
 				};
 
-		const groupSetWith =			(preset: ISettingAddOptions) =>
+		const groupSetWith =
+			(preset: ISettingAddOptions) =>
 				(options: ISettingAddOptions, cb: addGroupCallback): void => {
 					const mergedOptions = { ...preset, ...options };
 

@@ -25,7 +25,8 @@ const callback: NextHandleFunction = (req, res, next) => {
 	}
 	try {
 		const rawPath = parseRequest(req);
-		const pathname =			rawPath !== undefined && rawPath.pathname && decodeURIComponent(rawPath.pathname);
+		const pathname =
+			rawPath !== undefined && rawPath.pathname && decodeURIComponent(rawPath.pathname);
 
 		if (!pathname) {
 			next();
@@ -39,7 +40,8 @@ const callback: NextHandleFunction = (req, res, next) => {
 			return;
 		}
 
-		const serve =			(contentType: string) =>
+		const serve =
+			(contentType: string) =>
 				(content: string, cacheControl = 'public, max-age=31536000'): void => {
 					res.writeHead(200, {
 						'Content-type': contentType,
@@ -76,30 +78,30 @@ export const injectIntoHead = (key: string, value: Injection): void => {
 
 export const addScript = (key: string, content: string): void => {
 	if (!content.trim()) {
-		injectIntoHead(`${ key }.js`, '');
+		injectIntoHead(`${key}.js`, '');
 		return;
 	}
 	const currentHash = crypto.createHash('sha1').update(content).digest('hex');
-	injectIntoHead(`${ key }.js`, {
+	injectIntoHead(`${key}.js`, {
 		type: 'JS',
-		tag: `<script id="${ key }" type="text/javascript" src="${ `${ getURL(
+		tag: `<script id="${key}" type="text/javascript" src="${`${getURL(
 			key,
-		) }.js?${ currentHash }` }"></script>`,
+		)}.js?${currentHash}`}"></script>`,
 		content,
 	});
 };
 
 export const addStyle = (key: string, content: string): void => {
 	if (!content.trim()) {
-		injectIntoHead(`${ key }.css`, '');
+		injectIntoHead(`${key}.css`, '');
 		return;
 	}
 	const currentHash = crypto.createHash('sha1').update(content).digest('hex');
-	injectIntoHead(`${ key }.css`, {
+	injectIntoHead(`${key}.css`, {
 		type: 'CSS',
-		tag: `<link id="${ key }" rel="stylesheet" type="text/css" href="${ `${ getURL(
+		tag: `<link id="${key}" rel="stylesheet" type="text/css" href="${`${getURL(
 			key,
-		) }.css?${ currentHash }` }">`,
+		)}.css?${currentHash}`}">`,
 		content,
 	});
 };
@@ -113,7 +115,7 @@ export const applyHeadInjections = (injections: Injection[]): ((html: string) =>
 		return (html: string): string => html;
 	}
 
-	const replacementHtml = `${ injections
+	const replacementHtml = `${injections
 		.map((i) => {
 			if (typeof i === 'string') {
 				return i;
@@ -121,7 +123,7 @@ export const applyHeadInjections = (injections: Injection[]): ((html: string) =>
 			return i.content.trim().length > 0 ? i.tag : '';
 		})
 		.join('\n')
-		.replace(/\$/g, '$$$$') }\n</head>`;
+		.replace(/\$/g, '$$$$')}\n</head>`;
 
 	return (html: string): string => html.replace('</head>', replacementHtml);
 };

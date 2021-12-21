@@ -10,7 +10,8 @@ import { IPermission } from '../../../definition/IPermission';
 const isValidScope = (scope: IRole['scope']): boolean =>
 	typeof scope === 'string' && scope in Models;
 
-const createPermissionValidator =	(quantifier: (predicate: (permissionId: IPermission['_id']) => boolean) => boolean) =>
+const createPermissionValidator =
+	(quantifier: (predicate: (permissionId: IPermission['_id']) => boolean) => boolean) =>
 		(
 			permissionIds: IPermission['_id'][],
 			scope: string | undefined,

@@ -22,7 +22,7 @@ const handleAfterOnHold = async (room: any = {}): Promise<any> => {
 		return;
 	}
 
-	cbLogger.debug(`Scheduling room ${ rid } to be closed in ${ autoCloseOnHoldChatTimeout } seconds`);
+	cbLogger.debug(`Scheduling room ${rid} to be closed in ${autoCloseOnHoldChatTimeout} seconds`);
 	await AutoCloseOnHoldScheduler.scheduleRoom(
 		room._id,
 		autoCloseOnHoldChatTimeout,

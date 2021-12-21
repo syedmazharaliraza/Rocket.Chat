@@ -30,7 +30,7 @@ export async function configureEmailInboxes(): Promise<void> {
 	inboxes.clear();
 
 	for await (const emailInboxRecord of emailInboxesCursor) {
-		logger.info(`Setting up email interceptor for ${ emailInboxRecord.email }`);
+		logger.info(`Setting up email interceptor for ${emailInboxRecord.email}`);
 
 		const imap = new IMAPInterceptor(
 			{
@@ -84,7 +84,7 @@ export async function configureEmailInboxes(): Promise<void> {
 		inboxes.set(emailInboxRecord.email, { imap, smtp, config: emailInboxRecord });
 	}
 
-	logger.info(`Configured a total of ${ inboxes.size } inboxes`);
+	logger.info(`Configured a total of ${inboxes.size} inboxes`);
 }
 
 Meteor.startup(() => {

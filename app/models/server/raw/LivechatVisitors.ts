@@ -61,7 +61,7 @@ export class LivechatVisitorsRaw extends BaseRaw<ILivechatVisitor> {
 			exceptions = [exceptions];
 		}
 
-		const nameRegex = new RegExp(`^${ escapeRegExp(searchTerm).trim() }`, 'i');
+		const nameRegex = new RegExp(`^${escapeRegExp(searchTerm).trim()}`, 'i');
 
 		const match = {
 			$match: {

@@ -6,7 +6,7 @@ import * as Mailer from '../../../mailer';
 import { Users } from '../../../models/server/raw/index';
 import { IUser } from '../../../../definition/IUser';
 
-const sendResetNotification = async function(uid: string): Promise<void> {
+const sendResetNotification = async function (uid: string): Promise<void> {
 	const user = await Users.findOneById<Pick<IUser, 'language' | 'emails'>>(uid, {
 		projection: { language: 1, emails: 1 },
 	});
@@ -24,13 +24,13 @@ const sendResetNotification = async function(uid: string): Promise<void> {
 
 	const t = (s: string): string => TAPi18n.__(s, { lng: language });
 	const text = `
-	${ t('Your_TOTP_has_been_reset') }
+	${t('Your_TOTP_has_been_reset')}
 
-	${ t('TOTP_Reset_Other_Key_Warning') }
+	${t('TOTP_Reset_Other_Key_Warning')}
 	`;
 	const html = `
-		<p>${ t('Your_TOTP_has_been_reset') }</p>
-		<p>${ t('TOTP_Reset_Other_Key_Warning') }</p>
+		<p>${t('Your_TOTP_has_been_reset')}</p>
+		<p>${t('TOTP_Reset_Other_Key_Warning')}</p>
 	`;
 
 	const from = settings.get('From_Email');
@@ -49,7 +49,7 @@ const sendResetNotification = async function(uid: string): Promise<void> {
 			} catch (error) {
 				throw new Meteor.Error(
 					'error-email-send-failed',
-					`Error trying to send email: ${ error.message }`,
+					`Error trying to send email: ${error.message}`,
 					{
 						function: 'resetUserTOTP',
 						message: error.message,

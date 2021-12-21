@@ -2,8 +2,8 @@ import { Meteor } from 'meteor/meteor';
 
 import { settingsRegistry } from '../../settings/server';
 
-Meteor.startup(function() {
-	settingsRegistry.addGroup('LiveStream & Broadcasting', function() {
+Meteor.startup(function () {
+	settingsRegistry.addGroup('LiveStream & Broadcasting', function () {
 		this.add('Livestream_enabled', false, {
 			type: 'boolean',
 			public: true,

@@ -18,7 +18,7 @@ MeteorService.getLoginServiceConfiguration().then((records = []) =>
 	records.forEach((record) => loginServices.set(record._id, record)),
 );
 
-server.publish(loginServiceConfigurationPublication, async function() {
+server.publish(loginServiceConfigurationPublication, async function () {
 	loginServices.forEach((record) =>
 		this.added(loginServiceConfigurationCollection, record._id, record),
 	);
@@ -52,7 +52,7 @@ MeteorService.getLastAutoUpdateClientVersions().then((records = []) => {
 });
 
 const autoUpdateCollection = 'meteor_autoupdate_clientVersions';
-server.publish(autoUpdateCollection, function() {
+server.publish(autoUpdateCollection, function () {
 	autoUpdateRecords.forEach((record) => this.added(autoUpdateCollection, record._id, record));
 
 	const fn = (record: any): void => {

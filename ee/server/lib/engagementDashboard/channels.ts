@@ -43,7 +43,8 @@ export const findAllChannelsWithNumberOfMessages = async ({
 		options,
 	}).toArray();
 
-	const total =		(
+	const total =
+		(
 			await Rooms.findChannelsWithNumberOfMessagesBetweenDate({
 				start: convertDateToInt(start),
 				end: convertDateToInt(end),

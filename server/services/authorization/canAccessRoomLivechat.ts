@@ -3,7 +3,8 @@ import { proxifyWithWait } from '../../sdk/lib/proxify';
 import { RoomAccessValidator } from '../../sdk/types/IAuthorization';
 import { Rooms } from './service';
 
-export const AuthorizationLivechat =	proxifyWithWait<IAuthorizationLivechat>('authorization-livechat');
+export const AuthorizationLivechat =
+	proxifyWithWait<IAuthorizationLivechat>('authorization-livechat');
 
 export const canAccessRoomLivechat: RoomAccessValidator = async (
 	room,

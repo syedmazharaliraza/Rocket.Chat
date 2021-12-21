@@ -362,8 +362,8 @@ API.v1.addRoute(
 
 			if (
 				!(
-					this.userId === userId
-					|| hasPermission(this.userId, 'view-all-team-channels', team.roomId)
+					this.userId === userId ||
+					hasPermission(this.userId, 'view-all-team-channels', team.roomId)
 				)
 			) {
 				return API.v1.unauthorized();

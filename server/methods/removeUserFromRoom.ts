@@ -39,8 +39,8 @@ Meteor.methods({
 		const room = Rooms.findOneById(data.rid);
 
 		if (
-			!room
-			|| !roomTypes.getConfig(room.t).allowMemberAction(room, RoomMemberActions.REMOVE_USER)
+			!room ||
+			!roomTypes.getConfig(room.t).allowMemberAction(room, RoomMemberActions.REMOVE_USER)
 		) {
 			throw new Meteor.Error('error-not-allowed', 'Not allowed', {
 				method: 'removeUserFromRoom',
@@ -94,7 +94,7 @@ Meteor.methods({
 			await Team.removeMember(room.teamId, removedUser._id);
 		}
 
-		Meteor.defer(function() {
+		Meteor.defer(function () {
 			callbacks.run('afterRemoveFromRoom', { removedUser, userWhoRemoved: fromUser }, room);
 		});
 

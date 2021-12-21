@@ -12,6 +12,6 @@ export class IntegrationHistoryRaw extends BaseRaw<IIntegrationHistory> {
 		integrationId: string,
 		historyId: string,
 	): Promise<IIntegrationHistory | null> {
-		return this.findOne({ 'integration._id': integrationId, _id: historyId });
+		return this.findOne({ 'integration._id': integrationId, '_id': historyId });
 	}
 }

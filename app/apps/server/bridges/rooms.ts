@@ -16,7 +16,7 @@ export class AppRoomBridge extends RoomBridge {
 	}
 
 	protected async create(room: IRoom, members: Array<string>, appId: string): Promise<string> {
-		this.orch.debugLog(`The App ${ appId } is creating a new room.`, room);
+		this.orch.debugLog(`The App ${appId} is creating a new room.`, room);
 
 		const rcRoom = this.orch.getConverters()?.get('rooms').convertAppRoom(room);
 		let method: string;
@@ -55,19 +55,19 @@ export class AppRoomBridge extends RoomBridge {
 	}
 
 	protected async getById(roomId: string, appId: string): Promise<IRoom> {
-		this.orch.debugLog(`The App ${ appId } is getting the roomById: "${ roomId }"`);
+		this.orch.debugLog(`The App ${appId} is getting the roomById: "${roomId}"`);
 
 		return this.orch.getConverters()?.get('rooms').convertById(roomId);
 	}
 
 	protected async getByName(roomName: string, appId: string): Promise<IRoom> {
-		this.orch.debugLog(`The App ${ appId } is getting the roomByName: "${ roomName }"`);
+		this.orch.debugLog(`The App ${appId} is getting the roomByName: "${roomName}"`);
 
 		return this.orch.getConverters()?.get('rooms').convertByName(roomName);
 	}
 
 	protected async getCreatorById(roomId: string, appId: string): Promise<IUser | undefined> {
-		this.orch.debugLog(`The App ${ appId } is getting the room's creator by id: "${ roomId }"`);
+		this.orch.debugLog(`The App ${appId} is getting the room's creator by id: "${roomId}"`);
 
 		const room = Rooms.findOneById(roomId);
 
@@ -79,7 +79,7 @@ export class AppRoomBridge extends RoomBridge {
 	}
 
 	protected async getCreatorByName(roomName: string, appId: string): Promise<IUser | undefined> {
-		this.orch.debugLog(`The App ${ appId } is getting the room's creator by name: "${ roomName }"`);
+		this.orch.debugLog(`The App ${appId} is getting the room's creator by name: "${roomName}"`);
 
 		const room = Rooms.findOneByName(roomName, {});
 
@@ -91,7 +91,7 @@ export class AppRoomBridge extends RoomBridge {
 	}
 
 	protected async getMembers(roomId: string, appId: string): Promise<Array<IUser>> {
-		this.orch.debugLog(`The App ${ appId } is getting the room's members by room id: "${ roomId }"`);
+		this.orch.debugLog(`The App ${appId} is getting the room's members by room id: "${roomId}"`);
 		const subscriptions = await Subscriptions.findByRoomId(roomId, {});
 		return subscriptions.map((sub: ISubscription) =>
 			this.orch
@@ -105,7 +105,7 @@ export class AppRoomBridge extends RoomBridge {
 		usernames: Array<string>,
 		appId: string,
 	): Promise<IRoom | undefined> {
-		this.orch.debugLog(`The App ${ appId } is getting direct room by usernames: "${ usernames }"`);
+		this.orch.debugLog(`The App ${appId} is getting direct room by usernames: "${usernames}"`);
 		const room = await Rooms.findDirectRoomContainingAllUsernames(usernames, {});
 		if (!room) {
 			return undefined;
@@ -114,7 +114,7 @@ export class AppRoomBridge extends RoomBridge {
 	}
 
 	protected async update(room: IRoom, members: Array<string> = [], appId: string): Promise<void> {
-		this.orch.debugLog(`The App ${ appId } is updating a room.`);
+		this.orch.debugLog(`The App ${appId} is updating a room.`);
 
 		if (!room.id || !Rooms.findOneById(room.id)) {
 			throw new Error('A room must exist to update.');
@@ -136,7 +136,7 @@ export class AppRoomBridge extends RoomBridge {
 	}
 
 	protected async delete(roomId: string, appId: string): Promise<void> {
-		this.orch.debugLog(`The App ${ appId } is deleting a room.`);
+		this.orch.debugLog(`The App ${appId} is deleting a room.`);
 		Rooms.removeById(roomId);
 	}
 
@@ -147,7 +147,7 @@ export class AppRoomBridge extends RoomBridge {
 		members: Array<string> = [],
 		appId: string,
 	): Promise<string> {
-		this.orch.debugLog(`The App ${ appId } is creating a new discussion.`, room);
+		this.orch.debugLog(`The App ${appId} is creating a new discussion.`, room);
 
 		const rcRoom = this.orch.getConverters()?.get('rooms').convertAppRoom(room);
 

@@ -7,9 +7,10 @@ callbacks.add(
 	'livechat.applySimultaneousChatRestrictions',
 	(_: any, { departmentId }: { departmentId?: string }) => {
 		if (departmentId) {
-			const departmentLimit =				LivechatDepartment.findOneById(departmentId)?.maxNumberSimultaneousChat || 0;
+			const departmentLimit =
+				LivechatDepartment.findOneById(departmentId)?.maxNumberSimultaneousChat || 0;
 			if (departmentLimit > 0) {
-				cbLogger.debug(`Applying department filters. Max chats per department ${ departmentLimit }`);
+				cbLogger.debug(`Applying department filters. Max chats per department ${departmentLimit}`);
 				return { $match: { 'queueInfo.chats': { $gte: Number(departmentLimit) } } };
 			}
 		}
@@ -22,7 +23,8 @@ callbacks.add(
 			],
 		};
 		// apply filter only if agent setting is 0 or is disabled
-		const globalFilter =			maxChatsPerSetting > 0
+		const globalFilter =
+			maxChatsPerSetting > 0
 				? {
 						$and: [
 							{
@@ -42,7 +44,7 @@ callbacks.add(
 				  { _id: '' };
 
 		cbLogger.debug(
-			`Applying agent & global filters. Max number of chats allowed to all agents by setting: ${ maxChatsPerSetting }`,
+			`Applying agent & global filters. Max number of chats allowed to all agents by setting: ${maxChatsPerSetting}`,
 		);
 
 		return { $match: { $or: [agentFilter, globalFilter] } };

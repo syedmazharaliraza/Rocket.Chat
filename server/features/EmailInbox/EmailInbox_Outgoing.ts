@@ -29,7 +29,7 @@ const sendErrorReplyMessage = (error: string, options: any): void => {
 
 	const message = {
 		groupable: false,
-		msg: `@${ options.sender } something went wrong when replying email, sorry. **Error:**: ${ error }`,
+		msg: `@${options.sender} something went wrong when replying email, sorry. **Error:**: ${error}`,
 		_id: String(Date.now()),
 		rid: options.rid,
 		ts: new Date(),
@@ -81,7 +81,7 @@ slashCommands.add(
 		const inbox = inboxes.get(room.email.inbox);
 
 		if (!inbox) {
-			return sendErrorReplyMessage(`Email inbox ${ room.email.inbox } not found or disabled.`, {
+			return sendErrorReplyMessage(`Email inbox ${room.email.inbox} not found or disabled.`, {
 				msgId: message._id,
 				sender: message.u.username,
 				rid: room._id,
@@ -95,9 +95,9 @@ slashCommands.add(
 		}
 
 		FileUpload.getBuffer(file, (_err?: Error, buffer?: Buffer) => {
-			!_err
-				&& buffer
-				&& sendEmail(
+			!_err &&
+				buffer &&
+				sendEmail(
 					inbox,
 					{
 						to: room.email.replyTo,
@@ -131,7 +131,7 @@ slashCommands.add(
 							elements: [
 								{
 									type: 'mrkdwn',
-									text: `**${ t('To') }:** ${ room.email.replyTo }\n**${ t('Subject') }:** ${
+									text: `**${t('To')}:** ${room.email.replyTo}\n**${t('Subject')}:** ${
 										room.email.subject
 									}`,
 								},
@@ -153,7 +153,7 @@ slashCommands.add(
 
 callbacks.add(
 	'beforeSaveMessage',
-	function(message: IMessage, room: any) {
+	function (message: IMessage, room: any) {
 		if (!room?.email?.inbox) {
 			return message;
 		}
@@ -165,7 +165,7 @@ callbacks.add(
 					{
 						type: 'button',
 						text: t('Send_via_Email_as_attachment'),
-						msg: `/sendEmailAttachment ${ message._id }`,
+						msg: `/sendEmailAttachment ${message._id}`,
 						msg_in_chat_window: true,
 						msg_processing_type: 'sendMessage',
 					},
@@ -186,7 +186,7 @@ callbacks.add(
 		const inbox = inboxes.get(room.email.inbox);
 
 		if (!inbox) {
-			sendErrorReplyMessage(`Email inbox ${ room.email.inbox } not found or disabled.`, {
+			sendErrorReplyMessage(`Email inbox ${room.email.inbox} not found or disabled.`, {
 				msgId: message._id,
 				sender: message.u.username,
 				rid: room._id,
@@ -231,7 +231,7 @@ callbacks.add(
 				elements: [
 					{
 						type: 'mrkdwn',
-						text: `**${ t('To') }:** ${ room.email.replyTo }\n**${ t('Subject') }:** ${
+						text: `**${t('To')}:** ${room.email.replyTo}\n**${t('Subject')}:** ${
 							room.email.subject
 						}`,
 					},
@@ -248,7 +248,7 @@ callbacks.add(
 				type: 'section',
 				text: {
 					type: 'mrkdwn',
-					text: `> ---\n${ replyToMessage.msg.replace(/^/gm, '> ') }`,
+					text: `> ---\n${replyToMessage.msg.replace(/^/gm, '> ')}`,
 				},
 			},
 		];
@@ -277,7 +277,7 @@ export async function sendTestEmailToInbox(
 		throw new Error('user-without-verified-email');
 	}
 
-	console.log(`Sending testing email to ${ address }`);
+	console.log(`Sending testing email to ${address}`);
 	sendEmail(inbox, {
 		to: address,
 		subject: 'Test of inbox configuration',

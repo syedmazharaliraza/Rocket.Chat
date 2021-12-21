@@ -26,7 +26,7 @@ class ImportDataModel extends Base {
 	getAllChannelsForSelection(): Array<IImportChannelRecord> {
 		return this.find(
 			{
-				dataType: 'channel',
+				'dataType': 'channel',
 				'data.t': {
 					$ne: 'd',
 				},
@@ -46,7 +46,7 @@ class ImportDataModel extends Base {
 		return (
 			this.find(
 				{
-					dataType: 'channel',
+					'dataType': 'channel',
 					'data.t': 'd',
 				},
 				{
@@ -89,7 +89,7 @@ class ImportDataModel extends Base {
 
 	findDMForImportedUsers(...users: Array<string>): IImportChannelRecord | undefined {
 		const query = {
-			dataType: 'channel',
+			'dataType': 'channel',
 			'data.users': {
 				$all: users,
 			},

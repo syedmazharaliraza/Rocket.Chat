@@ -66,7 +66,8 @@ type ResultFields<Base, Defaults> = Defaults extends void
 		? Pick<Defaults, keyof Defaults>
 		: Omit<Defaults, keyof Defaults>;
 
-const warnFields =	process.env.NODE_ENV !== 'production'
+const warnFields =
+	process.env.NODE_ENV !== 'production'
 		? (...rest: any): void => {
 			console.warn(...rest, new Error().stack);
 		  }

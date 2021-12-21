@@ -14,11 +14,11 @@ export class Nps implements IUiKitCoreApp {
 			user,
 		} = payload;
 
-		const bannerId = viewId.replace(`${ npsId }-`, '');
+		const bannerId = viewId.replace(`${npsId}-`, '');
 
 		return createModal({
 			type: actionId === 'nps-score' ? 'modal.update' : 'modal.open',
-			id: `${ npsId }-${ bannerId }`,
+			id: `${npsId}-${bannerId}`,
 			appId: this.appId,
 			npsId,
 			triggerId,
@@ -41,7 +41,7 @@ export class Nps implements IUiKitCoreApp {
 
 		const [npsId] = Object.keys(state);
 
-		const bannerId = viewId.replace(`${ npsId }-`, '');
+		const bannerId = viewId.replace(`${npsId}-`, '');
 
 		const {
 			[npsId]: { 'nps-score': score, comment },

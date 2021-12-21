@@ -55,7 +55,8 @@ const loginViaResume = async (resume: string): Promise<false | ILoginResult> => 
 		return false;
 	}
 
-	const { when } =		user.services?.resume?.loginTokens?.find((token) => token.hashedToken === hashedToken) || {};
+	const { when } =
+		user.services?.resume?.loginTokens?.find((token) => token.hashedToken === hashedToken) || {};
 
 	return {
 		uid: user._id,
@@ -79,7 +80,8 @@ const loginViaUsername = async (
 		return false;
 	}
 
-	const valid =		user.services?.password?.bcrypt && validatePassword(password, user.services.password.bcrypt);
+	const valid =
+		user.services?.password?.bcrypt && validatePassword(password, user.services.password.bcrypt);
 	if (!valid) {
 		return false;
 	}

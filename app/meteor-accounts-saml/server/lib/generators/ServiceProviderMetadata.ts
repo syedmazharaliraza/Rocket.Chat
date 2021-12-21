@@ -55,7 +55,7 @@ export class ServiceProviderMetadata {
 			certificate: SAMLUtils.normalizeCert(serviceProviderOptions.privateCert),
 			identifierFormat: serviceProviderOptions.identifierFormat || defaultIdentifierFormat,
 			callbackUrl: serviceProviderOptions.callbackUrl,
-			sloLocation: `${ Meteor.absoluteUrl() }_saml/logout/${ serviceProviderOptions.provider }/`,
+			sloLocation: `${Meteor.absoluteUrl()}_saml/logout/${serviceProviderOptions.provider}/`,
 		};
 	}
 }

@@ -16,19 +16,19 @@ export function showBox(title: string, message: string, color?: LogColors): void
 		msgLines.map((line) => line.length),
 	);
 
-	const topLine = `+--${ s.pad('', len, '-') }--+`;
-	const separator = `|  ${ s.pad('', len, '') }  |`;
+	const topLine = `+--${s.pad('', len, '-')}--+`;
+	const separator = `|  ${s.pad('', len, '')}  |`;
 
 	const lines = [];
 
 	lines.push(topLine);
 	if (title) {
-		lines.push(`|  ${ s.lrpad(title, len) }  |`);
+		lines.push(`|  ${s.lrpad(title, len)}  |`);
 		lines.push(topLine);
 	}
 	lines.push(separator);
 
-	[...lines, ...msgLines.map((line) => `|  ${ s.rpad(line, len) }  |`), separator, topLine].forEach(
+	[...lines, ...msgLines.map((line) => `|  ${s.rpad(line, len)}  |`), separator, topLine].forEach(
 		(line) => console.log(color ? colors[color](line) : line),
 	);
 }

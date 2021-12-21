@@ -37,33 +37,33 @@ const migrateCollection = async (): Promise<void> => {
 				start: {
 					time: officeHour.start as any,
 					utc: {
-						dayOfWeek: moment(`${ officeHour.day }:${ officeHour.start }`, 'dddd:HH:mm')
+						dayOfWeek: moment(`${officeHour.day}:${officeHour.start}`, 'dddd:HH:mm')
 							.utc()
 							.format('dddd'),
-						time: moment(`${ officeHour.day }:${ officeHour.start }`, 'dddd:HH:mm')
+						time: moment(`${officeHour.day}:${officeHour.start}`, 'dddd:HH:mm')
 							.utc()
 							.format('HH:mm'),
 					},
 					cron: {
-						dayOfWeek: moment(`${ officeHour.day }:${ officeHour.start }`, 'dddd:HH:mm').format('dddd'),
-						time: moment(`${ officeHour.day }:${ officeHour.start }`, 'dddd:HH:mm').format('HH:mm'),
+						dayOfWeek: moment(`${officeHour.day}:${officeHour.start}`, 'dddd:HH:mm').format('dddd'),
+						time: moment(`${officeHour.day}:${officeHour.start}`, 'dddd:HH:mm').format('HH:mm'),
 					},
 				},
 				finish: {
 					time: officeHour.finish as any,
 					utc: {
-						dayOfWeek: moment(`${ officeHour.day }:${ officeHour.finish }`, 'dddd:HH:mm')
+						dayOfWeek: moment(`${officeHour.day}:${officeHour.finish}`, 'dddd:HH:mm')
 							.utc()
 							.format('dddd'),
-						time: moment(`${ officeHour.day }:${ officeHour.finish }`, 'dddd:HH:mm')
+						time: moment(`${officeHour.day}:${officeHour.finish}`, 'dddd:HH:mm')
 							.utc()
 							.format('HH:mm'),
 					},
 					cron: {
-						dayOfWeek: moment(`${ officeHour.day }:${ officeHour.finish }`, 'dddd:HH:mm').format(
+						dayOfWeek: moment(`${officeHour.day}:${officeHour.finish}`, 'dddd:HH:mm').format(
 							'dddd',
 						),
-						time: moment(`${ officeHour.day }:${ officeHour.finish }`, 'dddd:HH:mm').format('HH:mm'),
+						time: moment(`${officeHour.day}:${officeHour.finish}`, 'dddd:HH:mm').format('HH:mm'),
 					},
 				},
 				code: officeHour.code,

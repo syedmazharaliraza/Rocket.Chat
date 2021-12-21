@@ -10,7 +10,7 @@ addAction('discussions', ({ room: { prid } }) => {
 
 	return useMemo(
 		() =>
-			(discussionEnabled && !prid
+			discussionEnabled && !prid
 				? {
 						groups: ['channel', 'group', 'direct', 'direct_multiple', 'team'],
 						id: 'discussions',
@@ -20,7 +20,7 @@ addAction('discussions', ({ room: { prid } }) => {
 						full: true,
 						order: 3,
 				  }
-				: null),
+				: null,
 		[discussionEnabled, prid],
 	);
 });

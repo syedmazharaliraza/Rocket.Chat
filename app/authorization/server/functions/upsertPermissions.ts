@@ -230,7 +230,7 @@ export const upsertPermissions = async (): Promise<void> => {
 		);
 	}
 
-	const getPreviousPermissions = async function(
+	const getPreviousPermissions = async function (
 		settingId?: string,
 	): Promise<Record<string, IPermission>> {
 		const previousSettingPermissions: {
@@ -239,13 +239,13 @@ export const upsertPermissions = async (): Promise<void> => {
 
 		const selector = { level: 'settings' as const, ...settingId && { settingId } };
 
-		await Permissions.find(selector).forEach(function(permission: IPermission) {
+		await Permissions.find(selector).forEach(function (permission: IPermission) {
 			previousSettingPermissions[permission._id] = permission;
 		});
 		return previousSettingPermissions;
 	};
 
-	const createSettingPermission = async function(
+	const createSettingPermission = async function (
 		setting: ISetting,
 		previousSettingPermissions: {
 			[key: string]: IPermission;
@@ -263,8 +263,8 @@ export const upsertPermissions = async (): Promise<void> => {
 		};
 		// copy previously assigned roles if available
 		if (
-			previousSettingPermissions[permissionId]
-			&& previousSettingPermissions[permissionId].roles
+			previousSettingPermissions[permissionId] &&
+			previousSettingPermissions[permissionId].roles
 		) {
 			permission.roles = previousSettingPermissions[permissionId].roles;
 		}
@@ -298,7 +298,7 @@ export const upsertPermissions = async (): Promise<void> => {
 		delete previousSettingPermissions[permissionId];
 	};
 
-	const createPermissionsForExistingSettings = async function(): Promise<void> {
+	const createPermissionsForExistingSettings = async function (): Promise<void> {
 		const previousSettingPermissions = await getPreviousPermissions();
 
 		(await Settings.findNotHidden().toArray()).forEach((setting) => {
@@ -317,7 +317,7 @@ export const upsertPermissions = async (): Promise<void> => {
 	createPermissionsForExistingSettings();
 
 	// register a callback for settings for be create in higher-level-packages
-	settings.on('*', async function([settingId]) {
+	settings.on('*', async function ([settingId]) {
 		const previousSettingPermissions = await getPreviousPermissions(settingId);
 		const setting = await Settings.findOneById(settingId);
 		if (setting) {

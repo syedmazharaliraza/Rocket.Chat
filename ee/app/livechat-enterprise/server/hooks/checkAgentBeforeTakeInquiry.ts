@@ -47,7 +47,7 @@ callbacks.add(
 		}
 
 		if (allowAgentSkipQueue(agent)) {
-			cbLogger.debug(`Callback success. Agent ${ agent.agentId } can skip queue`);
+			cbLogger.debug(`Callback success. Agent ${agent.agentId} can skip queue`);
 			return agent;
 		}
 
@@ -58,7 +58,7 @@ callbacks.add(
 			departmentId,
 		});
 		if (maxNumberSimultaneousChat === 0) {
-			cbLogger.debug(`Callback success. Agent ${ agentId } max number simultaneous chats on range`);
+			cbLogger.debug(`Callback success. Agent ${agentId} max number simultaneous chats on range`);
 			return agent;
 		}
 
@@ -79,7 +79,7 @@ callbacks.add(
 			return null;
 		}
 
-		cbLogger.debug(`Callback success. Agent ${ agentId } can take inquiry ${ inquiry._id }`);
+		cbLogger.debug(`Callback success. Agent ${agentId} can take inquiry ${inquiry._id}`);
 		return agent;
 	},
 	callbacks.priority.MEDIUM,

@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 
 import { settingsRegistry } from '../../settings/server';
 
-Meteor.startup(function() {
+Meteor.startup(function () {
 	settingsRegistry.add('MapView_Enabled', false, {
 		type: 'boolean',
 		group: 'Message',

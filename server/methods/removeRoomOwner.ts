@@ -40,8 +40,8 @@ Meteor.methods({
 		}
 
 		if (
-			Array.isArray(subscription.roles) === false
-			|| subscription.roles.includes('owner') === false
+			Array.isArray(subscription.roles) === false ||
+			subscription.roles.includes('owner') === false
 		) {
 			throw new Meteor.Error('error-user-not-owner', 'User is not an owner', {
 				method: 'removeRoomOwner',

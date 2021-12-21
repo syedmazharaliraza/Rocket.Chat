@@ -14,7 +14,7 @@ import { IIncomingMessage } from '../../../definition/IIncomingMessage';
 
 RoutePolicy.declare('/_saml/', 'network');
 
-const samlUrlToObject = function(url: string | undefined): ISAMLAction | null {
+const samlUrlToObject = function (url: string | undefined): ISAMLAction | null {
 	// req.url will be '/_saml/<action>/<service name>/<credentialToken>'
 	if (!url) {
 		return null;
@@ -39,7 +39,7 @@ const samlUrlToObject = function(url: string | undefined): ISAMLAction | null {
 	return result;
 };
 
-const middleware = function(
+const middleware = function (
 	req: IIncomingMessage,
 	res: ServerResponse,
 	next: (err?: any) => void,
@@ -59,7 +59,7 @@ const middleware = function(
 
 		const service = SAMLUtils.getServiceProviderOptions(samlObject.serviceName);
 		if (!service) {
-			SystemLogger.error(`${ samlObject.serviceName } service provider not found`);
+			SystemLogger.error(`${samlObject.serviceName} service provider not found`);
 			throw new Error('SAML Service Provider not found.');
 		}
 
@@ -79,10 +79,10 @@ const middleware = function(
 // Listen to incoming SAML http requests
 WebApp.connectHandlers
 	.use(bodyParser.json())
-	.use(function(req: IncomingMessage, res: ServerResponse, next: (err?: any) => void) {
+	.use(function (req: IncomingMessage, res: ServerResponse, next: (err?: any) => void) {
 		// Need to create a fiber since we're using synchronous http calls and nothing
 		// else is wrapping this in a fiber automatically
-		fiber(function() {
+		fiber(function () {
 			middleware(req as IIncomingMessage, res, next);
 		}).run();
 	});

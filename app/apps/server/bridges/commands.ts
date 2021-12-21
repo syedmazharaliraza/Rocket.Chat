@@ -21,7 +21,7 @@ export class AppCommandsBridge extends CommandBridge {
 	}
 
 	protected doesCommandExist(command: string, appId: string): boolean {
-		this.orch.debugLog(`The App ${ appId } is checking if "${ command }" command exists.`);
+		this.orch.debugLog(`The App ${appId} is checking if "${command}" command exists.`);
 
 		if (typeof command !== 'string' || command.length === 0) {
 			return false;
@@ -32,7 +32,7 @@ export class AppCommandsBridge extends CommandBridge {
 	}
 
 	protected enableCommand(command: string, appId: string): void {
-		this.orch.debugLog(`The App ${ appId } is attempting to enable the command: "${ command }"`);
+		this.orch.debugLog(`The App ${appId} is attempting to enable the command: "${command}"`);
 
 		if (typeof command !== 'string' || command.trim().length === 0) {
 			throw new Error('Invalid command parameter provided, must be a string.');
@@ -40,7 +40,7 @@ export class AppCommandsBridge extends CommandBridge {
 
 		const cmd = command.toLowerCase();
 		if (!this.disabledCommands.has(cmd)) {
-			throw new Error(`The command is not currently disabled: "${ cmd }"`);
+			throw new Error(`The command is not currently disabled: "${cmd}"`);
 		}
 
 		slashCommands.commands[cmd] = this.disabledCommands.get(cmd);
@@ -50,7 +50,7 @@ export class AppCommandsBridge extends CommandBridge {
 	}
 
 	protected disableCommand(command: string, appId: string): void {
-		this.orch.debugLog(`The App ${ appId } is attempting to disable the command: "${ command }"`);
+		this.orch.debugLog(`The App ${appId} is attempting to disable the command: "${command}"`);
 
 		if (typeof command !== 'string' || command.trim().length === 0) {
 			throw new Error('Invalid command parameter provided, must be a string.');
@@ -63,7 +63,7 @@ export class AppCommandsBridge extends CommandBridge {
 		}
 
 		if (typeof slashCommands.commands[cmd] === 'undefined') {
-			throw new Error(`Command does not exist in the system currently: "${ cmd }"`);
+			throw new Error(`Command does not exist in the system currently: "${cmd}"`);
 		}
 
 		this.disabledCommands.set(cmd, slashCommands.commands[cmd]);
@@ -74,14 +74,14 @@ export class AppCommandsBridge extends CommandBridge {
 
 	// command: { command, paramsExample, i18nDescription, executor: function }
 	protected modifyCommand(command: ISlashCommand, appId: string): void {
-		this.orch.debugLog(`The App ${ appId } is attempting to modify the command: "${ command }"`);
+		this.orch.debugLog(`The App ${appId} is attempting to modify the command: "${command}"`);
 
 		this._verifyCommand(command);
 
 		const cmd = command.command.toLowerCase();
 		if (typeof slashCommands.commands[cmd] === 'undefined') {
 			throw new Error(
-				`Command does not exist in the system currently (or it is disabled): "${ cmd }"`,
+				`Command does not exist in the system currently (or it is disabled): "${cmd}"`,
 			);
 		}
 
@@ -100,7 +100,7 @@ export class AppCommandsBridge extends CommandBridge {
 	}
 
 	protected registerCommand(command: ISlashCommand, appId: string): void {
-		this.orch.debugLog(`The App ${ appId } is registering the command: "${ command.command }"`);
+		this.orch.debugLog(`The App ${appId} is registering the command: "${command.command}"`);
 
 		this._verifyCommand(command);
 
@@ -123,7 +123,7 @@ export class AppCommandsBridge extends CommandBridge {
 	}
 
 	protected unregisterCommand(command: string, appId: string): void {
-		this.orch.debugLog(`The App ${ appId } is unregistering the command: "${ command }"`);
+		this.orch.debugLog(`The App ${appId} is unregistering the command: "${command}"`);
 
 		if (typeof command !== 'string' || command.trim().length === 0) {
 			throw new Error('Invalid command parameter provided, must be a string.');

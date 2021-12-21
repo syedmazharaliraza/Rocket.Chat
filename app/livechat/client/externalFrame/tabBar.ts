@@ -8,7 +8,7 @@ addAction('omnichannel-external-frame', () => {
 
 	return useMemo(
 		() =>
-			(enabled
+			enabled
 				? {
 						groups: ['live'],
 						id: 'omnichannel-external-frame',
@@ -17,7 +17,7 @@ addAction('omnichannel-external-frame', () => {
 						template: 'ExternalFrameContainer',
 						order: -1,
 				  }
-				: null),
+				: null,
 		[enabled],
 	);
 });

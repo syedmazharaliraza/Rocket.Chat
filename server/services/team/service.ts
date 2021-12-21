@@ -112,7 +112,8 @@ export class TeamService extends ServiceClass implements ITeamService {
 			const excludeFromMembers = owner ? [owner] : [uid];
 
 			// filter empty strings and falsy values from members list
-			const membersList: Array<InsertionModel<ITeamMember>> =				members
+			const membersList: Array<InsertionModel<ITeamMember>> =
+				members
 					?.filter(Boolean)
 					.filter((memberId) => !excludeFromMembers.includes(memberId))
 					.map((memberId) => ({
@@ -252,7 +253,7 @@ export class TeamService extends ServiceClass implements ITeamService {
 		| FindOneOptions<P extends ITeam ? ITeam : P>,
 	): Promise<ITeam[] | P[]> {
 		if (typeof term === 'string') {
-			term = new RegExp(`^${ escapeRegExp(term) }`, 'i');
+			term = new RegExp(`^${escapeRegExp(term)}`, 'i');
 		}
 
 		const userTeams = await this.TeamMembersModel.findByUserId<Pick<ITeamMember, 'teamId'>>(
@@ -1069,7 +1070,7 @@ export class TeamService extends ServiceClass implements ITeamService {
 	}
 
 	async autocomplete(uid: string, name: string): Promise<ITeamAutocompleteResult[]> {
-		const nameRegex = new RegExp(`^${ escapeRegExp(name).trim() }`, 'i');
+		const nameRegex = new RegExp(`^${escapeRegExp(name).trim()}`, 'i');
 
 		const subscriptions = await this.SubscriptionsModel.find<Pick<ISubscription, 'rid'>>(
 			{ 'u._id': uid },

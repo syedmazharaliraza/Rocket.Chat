@@ -197,7 +197,8 @@ export class CachedSettings
 		[k: string]: SettingValue;
 	}
 	>
-	implements ICachedSettings {
+	implements ICachedSettings
+{
 	ready = false;
 
 	store = new Map<string, ISetting>();
@@ -218,14 +219,14 @@ export class CachedSettings
 	 */
 	public has(_id: ISetting['_id']): boolean {
 		if (!this.ready && warn) {
-			SystemLogger.warn(`Settings not initialized yet. getting: ${ _id }`);
+			SystemLogger.warn(`Settings not initialized yet. getting: ${_id}`);
 		}
 		return this.store.has(_id);
 	}
 
 	public getSetting(_id: ISetting['_id']): ISetting | undefined {
 		if (!this.ready && warn) {
-			SystemLogger.warn(`Settings not initialized yet. getting: ${ _id }`);
+			SystemLogger.warn(`Settings not initialized yet. getting: ${_id}`);
 		}
 		return this.store.get(_id);
 	}
@@ -239,7 +240,7 @@ export class CachedSettings
 	 */
 	public get<T extends SettingValue = SettingValue>(_id: ISetting['_id']): T {
 		if (!this.ready && warn) {
-			SystemLogger.warn(`Settings not initialized yet. getting: ${ _id }`);
+			SystemLogger.warn(`Settings not initialized yet. getting: ${_id}`);
 		}
 		return this.store.get(_id)?.value as T;
 	}
@@ -255,7 +256,7 @@ export class CachedSettings
 	/* @deprecated */
 	public getByRegexp<T extends SettingValue = SettingValue>(_id: RegExp): [string, T][] {
 		if (!this.ready && warn) {
-			SystemLogger.warn(`Settings not initialized yet. getting: ${ _id }`);
+			SystemLogger.warn(`Settings not initialized yet. getting: ${_id}`);
 		}
 
 		return [...this.store.entries()]

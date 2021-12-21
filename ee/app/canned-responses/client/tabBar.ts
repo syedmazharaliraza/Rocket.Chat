@@ -10,7 +10,7 @@ addAction('canned-responses', () => {
 
 	return useMemo(
 		() =>
-			(hasLicense && enabled
+			hasLicense && enabled
 				? {
 						groups: ['live'],
 						id: 'canned-responses',
@@ -21,7 +21,7 @@ addAction('canned-responses', () => {
 						),
 						order: 0,
 				  }
-				: null),
+				: null,
 		[hasLicense, enabled],
 	);
 });

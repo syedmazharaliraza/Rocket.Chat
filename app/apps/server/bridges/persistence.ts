@@ -10,13 +10,13 @@ export class AppPersistenceBridge extends PersistenceBridge {
 	}
 
 	protected async purge(appId: string): Promise<void> {
-		this.orch.debugLog(`The App's persistent storage is being purged: ${ appId }`);
+		this.orch.debugLog(`The App's persistent storage is being purged: ${appId}`);
 
 		this.orch.getPersistenceModel().remove({ appId });
 	}
 
 	protected async create(data: object, appId: string): Promise<string> {
-		this.orch.debugLog(`The App ${ appId } is storing a new object in their persistence.`, data);
+		this.orch.debugLog(`The App ${appId} is storing a new object in their persistence.`, data);
 
 		if (typeof data !== 'object') {
 			throw new Error('Attempted to store an invalid data type, it must be an object.');
@@ -31,7 +31,7 @@ export class AppPersistenceBridge extends PersistenceBridge {
 		appId: string,
 	): Promise<string> {
 		this.orch.debugLog(
-			`The App ${ appId } is storing a new object in their persistence that is associated with some models.`,
+			`The App ${appId} is storing a new object in their persistence that is associated with some models.`,
 			data,
 			associations,
 		);
@@ -45,7 +45,7 @@ export class AppPersistenceBridge extends PersistenceBridge {
 
 	protected async readById(id: string, appId: string): Promise<object> {
 		this.orch.debugLog(
-			`The App ${ appId } is reading their data in their persistence with the id: "${ id }"`,
+			`The App ${appId} is reading their data in their persistence with the id: "${id}"`,
 		);
 
 		const record = this.orch.getPersistenceModel().findOneById(id);
@@ -58,7 +58,7 @@ export class AppPersistenceBridge extends PersistenceBridge {
 		appId: string,
 	): Promise<Array<object>> {
 		this.orch.debugLog(
-			`The App ${ appId } is searching for records that are associated with the following:`,
+			`The App ${appId} is searching for records that are associated with the following:`,
 			associations,
 		);
 
@@ -74,7 +74,7 @@ export class AppPersistenceBridge extends PersistenceBridge {
 	}
 
 	protected async remove(id: string, appId: string): Promise<object | undefined> {
-		this.orch.debugLog(`The App ${ appId } is removing one of their records by the id: "${ id }"`);
+		this.orch.debugLog(`The App ${appId} is removing one of their records by the id: "${id}"`);
 
 		const record = this.orch.getPersistenceModel().findOne({ _id: id, appId });
 
@@ -92,7 +92,7 @@ export class AppPersistenceBridge extends PersistenceBridge {
 		appId: string,
 	): Promise<Array<object> | undefined> {
 		this.orch.debugLog(
-			`The App ${ appId } is removing records with the following associations:`,
+			`The App ${appId} is removing records with the following associations:`,
 			associations,
 		);
 
@@ -120,7 +120,7 @@ export class AppPersistenceBridge extends PersistenceBridge {
 		_upsert: boolean,
 		appId: string,
 	): Promise<string> {
-		this.orch.debugLog(`The App ${ appId } is updating the record "${ id }" to:`, data);
+		this.orch.debugLog(`The App ${appId} is updating the record "${id}" to:`, data);
 
 		if (typeof data !== 'object') {
 			throw new Error('Attempted to store an invalid data type, it must be an object.');
@@ -136,7 +136,7 @@ export class AppPersistenceBridge extends PersistenceBridge {
 		appId: string,
 	): Promise<string> {
 		this.orch.debugLog(
-			`The App ${ appId } is updating the record with association to data as follows:`,
+			`The App ${appId} is updating the record with association to data as follows:`,
 			associations,
 			data,
 		);

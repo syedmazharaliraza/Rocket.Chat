@@ -18,7 +18,7 @@ const {
 	// 	PROMETHEUS_PORT = 9100,
 } = process.env;
 
-const proxy = function(req: IncomingMessage, res: ServerResponse): void {
+const proxy = function (req: IncomingMessage, res: ServerResponse): void {
 	// console.log(`request ${ req.url }`);
 	req.pause();
 	const options: RequestOptions = url.parse(req.url || '');
@@ -28,7 +28,7 @@ const proxy = function(req: IncomingMessage, res: ServerResponse): void {
 	options.hostname = 'localhost';
 	options.port = 3000;
 
-	const connector = http.request(options, function(serverResponse) {
+	const connector = http.request(options, function (serverResponse) {
 		serverResponse.pause();
 		if (serverResponse.statusCode) {
 			res.writeHead(serverResponse.statusCode, serverResponse.headers);

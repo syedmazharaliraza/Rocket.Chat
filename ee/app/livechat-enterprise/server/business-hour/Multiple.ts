@@ -19,7 +19,8 @@ interface IBusinessHoursExtraProperties extends ILivechatBusinessHour {
 
 export class MultipleBusinessHoursBehavior
 	extends AbstractBusinessHourBehavior
-	implements IBusinessHourBehavior {
+	implements IBusinessHourBehavior
+{
 	private DepartmentsRepository: LivechatDepartmentRaw = LivechatDepartment;
 
 	private DepartmentsAgentsRepository: LivechatDepartmentAgentsRaw = LivechatDepartmentAgents;
@@ -36,7 +37,8 @@ export class MultipleBusinessHoursBehavior
 		await this.UsersRepository.updateLivechatStatusBasedOnBusinessHours();
 		const currentTime = moment.utc(moment().utc().format('dddd:HH:mm'), 'dddd:HH:mm');
 		const day = currentTime.format('dddd');
-		const activeBusinessHours =			await this.BusinessHourRepository.findActiveAndOpenBusinessHoursByDay(day, {
+		const activeBusinessHours =
+			await this.BusinessHourRepository.findActiveAndOpenBusinessHoursByDay(day, {
 				fields: {
 					workHours: 1,
 					timezone: 1,

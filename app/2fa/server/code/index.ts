@@ -49,9 +49,9 @@ export function getAvailableMethodNames(user: IUser): string[] | [] {
 export function getUserForCheck(userId: string): IUser {
 	return Users.findOneById(userId, {
 		fields: {
-			emails: 1,
-			language: 1,
-			createdAt: 1,
+			'emails': 1,
+			'language': 1,
+			'createdAt': 1,
 			'services.totp': 1,
 			'services.email2fa': 1,
 			'services.emailCode': 1,
@@ -176,8 +176,8 @@ const getSecondFactorMethod = (
 
 	// check if password fallback is enabled
 	if (
-		!options.disablePasswordFallback
-		&& passwordCheckFallback.isEnabled(user, !!options.requireSecondFactor)
+		!options.disablePasswordFallback &&
+		passwordCheckFallback.isEnabled(user, !!options.requireSecondFactor)
 	) {
 		return passwordCheckFallback;
 	}
@@ -203,10 +203,10 @@ export function checkCodeForUser({
 	}
 
 	if (
-		!code
-		&& !method
-		&& connection?.httpHeaders?.['x-2fa-code']
-		&& connection.httpHeaders['x-2fa-method']
+		!code &&
+		!method &&
+		connection?.httpHeaders?.['x-2fa-code'] &&
+		connection.httpHeaders['x-2fa-method']
 	) {
 		code = connection.httpHeaders['x-2fa-code'];
 		method = connection.httpHeaders['x-2fa-method'];

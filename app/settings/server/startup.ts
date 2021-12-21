@@ -19,7 +19,7 @@ if (process.env.DEBUG_SETTINGS === 'true') {
 				const start = process.hrtime();
 				callback(...args);
 				const elapsed = process.hrtime(start);
-				console.log(`settings.watch: ${ _id } ${ getProcessingTimeInMS(elapsed) }ms`);
+				console.log(`settings.watch: ${_id} ${getProcessingTimeInMS(elapsed)}ms`);
 			},
 			options,
 		);

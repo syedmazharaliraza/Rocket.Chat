@@ -36,7 +36,7 @@ class LicenseClass {
 		licenseURL = licenseURL
 			.replace(/\./g, '\\.') // convert dots to literal
 			.replace(/\*/g, '.*'); // convert * to .*
-		const regex = new RegExp(`^${ licenseURL }$`, 'i');
+		const regex = new RegExp(`^${licenseURL}$`, 'i');
 
 		return !!regex.exec(url);
 	}
@@ -48,7 +48,7 @@ class LicenseClass {
 			modules.forEach((module) => {
 				this.modules.add(module);
 				EnterpriseLicenses.emit('module', { module, valid: true });
-				EnterpriseLicenses.emit(`valid:${ module }`);
+				EnterpriseLicenses.emit(`valid:${module}`);
 			});
 		});
 	}
@@ -59,7 +59,7 @@ class LicenseClass {
 
 			modules.forEach((module) => {
 				EnterpriseLicenses.emit('module', { module, valid: false });
-				EnterpriseLicenses.emit(`invalid:${ module }`);
+				EnterpriseLicenses.emit(`invalid:${module}`);
 			});
 		});
 	}
@@ -146,7 +146,7 @@ class LicenseClass {
 				if (!this._validateURL(license.url, this.url)) {
 					item.valid = false;
 					console.error(
-						`#### License error: invalid url, licensed to ${ license.url }, used on ${ this.url }`,
+						`#### License error: invalid url, licensed to ${license.url}, used on ${this.url}`,
 					);
 					this._invalidModules(license.modules);
 					return item;
@@ -155,7 +155,7 @@ class LicenseClass {
 
 			if (license.expiry && this._validateExpiration(license.expiry)) {
 				item.valid = false;
-				console.error(`#### License error: expired, valid until ${ license.expiry }`);
+				console.error(`#### License error: expired, valid until ${license.expiry}`);
 				this._invalidModules(license.modules);
 				return item;
 			}
@@ -216,9 +216,9 @@ const License = new LicenseClass();
 
 export function addLicense(encryptedLicense: string): boolean {
 	if (
-		!encryptedLicense
-		|| String(encryptedLicense).trim() === ''
-		|| License.isLicenseDuplicate(encryptedLicense)
+		!encryptedLicense ||
+		String(encryptedLicense).trim() === '' ||
+		License.isLicenseDuplicate(encryptedLicense)
 	) {
 		return false;
 	}
@@ -302,30 +302,30 @@ export function onLicense(feature: BundleFeature, cb: (...args: any[]) => void):
 		return cb();
 	}
 
-	EnterpriseLicenses.once(`valid:${ feature }`, cb);
+	EnterpriseLicenses.once(`valid:${feature}`, cb);
 }
 
 export function onValidFeature(feature: BundleFeature, cb: () => void): () => void {
-	EnterpriseLicenses.on(`valid:${ feature }`, cb);
+	EnterpriseLicenses.on(`valid:${feature}`, cb);
 
 	if (hasLicense(feature)) {
 		cb();
 	}
 
 	return (): void => {
-		EnterpriseLicenses.off(`valid:${ feature }`, cb);
+		EnterpriseLicenses.off(`valid:${feature}`, cb);
 	};
 }
 
 export function onInvalidFeature(feature: BundleFeature, cb: () => void): () => void {
-	EnterpriseLicenses.on(`invalid:${ feature }`, cb);
+	EnterpriseLicenses.on(`invalid:${feature}`, cb);
 
 	if (!hasLicense(feature)) {
 		cb();
 	}
 
 	return (): void => {
-		EnterpriseLicenses.off(`invalid:${ feature }`, cb);
+		EnterpriseLicenses.off(`invalid:${feature}`, cb);
 	};
 }
 
@@ -396,7 +396,7 @@ export function overwriteClassOnLicense(
 	onLicense(license, () => {
 		Object.entries(overwrite).forEach(([key, value]) => {
 			const originalFn = original.prototype[key];
-			original.prototype[key] = function(...args: any[]): any {
+			original.prototype[key] = function (...args: any[]): any {
 				return value.call(this, originalFn, ...args);
 			};
 		});

@@ -1,6 +1,6 @@
 import { settingsRegistry } from '../../../settings/server';
 
-settingsRegistry.addGroup('RetentionPolicy', function() {
+settingsRegistry.addGroup('RetentionPolicy', function () {
 	const globalQuery = {
 		_id: 'RetentionPolicy_Enabled',
 		value: true,
@@ -62,7 +62,7 @@ settingsRegistry.addGroup('RetentionPolicy', function() {
 		enableQuery: [globalQuery, { _id: 'RetentionPolicy_Advanced_Precision', value: true }],
 	});
 
-	this.section('Global Policy', function() {
+	this.section('Global Policy', function () {
 		this.add('RetentionPolicy_AppliesToChannels', false, {
 			type: 'boolean',
 			public: true,

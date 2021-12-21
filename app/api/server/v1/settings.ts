@@ -81,8 +81,8 @@ API.v1.addRoute(
 					}
 
 					if (
-						service.custom
-						|| (service.service && ['saml', 'cas', 'wordpress'].includes(service.service))
+						service.custom ||
+						(service.service && ['saml', 'cas', 'wordpress'].includes(service.service))
 					) {
 						return { ...service };
 					}
@@ -181,9 +181,9 @@ API.v1.addRoute(
 				}
 
 				if (
-					isSettingAction(setting)
-					&& isSettingsUpdatePropsActions(this.bodyParams)
-					&& this.bodyParams.execute
+					isSettingAction(setting) &&
+					isSettingsUpdatePropsActions(this.bodyParams) &&
+					this.bodyParams.execute
 				) {
 					// execute the configured method
 					Meteor.call(setting.value);
@@ -199,8 +199,8 @@ API.v1.addRoute(
 				}
 
 				if (
-					isSettingsUpdatePropDefault(this.bodyParams)
-					&& (await Settings.updateValueNotHiddenById(this.urlParams._id, this.bodyParams.value))
+					isSettingsUpdatePropDefault(this.bodyParams) &&
+					await Settings.updateValueNotHiddenById(this.urlParams._id, this.bodyParams.value)
 				) {
 					const s = await Settings.findOneNotHiddenById(this.urlParams._id);
 					if (!s) {

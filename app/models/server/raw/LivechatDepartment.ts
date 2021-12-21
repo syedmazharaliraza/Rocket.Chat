@@ -23,7 +23,7 @@ export class LivechatDepartmentRaw extends BaseRaw<ILivechatDepartmentRecord> {
 			exceptions = [exceptions];
 		}
 
-		const nameRegex = new RegExp(`^${ escapeRegExp(searchTerm).trim() }`, 'i');
+		const nameRegex = new RegExp(`^${escapeRegExp(searchTerm).trim()}`, 'i');
 
 		const query = {
 			name: nameRegex,

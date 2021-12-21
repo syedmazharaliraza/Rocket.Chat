@@ -10,7 +10,7 @@ import { Apps } from '../../../apps/server';
 import { IMessage } from '../../../../definition/IMessage';
 import { IUser } from '../../../../definition/IUser';
 
-export const deleteMessage = async function(message: IMessage, user: IUser): Promise<void> {
+export const deleteMessage = async function (message: IMessage, user: IUser): Promise<void> {
 	const deletedMsg = Messages.findOneById(message._id);
 	const isThread = deletedMsg.tcount > 0;
 	const keepHistory = settings.get('Message_KeepHistory') || isThread;

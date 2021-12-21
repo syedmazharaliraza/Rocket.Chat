@@ -61,7 +61,7 @@ export class AuthorizeRequest {
 	private static getDataForNewRequest(
 		serviceProviderOptions: IServiceProviderOptions,
 	): IAuthorizeRequestVariables {
-		let id = `_${ SAMLUtils.generateUniqueID() }`;
+		let id = `_${SAMLUtils.generateUniqueID()}`;
 		const instant = SAMLUtils.generateInstant();
 
 		// Post-auth destination

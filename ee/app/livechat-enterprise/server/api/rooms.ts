@@ -52,7 +52,7 @@ API.v1.addRoute(
 
 			const onHoldBy = { _id: user._id, username: user.username, name: (user as any).name };
 			const comment = TAPi18n.__('Omnichannel_On_Hold_manually', {
-				user: onHoldBy.name || `@${ onHoldBy.username }`,
+				user: onHoldBy.name || `@${onHoldBy.username}`,
 			});
 
 			LivechatEnterprise.placeRoomOnHold(room, comment, onHoldBy);

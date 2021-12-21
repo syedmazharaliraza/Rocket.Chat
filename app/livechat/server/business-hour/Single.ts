@@ -4,7 +4,8 @@ import { openBusinessHourDefault } from './Helper';
 
 export class SingleBusinessHourBehavior
 	extends AbstractBusinessHourBehavior
-	implements IBusinessHourBehavior {
+	implements IBusinessHourBehavior
+{
 	async openBusinessHoursByDayAndHour(day: string, hour: string): Promise<void> {
 		const businessHoursIds = (
 			await this.BusinessHourRepository.findActiveBusinessHoursToOpen(

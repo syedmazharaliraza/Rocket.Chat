@@ -203,9 +203,9 @@ API.v1.addRoute(
 			}
 
 			if (
-				role.protected
-				&& ((roleData.name && roleData.name !== role.name)
-					|| (roleData.scope && roleData.scope !== role.scope))
+				role.protected &&
+				((roleData.name && roleData.name !== role.name) ||
+					(roleData.scope && roleData.scope !== role.scope))
 			) {
 				throw new Meteor.Error('error-role-protected', 'Role is protected');
 			}

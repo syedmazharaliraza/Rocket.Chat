@@ -7,7 +7,7 @@ import { Permissions, Roles } from '../../../../app/models/server/raw';
 onLicense('auditing', () => {
 	require('./methods');
 
-	Meteor.startup(function() {
+	Meteor.startup(function () {
 		const permissions = [
 			{ _id: 'can-audit', roles: ['admin', 'auditor'] },
 			{ _id: 'can-audit-log', roles: ['admin', 'auditor-log'] },

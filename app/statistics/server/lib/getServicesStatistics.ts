@@ -17,7 +17,7 @@ string,
 				name,
 				{
 					enabled: Boolean(value),
-					mergeRoles: settings.get<boolean>(`Accounts_OAuth_Custom-${ name }-merge_roles`),
+					mergeRoles: settings.get<boolean>(`Accounts_OAuth_Custom-${name}-merge_roles`),
 					users: Users.countActiveUsersByService(name),
 				},
 			];

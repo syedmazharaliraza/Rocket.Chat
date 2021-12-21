@@ -37,7 +37,7 @@ export const notifyFailedLogin = async (
 				fields: [
 					{
 						title: 'Failed login attempt threshold exceeded',
-						value: `User or IP: ${ ipOrUsername }\nBlocked until: ${ blockedUntil }\nFailed Attempts: ${ failedAttempts }`,
+						value: `User or IP: ${ipOrUsername}\nBlocked until: ${blockedUntil}\nFailed Attempts: ${failedAttempts}`,
 						short: true,
 					},
 				],
@@ -53,9 +53,9 @@ export const isValidLoginAttemptByIp = async (ip: string): Promise<boolean> => {
 	const whitelist = String(settings.get('Block_Multiple_Failed_Logins_Ip_Whitelist')).split(',');
 
 	if (
-		!settings.get('Block_Multiple_Failed_Logins_Enabled')
-		|| !settings.get('Block_Multiple_Failed_Logins_By_Ip')
-		|| whitelist.includes(ip)
+		!settings.get('Block_Multiple_Failed_Logins_Enabled') ||
+		!settings.get('Block_Multiple_Failed_Logins_By_Ip') ||
+		whitelist.includes(ip)
 	) {
 		return true;
 	}
@@ -101,13 +101,14 @@ export const isValidLoginAttemptByIp = async (ip: string): Promise<boolean> => {
 
 export const isValidAttemptByUser = async (login: ILoginAttempt): Promise<boolean> => {
 	if (
-		!settings.get('Block_Multiple_Failed_Logins_Enabled')
-		|| !settings.get('Block_Multiple_Failed_Logins_By_User')
+		!settings.get('Block_Multiple_Failed_Logins_Enabled') ||
+		!settings.get('Block_Multiple_Failed_Logins_By_User')
 	) {
 		return true;
 	}
 
-	const user =		login.user || await Users.findOneByUsername(login.methodArguments[0].user?.username);
+	const user =
+		login.user || await Users.findOneByUsername(login.methodArguments[0].user?.username);
 
 	if (!user?.username) {
 		return true;

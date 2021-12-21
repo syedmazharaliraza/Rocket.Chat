@@ -58,7 +58,7 @@ export class AppApisBridge extends ApiBridge {
 
 	public registerApi({ api, computedPath, endpoint }: AppApi, appId: string): void {
 		this.orch.debugLog(
-			`The App ${ appId } is registering the api: "${ endpoint.path }" (${ computedPath })`,
+			`The App ${appId} is registering the api: "${endpoint.path}" (${computedPath})`,
 		);
 
 		this._verifyApi(api, endpoint);
@@ -74,7 +74,7 @@ export class AppApisBridge extends ApiBridge {
 
 		let routePath = endpoint.path.trim();
 		if (!routePath.startsWith('/')) {
-			routePath = `/${ routePath }`;
+			routePath = `/${routePath}`;
 		}
 
 		if (router[method] instanceof Function) {
@@ -83,7 +83,7 @@ export class AppApisBridge extends ApiBridge {
 	}
 
 	public unregisterApis(appId: string): void {
-		this.orch.debugLog(`The App ${ appId } is unregistering all apis`);
+		this.orch.debugLog(`The App ${appId} is unregistering all apis`);
 
 		if (this.appRouters.get(appId)) {
 			this.appRouters.delete(appId);

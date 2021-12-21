@@ -9,7 +9,7 @@ addAction('autotranslate', () => {
 	const autoTranslateEnabled = useSetting('AutoTranslate_Enabled');
 	return useMemo(
 		() =>
-			(hasPermission && autoTranslateEnabled
+			hasPermission && autoTranslateEnabled
 				? {
 						groups: ['channel', 'group', 'direct', 'direct_multiple', 'team'],
 						id: 'autotranslate',
@@ -21,7 +21,7 @@ addAction('autotranslate', () => {
 						order: 20,
 						full: true,
 				  }
-				: null),
+				: null,
 		[autoTranslateEnabled, hasPermission],
 	);
 });

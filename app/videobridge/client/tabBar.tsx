@@ -36,7 +36,7 @@ addAction('bbb_video', ({ room }) => {
 
 	return useMemo(
 		() =>
-			(enableOption
+			enableOption
 				? {
 						groups,
 						id: 'bbb_video',
@@ -61,7 +61,7 @@ addAction('bbb_video', ({ room }) => {
 							</Option>
 						),
 				  }
-				: null),
+				: null,
 		[enableOption, groups, live, t],
 	);
 });
@@ -96,7 +96,7 @@ addAction('video', ({ room }) => {
 
 	return useMemo(
 		() =>
-			(enableOption
+			enableOption
 				? {
 						groups,
 						id: 'video',
@@ -124,7 +124,7 @@ addAction('video', ({ room }) => {
 							</Option>
 						),
 				  }
-				: null),
+				: null,
 		[enableOption, groups, live, t],
 	);
 });

@@ -67,7 +67,7 @@ export abstract class Streamer extends EventEmitter implements IStreamer {
 	}
 
 	get subscriptionName(): string {
-		return `stream-${ this.name }`;
+		return `stream-${this.name}`;
 	}
 
 	private allow(rules: IRules, name: string) {
@@ -87,25 +87,25 @@ export abstract class Streamer extends EventEmitter implements IStreamer {
 			}
 
 			if (typeof fn === 'string' && ['all', 'none', 'logged'].indexOf(fn) === -1) {
-				SystemLogger.error(`${ name } shortcut '${ fn }' is invalid`);
+				SystemLogger.error(`${name} shortcut '${fn}' is invalid`);
 			}
 
 			if (fn === 'all' || fn === true) {
-				rules[eventName] = async function(): Promise<boolean> {
+				rules[eventName] = async function (): Promise<boolean> {
 					return true;
 				};
 				return;
 			}
 
 			if (fn === 'none' || fn === false) {
-				rules[eventName] = async function(): Promise<boolean> {
+				rules[eventName] = async function (): Promise<boolean> {
 					return false;
 				};
 				return;
 			}
 
 			if (fn === 'logged') {
-				rules[eventName] = async function(): Promise<boolean> {
+				rules[eventName] = async function (): Promise<boolean> {
 					return Boolean(this.userId);
 				};
 			}
@@ -242,7 +242,7 @@ export abstract class Streamer extends EventEmitter implements IStreamer {
 		const _publish = this._publish.bind(this);
 		this.registerPublication(
 			this.subscriptionName,
-			async function(
+			async function (
 				this: IPublication,
 				eventName: string,
 				options: boolean | { useCollection?: boolean; args?: any },
@@ -334,16 +334,17 @@ export abstract class Streamer extends EventEmitter implements IStreamer {
 	): Promise<void> {
 		subscriptions.forEach(async (subscription) => {
 			if (
-				this.retransmitToSelf === false
-				&& origin
-				&& origin === subscription.subscription.connection
+				this.retransmitToSelf === false &&
+				origin &&
+				origin === subscription.subscription.connection
 			) {
 				return;
 			}
 
 			const allowed = await this.isEmitAllowed(subscription.subscription, eventName, ...args);
 			if (allowed) {
-				const msg =					typeof getMsg === 'string'
+				const msg =
+					typeof getMsg === 'string'
 						? getMsg
 						: getMsg(this, subscription, eventName, args, allowed);
 				if (msg) {

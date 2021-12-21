@@ -19,7 +19,7 @@ export const getSettingDefaults = (
 		valueSource: 'packageValue',
 		secret: false,
 		enterprise: false,
-		i18nDescription: `${ _id }_Description`,
+		i18nDescription: `${_id}_Description`,
 		autocomplete: true,
 		sorter: sorter || 0,
 		ts: new Date(),

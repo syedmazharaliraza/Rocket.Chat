@@ -130,12 +130,13 @@ class NotificationClass {
 		items: NotificationItem[];
 		user?: Partial<IUser>;
 	}): Promise<void> {
-		const receiver =			user
-			|| (await Users.findOneById<Pick<IUser, 'statusConnection'>>(uid, {
+		const receiver =
+			user ||
+			await Users.findOneById<Pick<IUser, 'statusConnection'>>(uid, {
 				projection: {
 					statusConnection: 1,
 				},
-			}));
+			});
 
 		if (!receiver) {
 			return;

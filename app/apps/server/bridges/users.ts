@@ -19,19 +19,19 @@ export class AppUserBridge extends UserBridge {
 	}
 
 	protected async getById(userId: string, appId: string): Promise<IUser> {
-		this.orch.debugLog(`The App ${ appId } is getting the userId: "${ userId }"`);
+		this.orch.debugLog(`The App ${appId} is getting the userId: "${userId}"`);
 
 		return this.orch.getConverters()?.get('users').convertById(userId);
 	}
 
 	protected async getByUsername(username: string, appId: string): Promise<IUser> {
-		this.orch.debugLog(`The App ${ appId } is getting the username: "${ username }"`);
+		this.orch.debugLog(`The App ${appId} is getting the username: "${username}"`);
 
 		return this.orch.getConverters()?.get('users').convertByUsername(username);
 	}
 
 	protected async getAppUser(appId?: string): Promise<IUser | undefined> {
-		this.orch.debugLog(`The App ${ appId } is getting its assigned user`);
+		this.orch.debugLog(`The App ${appId} is getting its assigned user`);
 
 		const user = Users.findOneByAppId(appId, {});
 
@@ -43,7 +43,7 @@ export class AppUserBridge extends UserBridge {
 		appId: string,
 		options?: IUserCreationOptions,
 	): Promise<string> {
-		this.orch.debugLog(`The App ${ appId } is requesting to create a new user.`);
+		this.orch.debugLog(`The App ${appId} is requesting to create a new user.`);
 		const user = this.orch.getConverters()?.get('users').convertToRocketChat(userDescriptor);
 
 		if (!user._id) {
@@ -58,7 +58,7 @@ export class AppUserBridge extends UserBridge {
 			case 'app':
 				if (!checkUsernameAvailability(user.username)) {
 					throw new Error(
-						`The username "${ user.username }" is already being used. Rename or remove the user using it to install this App`,
+						`The username "${user.username}" is already being used. Rename or remove the user using it to install this App`,
 					);
 				}
 
@@ -78,7 +78,7 @@ export class AppUserBridge extends UserBridge {
 	}
 
 	protected async remove(user: IUser & { id: string }, appId: string): Promise<boolean> {
-		this.orch.debugLog(`The App's user is being removed: ${ appId }`);
+		this.orch.debugLog(`The App's user is being removed: ${appId}`);
 
 		// It's actually not a problem if there is no App user to delete - just means we don't need to do anything more.
 		if (!user) {
@@ -88,7 +88,7 @@ export class AppUserBridge extends UserBridge {
 		try {
 			deleteUser(user.id);
 		} catch (err) {
-			throw new Error(`Errors occurred while deleting an app user: ${ err }`);
+			throw new Error(`Errors occurred while deleting an app user: ${err}`);
 		}
 
 		return true;
@@ -99,7 +99,7 @@ export class AppUserBridge extends UserBridge {
 		fields: Partial<IUser>,
 		appId: string,
 	): Promise<boolean> {
-		this.orch.debugLog(`The App ${ appId } is updating a user`);
+		this.orch.debugLog(`The App ${appId} is updating a user`);
 
 		if (!user) {
 			throw new Error('User not provided');

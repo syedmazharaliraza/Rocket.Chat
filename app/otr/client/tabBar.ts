@@ -22,7 +22,7 @@ addAction('otr', () => {
 
 	return useMemo(
 		() =>
-			(shouldAddAction
+			shouldAddAction
 				? {
 						groups: ['direct'],
 						id: 'otr',
@@ -32,7 +32,7 @@ addAction('otr', () => {
 						order: 13,
 						full: true,
 				  }
-				: null),
+				: null,
 		[shouldAddAction],
 	);
 });

@@ -166,7 +166,7 @@ export class Client extends EventEmitter {
 
 	encodePayload(payload: string): string {
 		if (this.meteorClient) {
-			return `a${ JSON.stringify([payload]) }`;
+			return `a${JSON.stringify([payload])}`;
 		}
 		return payload;
 	}

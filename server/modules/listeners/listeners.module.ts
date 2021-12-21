@@ -176,7 +176,7 @@ export class ListenersModule {
 
 				if (inquiry.department) {
 					return notifications.streamLivechatQueueData.emitWithoutBroadcast(
-						`department/${ inquiry.department }`,
+						`department/${inquiry.department}`,
 						{ type, ...inquiry },
 					);
 				}
@@ -200,7 +200,7 @@ export class ListenersModule {
 			}
 
 			notifications.streamLivechatQueueData.emitWithoutBroadcast(
-				`department/${ inquiry.department }`,
+				`department/${inquiry.department}`,
 				{ type, ...inquiry },
 			);
 

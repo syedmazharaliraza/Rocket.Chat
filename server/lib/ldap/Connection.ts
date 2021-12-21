@@ -326,7 +326,7 @@ export class LDAPConnection {
 					key,
 					type: dataType,
 					length: values[key].length,
-					value: `${ values[key].substr(0, 100) }...`,
+					value: `${values[key].substr(0, 100)}...`,
 				});
 				return;
 			}
@@ -381,7 +381,7 @@ export class LDAPConnection {
 
 				res.on('end', () => {
 					searchLogger.info(
-						`LDAP Search found ${ realEntries } entries and loaded the data of ${ entries.length }.`,
+						`LDAP Search found ${realEntries} entries and loaded the data of ${entries.length}.`,
 					);
 					resolve(entries);
 				});
@@ -399,17 +399,17 @@ export class LDAPConnection {
 
 		const usernameFilter = this.options.userSearchField
 			.split(',')
-			.map((item) => `(${ item }=${ username })`);
+			.map((item) => `(${item}=${username})`);
 
 		if (usernameFilter.length === 0) {
 			logger.error('LDAP_LDAP_User_Search_Field not defined');
 		} else if (usernameFilter.length === 1) {
-			filter.push(`${ usernameFilter[0] }`);
+			filter.push(`${usernameFilter[0]}`);
 		} else {
-			filter.push(`(|${ usernameFilter.join('') })`);
+			filter.push(`(|${usernameFilter.join('')})`);
 		}
 
-		return `(&${ filter.join('') })`;
+		return `(&${filter.join('')})`;
 	}
 
 	public async isUserAcceptedByGroupFilter(username: string, userdn: string): Promise<boolean> {
@@ -420,18 +420,18 @@ export class LDAPConnection {
 		const filter = ['(&'];
 
 		if (this.options.groupFilterObjectClass) {
-			filter.push(`(objectclass=${ this.options.groupFilterObjectClass })`);
+			filter.push(`(objectclass=${this.options.groupFilterObjectClass})`);
 		}
 
 		if (this.options.groupFilterGroupMemberAttribute) {
 			filter.push(
-				`(${ this.options.groupFilterGroupMemberAttribute }=${ this.options.groupFilterGroupMemberFormat })`,
+				`(${this.options.groupFilterGroupMemberAttribute}=${this.options.groupFilterGroupMemberFormat})`,
 			);
 		}
 
 		if (this.options.groupFilterGroupIdAttribute) {
 			filter.push(
-				`(${ this.options.groupFilterGroupIdAttribute }=${ this.options.groupFilterGroupName })`,
+				`(${this.options.groupFilterGroupIdAttribute}=${this.options.groupFilterGroupName})`,
 			);
 		}
 		filter.push(')');
@@ -459,9 +459,9 @@ export class LDAPConnection {
 
 		if (userSearchFilter !== '') {
 			if (userSearchFilter[0] === '(') {
-				filters.push(`${ userSearchFilter }`);
+				filters.push(`${userSearchFilter}`);
 			} else {
-				filters.push(`(${ userSearchFilter })`);
+				filters.push(`(${userSearchFilter})`);
 			}
 		}
 	}
@@ -689,7 +689,7 @@ export class LDAPConnection {
 		tlsOptions: Record<string, any>;
 	} {
 		const clientOptions: ldapjs.ClientOptions = {
-			url: `${ this.options.host }:${ this.options.port }`,
+			url: `${this.options.host}:${this.options.port}`,
 			timeout: this.options.timeout,
 			connectTimeout: this.options.connectionTimeout,
 			idleTimeout: this.options.idleTimeout,
@@ -717,10 +717,10 @@ export class LDAPConnection {
 		}
 
 		if (this.options.encryption === 'ssl') {
-			clientOptions.url = `ldaps://${ clientOptions.url }`;
+			clientOptions.url = `ldaps://${clientOptions.url}`;
 			clientOptions.tlsOptions = tlsOptions;
 		} else {
-			clientOptions.url = `ldap://${ clientOptions.url }`;
+			clientOptions.url = `ldap://${clientOptions.url}`;
 		}
 
 		return {

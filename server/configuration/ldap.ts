@@ -5,7 +5,7 @@ import { LDAP } from '../sdk';
 import { settings } from '../../app/settings/server';
 
 // Register ldap login handler
-Accounts.registerLoginHandler('ldap', function(loginRequest: Record<string, any>) {
+Accounts.registerLoginHandler('ldap', function (loginRequest: Record<string, any>) {
 	if (!loginRequest.ldap || !loginRequest.ldapOptions) {
 		return undefined;
 	}

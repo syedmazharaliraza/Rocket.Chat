@@ -2,11 +2,11 @@ import { Meteor } from 'meteor/meteor';
 
 import { settingsRegistry } from '../../../settings/server';
 
-Meteor.startup(function() {
-	settingsRegistry.addGroup('Accounts', function() {
+Meteor.startup(function () {
+	settingsRegistry.addGroup('Accounts', function () {
 		const enableQueryCollectData = { _id: 'Block_Multiple_Failed_Logins_Enabled', value: true };
 
-		this.section('Login_Attempts', function() {
+		this.section('Login_Attempts', function () {
 			this.add('Block_Multiple_Failed_Logins_Enabled', false, {
 				type: 'boolean',
 			});
@@ -71,7 +71,7 @@ Meteor.startup(function() {
 			});
 		});
 
-		this.section('Login_Logs', function() {
+		this.section('Login_Logs', function () {
 			const enableQueryAudit = { _id: 'Login_Logs_Enabled', value: true };
 
 			this.add('Login_Logs_Enabled', false, { type: 'boolean' });

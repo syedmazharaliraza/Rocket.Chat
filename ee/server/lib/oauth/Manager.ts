@@ -28,7 +28,7 @@ export class OAuthEEManager {
 						if (!room) {
 							room = createRoom('c', channel, channelsAdmin, [], false);
 							if (!room || !room.rid) {
-								logger.error(`could not create channel ${ channel }`);
+								logger.error(`could not create channel ${channel}`);
 								return;
 							}
 						}
@@ -79,9 +79,9 @@ export class OAuthEEManager {
 			if (identity[roleClaimName] && Array.isArray(identity[roleClaimName])) {
 				roles = identity[roleClaimName].filter(
 					(val: string) =>
-						val !== 'offline_access'
-						&& val !== 'uma_authorization'
-						&& Promise.await(Roles.findOneByIdOrName(val)),
+						val !== 'offline_access' &&
+						val !== 'uma_authorization' &&
+						Promise.await(Roles.findOneByIdOrName(val)),
 				);
 			}
 		}

@@ -15,7 +15,7 @@ addAction('game-center', () => {
 	const hasError = !!error;
 	return useMemo(
 		() =>
-			(state === AsyncStatePhase.RESOLVED && !hasError && hasExternalComponents
+			state === AsyncStatePhase.RESOLVED && !hasError && hasExternalComponents
 				? {
 						groups: ['channel', 'group', 'direct', 'direct_multiple', 'team'],
 						id: 'game-center',
@@ -24,7 +24,7 @@ addAction('game-center', () => {
 						template: 'GameCenter',
 						order: -1,
 				  }
-				: null),
+				: null,
 		[hasError, hasExternalComponents, state],
 	);
 });

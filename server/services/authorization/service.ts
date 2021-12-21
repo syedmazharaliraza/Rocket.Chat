@@ -161,13 +161,15 @@ export class Authorization extends ServiceClass implements IAuthorization {
 	}
 
 	private async getRoles(uid: string, scope?: string): Promise<string[]> {
-		const { roles: userRoles = [] } =			(await this.Users.findOneById(uid, { projection: { roles: 1 } })) || {};
-		const { roles: subscriptionsRoles = [] } =			(scope
-				&& (await Subscriptions.findOne<Pick<ISubscription, 'roles'>>(
-					{ rid: scope, 'u._id': uid },
+		const { roles: userRoles = [] } =
+			(await this.Users.findOneById(uid, { projection: { roles: 1 } })) || {};
+		const { roles: subscriptionsRoles = [] } =
+			(scope &&
+				await Subscriptions.findOne<Pick<ISubscription, 'roles'>>(
+					{ 'rid': scope, 'u._id': uid },
 					{ projection: { roles: 1 } },
-				)))
-			|| {};
+				)) ||
+			{};
 		return [...userRoles, ...subscriptionsRoles].sort((a, b) => a.localeCompare(b));
 	}
 

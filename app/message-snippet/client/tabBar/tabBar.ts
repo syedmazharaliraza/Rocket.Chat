@@ -7,7 +7,7 @@ addAction('snippeted-messages', () => {
 	const snippetingEnabled = useSetting('Message_AllowSnippeting');
 	return useMemo(
 		() =>
-			(snippetingEnabled
+			snippetingEnabled
 				? {
 						groups: ['channel', 'group', 'direct', 'direct_multiple', 'team'],
 						id: 'snippeted-messages',
@@ -16,7 +16,7 @@ addAction('snippeted-messages', () => {
 						template: 'snippetedMessages',
 						order: 20,
 				  }
-				: null),
+				: null,
 		[snippetingEnabled],
 	);
 });

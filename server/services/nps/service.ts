@@ -177,7 +177,7 @@ export class NPSService extends ServiceClass implements INPSService {
 			throw new Error('NPS survey not started');
 		}
 
-		const identifier = createHash('sha256').update(`${ userId }${ npsId }`).digest('hex');
+		const identifier = createHash('sha256').update(`${userId}${npsId}`).digest('hex');
 
 		const result = await this.NpsVote.save({
 			ts: new Date(),

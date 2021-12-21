@@ -646,7 +646,7 @@ export const aggregates = {
 				[
 					{
 						$match: {
-							type: 'user_daily',
+							'type': 'user_daily',
 							'devices.device.os.name': {
 								$exists: true,
 							},
@@ -701,7 +701,7 @@ export const aggregates = {
 						year,
 						month,
 						day,
-						type: 'user_daily',
+						'type': 'user_daily',
 						'devices.device.os.name': {
 							$exists: true,
 						},

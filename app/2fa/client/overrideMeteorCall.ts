@@ -12,7 +12,8 @@ type Callback = {
 	(error: unknown, result: unknown): void;
 };
 
-const callWithTotp =	(methodName: string, args: unknown[], callback: Callback) =>
+const callWithTotp =
+	(methodName: string, args: unknown[], callback: Callback) =>
 		(twoFactorCode: string, twoFactorMethod: string): unknown =>
 			call(
 				methodName,
@@ -44,8 +45,9 @@ const callWithoutTotp = (methodName: string, args: unknown[], callback: Callback
 		});
 	});
 
-Meteor.call = function(methodName: string, ...args: unknown[]): unknown {
-	const callback =		args.length > 0 && typeof args[args.length - 1] === 'function'
+Meteor.call = function (methodName: string, ...args: unknown[]): unknown {
+	const callback =
+		args.length > 0 && typeof args[args.length - 1] === 'function'
 			? (args.pop() as Callback)
 			: (): void => undefined;
 

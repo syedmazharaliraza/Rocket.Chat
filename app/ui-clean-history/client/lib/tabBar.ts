@@ -9,7 +9,7 @@ addAction('clean-history', ({ room }) => {
 	const hasPermission = usePermission('clean-channel-history', room._id);
 	return useMemo(
 		() =>
-			(hasPermission
+			hasPermission
 				? {
 						groups: ['channel', 'group', 'team', 'direct_multiple', 'direct'],
 						id: 'clean-history',
@@ -19,7 +19,7 @@ addAction('clean-history', ({ room }) => {
 						template,
 						order: 250,
 				  }
-				: null),
+				: null,
 		[hasPermission],
 	);
 });

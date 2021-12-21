@@ -10,7 +10,7 @@ type T = IAnalytic;
 export class AnalyticsRaw extends BaseRaw<T> {
 	protected indexes: IndexSpecification[] = [
 		{ key: { date: 1 } },
-		{ key: { 'room._id': 1, date: 1 }, unique: true },
+		{ key: { 'room._id': 1, 'date': 1 }, unique: true },
 	];
 
 	saveMessageSent({
@@ -21,7 +21,7 @@ export class AnalyticsRaw extends BaseRaw<T> {
 		date: IAnalytic['date'];
 	}): Promise<UpdateWriteOpResult> {
 		return this.updateMany(
-			{ date, 'room._id': room._id, type: 'messages' },
+			{ date, 'room._id': room._id, 'type': 'messages' },
 			{
 				$set: {
 					room: {

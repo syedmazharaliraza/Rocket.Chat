@@ -1,7 +1,8 @@
 import { ISetting } from '../../../../definition/ISetting';
 import { convertValue } from './convertValue';
 
-export const overrideGenerator =	(fn: (key: string) => string | undefined) =>
+export const overrideGenerator =
+	(fn: (key: string) => string | undefined) =>
 		(setting: ISetting): ISetting => {
 			const overwriteValue = fn(setting._id);
 			if (overwriteValue === null || overwriteValue === undefined) {

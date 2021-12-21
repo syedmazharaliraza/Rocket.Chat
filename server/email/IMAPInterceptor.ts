@@ -118,9 +118,9 @@ export class IMAPInterceptor extends EventEmitter {
 
 						simpleParser(stream, (_err, email) => {
 							if (
-								this.options.rejectBeforeTS
-								&& email.date
-								&& email.date < this.options.rejectBeforeTS
+								this.options.rejectBeforeTS &&
+								email.date &&
+								email.date < this.options.rejectBeforeTS
 							) {
 								this.log('Rejecting email', email.subject);
 								return;
@@ -136,7 +136,7 @@ export class IMAPInterceptor extends EventEmitter {
 						if (this.options.deleteAfterRead) {
 							this.imap.seq.addFlags(seqno, 'Deleted', (err) => {
 								if (err) {
-									this.log(`Mark deleted error: ${ err }`);
+									this.log(`Mark deleted error: ${err}`);
 								}
 							});
 						}
@@ -144,7 +144,7 @@ export class IMAPInterceptor extends EventEmitter {
 				});
 
 				fetch.once('error', (err) => {
-					this.log(`Fetch error: ${ err }`);
+					this.log(`Fetch error: ${err}`);
 				});
 			}
 		});

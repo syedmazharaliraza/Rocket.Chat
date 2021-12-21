@@ -10,14 +10,15 @@ addAction('livestream', ({ room }) => {
 	const enabled = useSetting('Livestream_enabled');
 	const t = useTranslation();
 
-	const isLive =		room
-		&& room.streamingOptions
-		&& room.streamingOptions.id
-		&& room.streamingOptions.type === 'livestream';
+	const isLive =
+		room &&
+		room.streamingOptions &&
+		room.streamingOptions.id &&
+		room.streamingOptions.type === 'livestream';
 
 	return useMemo(
 		() =>
-			(enabled
+			enabled
 				? {
 						groups: ['channel', 'group', 'team'],
 						id: 'livestream',
@@ -44,7 +45,7 @@ addAction('livestream', ({ room }) => {
 							</Option>
 						),
 				  }
-				: null),
+				: null,
 		[enabled, isLive, t],
 	);
 });

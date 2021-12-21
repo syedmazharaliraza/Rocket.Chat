@@ -24,7 +24,7 @@ settings.watch<string>('Language', (value) => {
 });
 
 export const replacekey = (str: string, key: string, value = ''): string =>
-	str.replace(new RegExp(`(\\[${ key }\\]|__${ key }__)`, 'igm'), value);
+	str.replace(new RegExp(`(\\[${key}\\]|__${key}__)`, 'igm'), value);
 
 export const translate = (str: string): string =>
 	replaceVariables(str, (_match, key) => TAPi18n.__(key, { lng }));
@@ -43,8 +43,8 @@ export const replace = (str: string, data: { [key: string]: unknown } = {}): str
 		Site_URL_Slash: settings.get<string>('Site_Url')?.replace(/\/?$/, '/'),
 		...data.name
 			? {
-					fname: s.strLeft(String(data.name), ' '),
-					lname: s.strRightBack(String(data.name), ' '),
+				fname: s.strLeft(String(data.name), ' '),
+				lname: s.strRightBack(String(data.name), ' '),
 			  }
 			: {},
 		...data,
@@ -127,7 +127,7 @@ settings.watchMultiple(['Email_Header', 'Email_Footer'], () => {
 		'Email_Header',
 		(value) => {
 			contentHeader = replace(value || '');
-			body = inlinecss(`${ contentHeader } {{body}} ${ contentFooter }`);
+			body = inlinecss(`${contentHeader} {{body}} ${contentFooter}`);
 		},
 		false,
 	);
@@ -136,12 +136,12 @@ settings.watchMultiple(['Email_Header', 'Email_Footer'], () => {
 		'Email_Footer',
 		(value) => {
 			contentFooter = replace(value || '');
-			body = inlinecss(`${ contentHeader } {{body}} ${ contentFooter }`);
+			body = inlinecss(`${contentHeader} {{body}} ${contentFooter}`);
 		},
 		false,
 	);
 
-	body = inlinecss(`${ contentHeader } {{body}} ${ contentFooter }`);
+	body = inlinecss(`${contentHeader} {{body}} ${contentFooter}`);
 });
 
 export const checkAddressFormat = (adresses: string | string[]): boolean =>

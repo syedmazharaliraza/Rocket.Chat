@@ -12,8 +12,8 @@ export class IntegrationsRaw extends BaseRaw<IIntegration> {
 		oldRoomName: string,
 		newRoomName: string,
 	): ReturnType<BaseRaw<IIntegration>['updateMany']> {
-		const hashedOldRoomName = `#${ oldRoomName }`;
-		const hashedNewRoomName = `#${ newRoomName }`;
+		const hashedOldRoomName = `#${oldRoomName}`;
+		const hashedNewRoomName = `#${newRoomName}`;
 
 		return this.updateMany(
 			{

@@ -61,16 +61,16 @@ export class RolesRaw extends BaseRaw<IRole> {
 	): Promise<boolean> {
 		if (!Array.isArray(roles)) {
 			roles = [roles];
-			process.env.NODE_ENV === 'development'
-				&& console.warn('[WARN] RolesRaw.addUserRoles: roles should be an array');
+			process.env.NODE_ENV === 'development' &&
+				console.warn('[WARN] RolesRaw.addUserRoles: roles should be an array');
 		}
 
 		for await (const name of roles) {
 			const role = await this.findOne({ name }, { scope: 1 } as FindOneOptions<IRole>);
 
 			if (!role) {
-				process.env.NODE_ENV === 'development'
-					&& console.warn(`[WARN] RolesRaw.addUserRoles: role: ${ name } not found`);
+				process.env.NODE_ENV === 'development' &&
+					console.warn(`[WARN] RolesRaw.addUserRoles: role: ${name} not found`);
 				continue;
 			}
 			switch (role.scope) {
@@ -93,8 +93,8 @@ export class RolesRaw extends BaseRaw<IRole> {
 		if (!Array.isArray(roles)) {
 			// TODO: remove this check
 			roles = [roles];
-			process.env.NODE_ENV === 'development'
-				&& console.warn('[WARN] RolesRaw.isUserInRoles: roles should be an array');
+			process.env.NODE_ENV === 'development' &&
+				console.warn('[WARN] RolesRaw.isUserInRoles: roles should be an array');
 		}
 
 		for await (const roleName of roles) {
@@ -128,8 +128,8 @@ export class RolesRaw extends BaseRaw<IRole> {
 		if (!Array.isArray(roles)) {
 			// TODO: remove this check
 			roles = [roles];
-			process.env.NODE_ENV === 'development'
-				&& console.warn('[WARN] RolesRaw.removeUserRoles: roles should be an array');
+			process.env.NODE_ENV === 'development' &&
+				console.warn('[WARN] RolesRaw.removeUserRoles: roles should be an array');
 		}
 		for await (const roleName of roles) {
 			const role = await this.findOne({ name: roleName }, { scope: 1 } as FindOneOptions<IRole>);

@@ -157,9 +157,9 @@ export class BusinessHourManager {
 
 	private scheduleCronJob(items: string[], day: string, type: string, job: Function): void {
 		items.forEach((hour) => {
-			const jobName = `${ day }/${ hour }/${ type }`;
+			const jobName = `${day}/${hour}/${type}`;
 			const time = moment(hour, 'HH:mm');
-			const scheduleAt = `${ time.minutes() } ${ time.hours() } * * ${ cronJobDayDict[day] }`;
+			const scheduleAt = `${time.minutes()} ${time.hours()} * * ${cronJobDayDict[day]}`;
 			this.addToCache(jobName);
 			this.cronJobs.add(jobName, scheduleAt, job);
 		});

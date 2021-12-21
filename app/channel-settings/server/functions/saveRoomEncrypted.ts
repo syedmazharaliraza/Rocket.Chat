@@ -5,7 +5,7 @@ import type { WriteOpResult } from 'mongodb';
 import { Rooms, Messages } from '../../../models/server';
 import type { IUser } from '../../../../definition/IUser';
 
-export const saveRoomEncrypted = function(
+export const saveRoomEncrypted = function (
 	rid: string,
 	encrypted: boolean,
 	user: IUser,
@@ -20,7 +20,7 @@ export const saveRoomEncrypted = function(
 	const update = Rooms.saveEncryptedById(rid, encrypted);
 	if (update && sendMessage) {
 		Messages.createRoomSettingsChangedWithTypeRoomIdMessageAndUser(
-			`room_e2e_${ encrypted ? 'enabled' : 'disabled' }`,
+			`room_e2e_${encrypted ? 'enabled' : 'disabled'}`,
 			rid,
 			user.username,
 			user,

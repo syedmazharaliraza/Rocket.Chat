@@ -45,8 +45,8 @@ export const createSettings = (): void => {
 		enableQuery: omnichannelEnabledQuery,
 	});
 
-	settingsRegistry.addGroup('Omnichannel', function() {
-		this.section('Business_Hours', function() {
+	settingsRegistry.addGroup('Omnichannel', function () {
+		this.section('Business_Hours', function () {
 			this.add('Livechat_business_hour_type', 'Single', {
 				type: 'select',
 				values: [
@@ -68,7 +68,7 @@ export const createSettings = (): void => {
 			});
 		});
 
-		this.section('Queue_management', function() {
+		this.section('Queue_management', function () {
 			this.add('Livechat_waiting_queue', false, {
 				type: 'boolean',
 				group: 'Omnichannel',

@@ -15,10 +15,10 @@ import {
 	STATUS_DISABLED,
 } from '../constants';
 
-Meteor.startup(async function() {
+Meteor.startup(async function () {
 	const federationPublicKey = await FederationKeys.getPublicKeyString();
 
-	settingsRegistry.addGroup('Federation', function() {
+	settingsRegistry.addGroup('Federation', function () {
 		this.add('FEDERATION_Enabled', false, {
 			type: 'boolean',
 			i18nLabel: 'Enabled',
@@ -73,7 +73,7 @@ Meteor.startup(async function() {
 	});
 });
 
-const updateSettings = async function(): Promise<void> {
+const updateSettings = async function (): Promise<void> {
 	// Get the key pair
 
 	if (getFederationDiscoveryMethod() === 'hub' && !Promise.await(isRegisteringOrEnabled())) {
@@ -101,7 +101,7 @@ const updateSettings = async function(): Promise<void> {
 
 // Add settings listeners
 settings.watch('FEDERATION_Enabled', function enableOrDisable(value) {
-	setupLogger.info(`Federation is ${ value ? 'enabled' : 'disabled' }`);
+	setupLogger.info(`Federation is ${value ? 'enabled' : 'disabled'}`);
 
 	if (value) {
 		Promise.await(updateSettings());

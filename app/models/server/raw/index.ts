@@ -131,107 +131,107 @@ export const ImportData = new ImportDataRaw(ImportDataModel.model.rawCollection(
 const { db } = MongoInternals.defaultRemoteCollectionDriver().mongo;
 const prefix = 'rocketchat_';
 
-export const Avatars = new AvatarsRaw(db.collection(`${ prefix }avatars`), trashCollection);
+export const Avatars = new AvatarsRaw(db.collection(`${prefix}avatars`), trashCollection);
 export const Analytics = new AnalyticsRaw(
-	db.collection(`${ prefix }analytics`, { readPreference: readSecondaryPreferred(db) }),
+	db.collection(`${prefix}analytics`, { readPreference: readSecondaryPreferred(db) }),
 	trashCollection,
 );
 export const CustomSounds = new CustomSoundsRaw(
-	db.collection(`${ prefix }custom_sounds`),
+	db.collection(`${prefix}custom_sounds`),
 	trashCollection,
 );
 export const CustomUserStatus = new CustomUserStatusRaw(
-	db.collection(`${ prefix }custom_user_status`),
+	db.collection(`${prefix}custom_user_status`),
 	trashCollection,
 );
 export const CredentialTokens = new CredentialTokensRaw(
-	db.collection(`${ prefix }credential_tokens`),
+	db.collection(`${prefix}credential_tokens`),
 	trashCollection,
 );
-export const EmailInbox = new EmailInboxRaw(db.collection(`${ prefix }email_inbox`), trashCollection);
+export const EmailInbox = new EmailInboxRaw(db.collection(`${prefix}email_inbox`), trashCollection);
 export const EmailMessageHistory = new EmailMessageHistoryRaw(
-	db.collection(`${ prefix }email_message_history`),
+	db.collection(`${prefix}email_message_history`),
 	trashCollection,
 );
 export const EmojiCustom = new EmojiCustomRaw(
-	db.collection(`${ prefix }custom_emoji`),
+	db.collection(`${prefix}custom_emoji`),
 	trashCollection,
 );
 export const ExportOperations = new ExportOperationsRaw(
-	db.collection(`${ prefix }export_operations`),
+	db.collection(`${prefix}export_operations`),
 	trashCollection,
 );
 export const FederationKeys = new FederationKeysRaw(
-	db.collection(`${ prefix }federation_keys`),
+	db.collection(`${prefix}federation_keys`),
 	trashCollection,
 );
 export const FederationServers = new FederationServersRaw(
-	db.collection(`${ prefix }federation_servers`),
+	db.collection(`${prefix}federation_servers`),
 	trashCollection,
 );
 export const InstanceStatus = new InstanceStatusRaw(db.collection('instances'), trashCollection, {
 	preventSetUpdatedAt: true,
 });
 export const Integrations = new IntegrationsRaw(
-	db.collection(`${ prefix }integrations`),
+	db.collection(`${prefix}integrations`),
 	trashCollection,
 );
 export const IntegrationHistory = new IntegrationHistoryRaw(
-	db.collection(`${ prefix }integration_history`),
+	db.collection(`${prefix}integration_history`),
 	trashCollection,
 );
-export const Invites = new InvitesRaw(db.collection(`${ prefix }invites`), trashCollection);
+export const Invites = new InvitesRaw(db.collection(`${prefix}invites`), trashCollection);
 export const LivechatTrigger = new LivechatTriggerRaw(
-	db.collection(`${ prefix }livechat_trigger`),
+	db.collection(`${prefix}livechat_trigger`),
 	trashCollection,
 );
 export const NotificationQueue = new NotificationQueueRaw(
-	db.collection(`${ prefix }notification_queue`),
+	db.collection(`${prefix}notification_queue`),
 	trashCollection,
 );
-export const OAuthApps = new OAuthAppsRaw(db.collection(`${ prefix }oauth_apps`), trashCollection);
+export const OAuthApps = new OAuthAppsRaw(db.collection(`${prefix}oauth_apps`), trashCollection);
 export const OEmbedCache = new OEmbedCacheRaw(
-	db.collection(`${ prefix }oembed_cache`),
+	db.collection(`${prefix}oembed_cache`),
 	trashCollection,
 );
 export const Permissions = new PermissionsRaw(
-	db.collection(`${ prefix }permissions`),
+	db.collection(`${prefix}permissions`),
 	trashCollection,
 );
 export const ReadReceipts = new ReadReceiptsRaw(
-	db.collection(`${ prefix }read_receipts`),
+	db.collection(`${prefix}read_receipts`),
 	trashCollection,
 );
-export const Reports = new ReportsRaw(db.collection(`${ prefix }reports`), trashCollection);
+export const Reports = new ReportsRaw(db.collection(`${prefix}reports`), trashCollection);
 export const ServerEvents = new ServerEventsRaw(
-	db.collection(`${ prefix }server_events`),
+	db.collection(`${prefix}server_events`),
 	trashCollection,
 );
 export const Sessions = new SessionsRaw(
-	db.collection(`${ prefix }sessions`),
-	db.collection(`${ prefix }sessions`, { readPreference: readSecondaryPreferred(db) }),
+	db.collection(`${prefix}sessions`),
+	db.collection(`${prefix}sessions`, { readPreference: readSecondaryPreferred(db) }),
 	trashCollection,
 );
 export const Roles = new RolesRaw(
-	db.collection(`${ prefix }roles`),
+	db.collection(`${prefix}roles`),
 	{ Users, Subscriptions },
 	trashCollection,
 );
 export const SmarshHistory = new SmarshHistoryRaw(
-	db.collection(`${ prefix }smarsh_history`),
+	db.collection(`${prefix}smarsh_history`),
 	trashCollection,
 );
-export const Statistics = new StatisticsRaw(db.collection(`${ prefix }statistics`), trashCollection);
+export const Statistics = new StatisticsRaw(db.collection(`${prefix}statistics`), trashCollection);
 export const UsersSessions = new UsersSessionsRaw(db.collection('usersSessions'), trashCollection, {
 	preventSetUpdatedAt: true,
 });
 export const UserDataFiles = new UserDataFilesRaw(
-	db.collection(`${ prefix }user_data_files`),
+	db.collection(`${prefix}user_data_files`),
 	trashCollection,
 );
-export const Uploads = new UploadsRaw(db.collection(`${ prefix }uploads`), trashCollection);
+export const Uploads = new UploadsRaw(db.collection(`${prefix}uploads`), trashCollection);
 export const WebdavAccounts = new WebdavAccountsRaw(
-	db.collection(`${ prefix }webdav_accounts`),
+	db.collection(`${prefix}webdav_accounts`),
 	trashCollection,
 );
 

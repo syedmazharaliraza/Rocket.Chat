@@ -139,7 +139,7 @@ export class LivechatBusinessHoursRaw extends BaseRaw<ILivechatBusinessHour> {
 				$elemMatch: {
 					'start.cron.dayOfWeek': day,
 					'start.cron.time': start,
-					open: true,
+					'open': true,
 				},
 			},
 		};
@@ -161,7 +161,7 @@ export class LivechatBusinessHoursRaw extends BaseRaw<ILivechatBusinessHour> {
 				$elemMatch: {
 					'finish.cron.dayOfWeek': day,
 					'finish.cron.time': finish,
-					open: true,
+					'open': true,
 				},
 			},
 		};

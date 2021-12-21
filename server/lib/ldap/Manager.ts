@@ -68,7 +68,7 @@ export class LDAPManager {
 	}
 
 	public static async testSearch(username: string): Promise<void> {
-		const escapedUsername = ldapEscape.filter`${ username }`;
+		const escapedUsername = ldapEscape.filter`${username}`;
 		const ldap = new LDAPConnection();
 
 		try {
@@ -76,7 +76,7 @@ export class LDAPManager {
 
 			const users = await ldap.searchByUsername(escapedUsername);
 			if (users.length !== 1) {
-				logger.debug(`Search returned ${ users.length } records for ${ escapedUsername }`);
+				logger.debug(`Search returned ${users.length} records for ${escapedUsername}`);
 				throw new Error('User not found');
 			}
 		} catch (error) {
@@ -165,19 +165,19 @@ export class LDAPManager {
 		username: string,
 		password: string,
 	): Promise<ILDAPEntry | undefined> {
-		const escapedUsername = ldapEscape.filter`${ username }`;
+		const escapedUsername = ldapEscape.filter`${username}`;
 
 		try {
 			const users = await ldap.searchByUsername(escapedUsername);
 
 			if (users.length !== 1) {
-				logger.debug(`Search returned ${ users.length } records for ${ escapedUsername }`);
+				logger.debug(`Search returned ${users.length} records for ${escapedUsername}`);
 				throw new Error('User not found');
 			}
 
 			const [ldapUser] = users;
 			if (!await ldap.authenticate(ldapUser.dn, password)) {
-				logger.debug(`Wrong password for ${ escapedUsername }`);
+				logger.debug(`Wrong password for ${escapedUsername}`);
 				throw new Error('Invalid user or wrong password');
 			}
 
@@ -185,7 +185,7 @@ export class LDAPManager {
 				// Do a search as the user and check if they have any result
 				authLogger.debug('User authenticated successfully, performing additional search.');
 				if (await ldap.searchAndCount(ldapUser.dn, {}) === 0) {
-					authLogger.debug(`Bind successful but user ${ ldapUser.dn } was not found via search`);
+					authLogger.debug(`Bind successful but user ${ldapUser.dn} was not found via search`);
 				}
 			}
 
@@ -245,9 +245,9 @@ export class LDAPManager {
 	): void {
 		logger.debug('running onLDAPLogin');
 		if (
-			settings.get<boolean>('LDAP_Login_Fallback')
-			&& typeof password === 'string'
-			&& password.trim() !== ''
+			settings.get<boolean>('LDAP_Login_Fallback') &&
+			typeof password === 'string' &&
+			password.trim() !== ''
 		) {
 			Accounts.setPassword(user._id, password, { logout: false });
 		}
@@ -266,7 +266,7 @@ export class LDAPManager {
 			logger.debug('User exists without "ldap: true"');
 			throw new Meteor.Error(
 				'LDAP-login-error',
-				`LDAP Authentication succeeded, but there's already an existing user with provided username [${ user.username }] in Mongo.`,
+				`LDAP Authentication succeeded, but there's already an existing user with provided username [${user.username}] in Mongo.`,
 			);
 		}
 
@@ -324,7 +324,8 @@ export class LDAPManager {
 			uniqueIdentifierField = [];
 		}
 
-		let userSearchField: string | string[] | undefined =			getLDAPConditionalSetting<string>('LDAP_User_Search_Field');
+		let userSearchField: string | string[] | undefined =
+			getLDAPConditionalSetting<string>('LDAP_User_Search_Field');
 
 		if (userSearchField) {
 			userSearchField = userSearchField.replace(/\s/g, '').split(',');
@@ -406,7 +407,7 @@ export class LDAPManager {
 		}
 
 		if (settings.get('LDAP_Default_Domain') !== '' && username) {
-			return [`${ username }@${ settings.get('LDAP_Default_Domain') }`];
+			return [`${username}@${settings.get('LDAP_Default_Domain')}`];
 		}
 
 		if (ldapUser.mail && ldapUser.mail.includes('@')) {

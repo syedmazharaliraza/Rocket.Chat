@@ -7,7 +7,7 @@ addAction('pinned-messages', () => {
 	const pinningAllowed = useSetting('Message_AllowPinning');
 	return useMemo(
 		() =>
-			(pinningAllowed
+			pinningAllowed
 				? {
 						groups: ['channel', 'group', 'direct', 'direct_multiple', 'team'],
 						id: 'pinned-messages',
@@ -16,7 +16,7 @@ addAction('pinned-messages', () => {
 						template: 'pinnedMessages',
 						order: 11,
 				  }
-				: null),
+				: null,
 		[pinningAllowed],
 	);
 });

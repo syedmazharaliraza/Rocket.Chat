@@ -8,7 +8,7 @@ const handleAfterOnHoldChatResumed = async (room: any): Promise<void> => {
 		return;
 	}
 
-	cbLogger.debug(`Removing current on hold timers for room ${ room._id }`);
+	cbLogger.debug(`Removing current on hold timers for room ${room._id}`);
 	LivechatEnterprise.releaseOnHoldChat(room);
 };
 

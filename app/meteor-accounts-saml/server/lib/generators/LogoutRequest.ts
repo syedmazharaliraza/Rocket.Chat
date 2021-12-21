@@ -37,7 +37,7 @@ export class LogoutRequest {
 		// sessionIndex: sessionIndex
 		// --- NO SAMLsettings: <Meteor.setting.saml  entry for the provider you want to SLO from
 
-		const id = `_${ SAMLUtils.generateUniqueID() }`;
+		const id = `_${SAMLUtils.generateUniqueID()}`;
 		const instant = SAMLUtils.generateInstant();
 
 		return {

@@ -171,7 +171,8 @@ class NetworkBroker implements IBroker {
 			return;
 		}
 
-		const methods =			instance.constructor?.name === 'Object'
+		const methods =
+			instance.constructor?.name === 'Object'
 				? Object.getOwnPropertyNames(instance)
 				: Object.getOwnPropertyNames(Object.getPrototypeOf(instance));
 		for (const method of methods) {
@@ -210,7 +211,7 @@ class NetworkBroker implements IBroker {
 						ctx,
 					},
 					async (): Promise<any> => {
-						if (this.isActionWhitelisted(`${ name }.${ method }`) || await this.allowed) {
+						if (this.isActionWhitelisted(`${name}.${method}`) || await this.allowed) {
 							return i[method](...ctx.params);
 						}
 					},

@@ -41,7 +41,7 @@ export class LogoutResponse {
 		sessionIndex: string,
 		inResponseToId: string,
 	): ILogoutResponseVariables {
-		const id = `_${ SAMLUtils.generateUniqueID() }`;
+		const id = `_${SAMLUtils.generateUniqueID()}`;
 		const instant = SAMLUtils.generateInstant();
 
 		return {

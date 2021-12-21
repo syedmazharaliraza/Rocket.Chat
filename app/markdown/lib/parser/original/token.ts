@@ -28,7 +28,7 @@ export const addAsToken = (
 	if (!message.tokens) {
 		message.tokens = [];
 	}
-	const token = `=!=${ Random.id() }=!=`;
+	const token = `=!=${Random.id()}=!=`;
 	message.tokens.push({
 		token,
 		type,

@@ -29,7 +29,8 @@ addMigration({
 		const banners = admins
 			.map((a) => Promise.await(Banner.getBannersForUser(a._id, BannerPlatform.Web)))
 			.flat();
-		const msg =			'Please notice that after the next release (4.0) advanced functionalities of LDAP, SAML, and Custom Oauth will be available only in Enterprise Edition and Gold plan. Check the official announcement for more info: https://go.rocket.chat/i/authentication-changes';
+		const msg =
+			'Please notice that after the next release (4.0) advanced functionalities of LDAP, SAML, and Custom Oauth will be available only in Enterprise Edition and Gold plan. Check the official announcement for more info: https://go.rocket.chat/i/authentication-changes';
 		// @ts-ignore
 		const authBanner = banners.find((b) => b.view.blocks[0].text.text === msg);
 

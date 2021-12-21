@@ -23,8 +23,8 @@ Meteor.methods({
 		}
 
 		if (
-			(room.t === 'c' && !hasPermission(user._id, 'leave-c'))
-			|| (room.t === 'p' && !hasPermission(user._id, 'leave-p'))
+			(room.t === 'c' && !hasPermission(user._id, 'leave-c')) ||
+			(room.t === 'p' && !hasPermission(user._id, 'leave-p'))
 		) {
 			throw new Meteor.Error('error-not-allowed', 'Not allowed', { method: 'leaveRoom' });
 		}

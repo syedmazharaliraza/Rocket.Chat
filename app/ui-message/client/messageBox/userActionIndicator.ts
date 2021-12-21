@@ -44,7 +44,7 @@ Template.userActionIndicator.helpers({
 				return {
 					action,
 					multi: true,
-					users: usernames.join(` ${ t('and') } `),
+					users: usernames.join(` ${t('and')} `),
 					end: false,
 				};
 			})

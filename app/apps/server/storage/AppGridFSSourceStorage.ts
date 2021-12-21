@@ -63,7 +63,7 @@ export class AppGridFSSourceStorage extends AppSourceStorage {
 				if (error) {
 					if (error.message.includes('FileNotFound: no file with id')) {
 						console.warn(
-							`This instance could not remove the ${ item.info.name } app package. If you are running Rocket.Chat in a cluster with multiple instances, possibly other instance removed the package. If this is not the case, it is possible that the file in the database got renamed or removed manually.`,
+							`This instance could not remove the ${item.info.name} app package. If you are running Rocket.Chat in a cluster with multiple instances, possibly other instance removed the package. If this is not the case, it is possible that the file in the database got renamed or removed manually.`,
 						);
 						return resolve();
 					}
@@ -77,7 +77,7 @@ export class AppGridFSSourceStorage extends AppSourceStorage {
 	}
 
 	private itemToFilename(item: IAppStorageItem): string {
-		return `${ item.info.nameSlug }-${ item.info.version }.package`;
+		return `${item.info.nameSlug}-${item.info.version}.package`;
 	}
 
 	private idToPath(id: GridFSBucketWriteStream['id']): string {

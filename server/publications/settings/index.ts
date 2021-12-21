@@ -48,7 +48,8 @@ Meteor.methods({
 			'view-privileged-setting',
 			'edit-privileged-setting',
 		]);
-		const manageSelectedSettings =			privilegedSetting || hasPermission(uid, 'manage-selected-settings');
+		const manageSelectedSettings =
+			privilegedSetting || hasPermission(uid, 'manage-selected-settings');
 
 		if (!manageSelectedSettings) {
 			return [];

@@ -50,7 +50,7 @@ Meteor.startup(() => {
 
 		callbacks.add(
 			'beforeSaveMessage',
-			function(message: IMessage) {
+			function (message: IMessage) {
 				if (!message.msg) {
 					return message;
 				}

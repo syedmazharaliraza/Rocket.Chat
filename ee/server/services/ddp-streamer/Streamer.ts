@@ -25,8 +25,8 @@ export class Stream extends Streamer {
 
 	changedPayload(collection: string, id: string, fields: Record<string, any>): string | false {
 		return (
-			!isEmpty(fields)
-			&& server.serialize({
+			!isEmpty(fields) &&
+			server.serialize({
 				[DDP_EVENTS.MSG]: DDP_EVENTS.CHANGED,
 				[DDP_EVENTS.COLLECTION]: collection,
 				[DDP_EVENTS.ID]: id,
@@ -56,7 +56,7 @@ export class Stream extends Streamer {
 
 		const data = {
 			meteor: [
-				Buffer.concat(WebSocket.Sender.frame(Buffer.from(`a${ JSON.stringify([getMsg]) }`), options)),
+				Buffer.concat(WebSocket.Sender.frame(Buffer.from(`a${JSON.stringify([getMsg])}`), options)),
 			],
 			normal: [Buffer.concat(WebSocket.Sender.frame(Buffer.from(getMsg), options))],
 		};

@@ -34,7 +34,8 @@ export class LDAPEEManager extends LDAPManager {
 		}
 
 		const createNewUsers = settings.get<boolean>('LDAP_Background_Sync_Import_New_Users') ?? true;
-		const updateExistingUsers =			settings.get<boolean>('LDAP_Background_Sync_Keep_Existant_Users_Updated') ?? true;
+		const updateExistingUsers =
+			settings.get<boolean>('LDAP_Background_Sync_Keep_Existant_Users_Updated') ?? true;
 
 		const options = this.getConverterOptions();
 		options.skipExistingUsers = !updateExistingUsers;
@@ -66,8 +67,8 @@ export class LDAPEEManager extends LDAPManager {
 
 	public static async syncAvatars(): Promise<void> {
 		if (
-			settings.get('LDAP_Enable') !== true
-			|| settings.get('LDAP_Background_Sync_Avatars') !== true
+			settings.get('LDAP_Enable') !== true ||
+			settings.get('LDAP_Background_Sync_Avatars') !== true
 		) {
 			return;
 		}
@@ -111,8 +112,8 @@ export class LDAPEEManager extends LDAPManager {
 
 	public static async syncLogout(): Promise<void> {
 		if (
-			settings.get('LDAP_Enable') !== true
-			|| settings.get('LDAP_Sync_AutoLogout_Enabled') !== true
+			settings.get('LDAP_Enable') !== true ||
+			settings.get('LDAP_Sync_AutoLogout_Enabled') !== true
 		) {
 			return;
 		}
@@ -179,9 +180,9 @@ export class LDAPEEManager extends LDAPManager {
 		const result = await ldap.searchRaw(baseDN, searchOptions);
 
 		if (!Array.isArray(result) || result.length === 0) {
-			logger.debug(`${ username } is not in ${ groupName } group!!!`);
+			logger.debug(`${username} is not in ${groupName} group!!!`);
 		} else {
-			logger.debug(`${ username } is in ${ groupName } group.`);
+			logger.debug(`${username} is in ${groupName} group.`);
 			return true;
 		}
 
@@ -192,7 +193,7 @@ export class LDAPEEManager extends LDAPManager {
 		try {
 			return JSON.parse(json);
 		} catch (err) {
-			logger.error(`Unexpected error : ${ err.message }`);
+			logger.error(`Unexpected error : ${err.message}`);
 		}
 	}
 
@@ -225,7 +226,8 @@ export class LDAPEEManager extends LDAPManager {
 		}
 
 		const syncUserRoles = settings.get<boolean>('LDAP_Sync_User_Data_Roles') ?? false;
-		const syncUserRolesAutoRemove =			settings.get<boolean>('LDAP_Sync_User_Data_Roles_AutoRemove') ?? false;
+		const syncUserRolesAutoRemove =
+			settings.get<boolean>('LDAP_Sync_User_Data_Roles_AutoRemove') ?? false;
 		const syncUserRolesFieldMap = (
 			settings.get<string>('LDAP_Sync_User_Data_RolesMap') ?? ''
 		).trim();
@@ -270,11 +272,11 @@ export class LDAPEEManager extends LDAPManager {
 
 			const [roleName] = userField.split(/\.(.+)/);
 			if (!_.find<IRole>(roles, (el) => el.name === roleName)) {
-				logger.debug(`User Role doesn't exist: ${ roleName }`);
+				logger.debug(`User Role doesn't exist: ${roleName}`);
 				continue;
 			}
 
-			logger.debug(`User role exists for mapping ${ ldapField } -> ${ roleName }`);
+			logger.debug(`User role exists for mapping ${ldapField} -> ${roleName}`);
 
 			if (
 				await this.isUserInGroup(
@@ -288,7 +290,7 @@ export class LDAPEEManager extends LDAPManager {
 				if (await Roles.addUserRoles(user._id, roleName)) {
 					this.broadcastRoleChange('added', roleName, user._id, username);
 				}
-				logger.debug(`Synced user group ${ roleName } from LDAP for ${ user.username }`);
+				logger.debug(`Synced user group ${roleName} from LDAP for ${user.username}`);
 				continue;
 			}
 
@@ -303,7 +305,7 @@ export class LDAPEEManager extends LDAPManager {
 	}
 
 	private static createRoomForSync(channel: string): IRoom | undefined {
-		logger.debug(`Channel '${ channel }' doesn't exist, creating it.`);
+		logger.debug(`Channel '${channel}' doesn't exist, creating it.`);
 
 		const roomOwner = settings.get('LDAP_Sync_User_Data_Channels_Admin') || '';
 		// #ToDo: Remove typecastings when createRoom is converted to ts.
@@ -311,7 +313,7 @@ export class LDAPEEManager extends LDAPManager {
 			customFields: { ldap: true },
 		} as any) as unknown as ICreatedRoom | undefined;
 		if (!room?.rid) {
-			logger.error(`Unable to auto-create channel '${ channel }' during ldap sync.`);
+			logger.error(`Unable to auto-create channel '${channel}' during ldap sync.`);
 			return;
 		}
 
@@ -325,7 +327,8 @@ export class LDAPEEManager extends LDAPManager {
 		dn: string,
 	): Promise<void> {
 		const syncUserChannels = settings.get<boolean>('LDAP_Sync_User_Data_Channels') ?? false;
-		const syncUserChannelsRemove =			settings.get<boolean>('LDAP_Sync_User_Data_Channels_Enforce_AutoChannels') ?? false;
+		const syncUserChannelsRemove =
+			settings.get<boolean>('LDAP_Sync_User_Data_Channels_Enforce_AutoChannels') ?? false;
 		const syncUserChannelsFieldMap = (
 			settings.get<string>('LDAP_Sync_User_Data_ChannelsMap') ?? ''
 		).trim();
@@ -370,17 +373,18 @@ export class LDAPEEManager extends LDAPManager {
 
 			const channels: Array<string> = [].concat(fieldMap[ldapField]);
 			for await (const channel of channels) {
-				const room: IRoom | undefined =					Rooms.findOneByNonValidatedName(channel) || this.createRoomForSync(channel);
+				const room: IRoom | undefined =
+					Rooms.findOneByNonValidatedName(channel) || this.createRoomForSync(channel);
 				if (!room) {
 					return;
 				}
 
 				if (isUserInGroup) {
 					if (room.teamMain) {
-						logger.error(`Can't add user to channel ${ channel } because it is a team.`);
+						logger.error(`Can't add user to channel ${channel} because it is a team.`);
 					} else {
 						addUserToRoom(room._id, user);
-						logger.debug(`Synced user channel ${ room._id } from LDAP for ${ username }`);
+						logger.debug(`Synced user channel ${room._id} from LDAP for ${username}`);
 					}
 				} else if (syncUserChannelsRemove && !room.teamMain) {
 					const subscription = await SubscriptionsRaw.findOneByRoomIdAndUserId(room._id, user._id);
@@ -402,8 +406,9 @@ export class LDAPEEManager extends LDAPManager {
 			return;
 		}
 
-		const mapTeams =			settings.get<boolean>('LDAP_Enable_LDAP_Groups_To_RC_Teams')
-			&& (isNewRecord || settings.get<boolean>('LDAP_Validate_Teams_For_Each_Login'));
+		const mapTeams =
+			settings.get<boolean>('LDAP_Enable_LDAP_Groups_To_RC_Teams') &&
+			(isNewRecord || settings.get<boolean>('LDAP_Validate_Teams_For_Each_Login'));
 		if (!mapTeams) {
 			return;
 		}
@@ -432,7 +437,8 @@ export class LDAPEEManager extends LDAPManager {
 			projection: { teamId: 1 },
 		});
 		const currentTeamIds = currentTeams && currentTeams.map(({ teamId }) => teamId);
-		const teamsToRemove =			currentTeamIds && currentTeamIds.filter((teamId) => notInTeamIds.includes(teamId));
+		const teamsToRemove =
+			currentTeamIds && currentTeamIds.filter((teamId) => notInTeamIds.includes(teamId));
 		const teamsToAdd = inTeamIds.filter((teamId) => !currentTeamIds?.includes(teamId));
 
 		await Team.insertMemberOnTeams(user._id, teamsToAdd);
@@ -453,9 +459,9 @@ export class LDAPEEManager extends LDAPManager {
 				(ldapTeam) => !mappedLdapTeams.includes(ldapTeam),
 			);
 			logger.error(
-				`The following LDAP teams are not mapped in Rocket.Chat: "${ unmappedLdapTeams.join(
+				`The following LDAP teams are not mapped in Rocket.Chat: "${unmappedLdapTeams.join(
 					', ',
-				) }".`,
+				)}".`,
 			);
 		}
 
@@ -586,7 +592,7 @@ export class LDAPEEManager extends LDAPManager {
 
 		userData.deleted = deleted;
 		logger.info(
-			`${ deleted ? 'Deactivating' : 'Activating' } user ${ userData.name } (${ userData.username })`,
+			`${deleted ? 'Deactivating' : 'Activating'} user ${userData.name} (${userData.username})`,
 		);
 	}
 
@@ -625,7 +631,7 @@ export class LDAPEEManager extends LDAPManager {
 
 		_.map(map, (userField, ldapField) => {
 			if (!this.getCustomField(customFields, userField)) {
-				logger.debug(`User attribute does not exist: ${ userField }`);
+				logger.debug(`User attribute does not exist: ${userField}`);
 				return;
 			}
 
@@ -645,7 +651,7 @@ export class LDAPEEManager extends LDAPManager {
 						if (ref[previousKey] === undefined) {
 							ref[previousKey] = {};
 						} else if (typeof ref[previousKey] !== 'object') {
-							logger.error(`Failed to assign custom field: ${ userField }`);
+							logger.error(`Failed to assign custom field: ${userField}`);
 							return;
 						}
 
@@ -657,7 +663,7 @@ export class LDAPEEManager extends LDAPManager {
 
 				if (previousKey) {
 					ref[previousKey] = value;
-					logger.debug(`user.customFields.${ userField } changed to: ${ value }`);
+					logger.debug(`user.customFields.${userField} changed to: ${value}`);
 				}
 			}
 		});

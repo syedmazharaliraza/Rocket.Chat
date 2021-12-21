@@ -59,7 +59,7 @@ if (disableOplog) {
 	// Overrides the native observe changes to prevent database polling and stores the callbacks
 	// for the users' tokens to re-implement the reactivity based on our database listeners
 	const { mongo } = MongoInternals.defaultRemoteCollectionDriver();
-	MongoInternals.Connection.prototype._observeChanges = function(
+	MongoInternals.Connection.prototype._observeChanges = function (
 		{
 			collectionName,
 			selector,
@@ -232,7 +232,8 @@ export class MeteorService extends ServiceClass implements IMeteor {
 							statusLivechat: 1,
 						},
 					});
-					const serviceOnline =						agent && agent.status !== 'offline' && agent.statusLivechat === 'available';
+					const serviceOnline =
+						agent && agent.status !== 'offline' && agent.statusLivechat === 'available';
 
 					if (serviceOnline) {
 						return onlineAgents.add(id);

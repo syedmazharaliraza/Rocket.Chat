@@ -25,13 +25,13 @@ import { ISAMLUser } from '../definition/ISAMLUser';
 import { SAMLUtils } from './Utils';
 import { SystemLogger } from '../../../../server/lib/logger/system';
 
-const showErrorMessage = function(res: ServerResponse, err: string): void {
+const showErrorMessage = function (res: ServerResponse, err: string): void {
 	res.writeHead(200, {
 		'Content-Type': 'text/html',
 	});
-	const content = `<html><body><h2>Sorry, an annoying error occured</h2><div>${ escapeHTML(
+	const content = `<html><body><h2>Sorry, an annoying error occured</h2><div>${escapeHTML(
 		err,
-	) }</div></body></html>`;
+	)}</div></body></html>`;
 	res.end(content, 'utf-8');
 };
 
@@ -45,11 +45,11 @@ export class SAML {
 		// Skip everything if there's no service set by the saml middleware
 		if (!service) {
 			if (samlObject.actionName === 'metadata') {
-				showErrorMessage(res, `Unexpected SAML service ${ samlObject.serviceName }`);
+				showErrorMessage(res, `Unexpected SAML service ${samlObject.serviceName}`);
 				return;
 			}
 
-			throw new Error(`Unexpected SAML service ${ samlObject.serviceName }`);
+			throw new Error(`Unexpected SAML service ${samlObject.serviceName}`);
 		}
 
 		switch (samlObject.actionName) {
@@ -64,7 +64,7 @@ export class SAML {
 			case 'validate':
 				return this.processValidateAction(req, res, service, samlObject);
 			default:
-				throw new Error(`Unexpected SAML action ${ samlObject.actionName }`);
+				throw new Error(`Unexpected SAML action ${samlObject.actionName}`);
 		}
 	}
 
@@ -105,14 +105,14 @@ export class SAML {
 
 		// First, try searching by custom identifier
 		if (
-			userObject.identifier.type === 'custom'
-			&& userObject.identifier.attribute
-			&& userObject.attributeList.has(userObject.identifier.attribute)
+			userObject.identifier.type === 'custom' &&
+			userObject.identifier.attribute &&
+			userObject.attributeList.has(userObject.identifier.attribute)
 		) {
 			customIdentifierAttributeName = userObject.identifier.attribute;
 
 			const query: Record<string, any> = {};
-			query[`services.saml.${ customIdentifierAttributeName }`] = userObject.attributeList.get(
+			query[`services.saml.${customIdentifierAttributeName}`] = userObject.attributeList.get(
 				customIdentifierAttributeName,
 			);
 			user = Users.findOne(query);
@@ -124,7 +124,7 @@ export class SAML {
 
 		// Second, try searching by username or email (according to the immutableProperty setting)
 		if (!user) {
-			const expression = userObject.emailList.map((email) => `^${ escapeRegExp(email) }$`).join('|');
+			const expression = userObject.emailList.map((email) => `^${escapeRegExp(email)}$`).join('|');
 			const emailRegex = new RegExp(expression, 'i');
 
 			user = SAML.findUser(userObject.username, emailRegex);
@@ -204,15 +204,15 @@ export class SAML {
 
 		// If the user was not found through the customIdentifier property, then update it's value
 		if (customIdentifierMatch === false && customIdentifierAttributeName) {
-			updateData[`services.saml.${ customIdentifierAttributeName }`] = userObject.attributeList.get(
+			updateData[`services.saml.${customIdentifierAttributeName}`] = userObject.attributeList.get(
 				customIdentifierAttributeName,
 			);
 		}
 
 		// Overwrite mail if needed
 		if (
-			mailOverwrite === true
-			&& (customIdentifierMatch === true || immutableProperty !== 'EMail')
+			mailOverwrite === true &&
+			(customIdentifierMatch === true || immutableProperty !== 'EMail')
 		) {
 			updateData.emails = emails;
 		}
@@ -280,7 +280,7 @@ export class SAML {
 	}
 
 	private static _logoutRemoveTokens(userId: string): void {
-		SAMLUtils.log(`Found user ${ userId }`);
+		SAMLUtils.log(`Found user ${userId}`);
 
 		Users.unsetLoginTokens(userId);
 		Users.removeSamlServiceSession(userId);
@@ -382,7 +382,7 @@ export class SAML {
 			}
 
 			const logOutUser = (inResponseTo: string): void => {
-				SAMLUtils.log(`Logging Out user via inResponseTo ${ inResponseTo }`);
+				SAMLUtils.log(`Logging Out user via inResponseTo ${inResponseTo}`);
 
 				const cursor = Users.findBySAMLInResponseTo(inResponseTo);
 				const count = cursor.count();
@@ -470,7 +470,7 @@ export class SAML {
 					};
 
 					await this.storeCredential(credentialToken, loginResult);
-					const url = `${ Meteor.absoluteUrl('home') }?saml_idp_credentialToken=${ credentialToken }`;
+					const url = `${Meteor.absoluteUrl('home')}?saml_idp_credentialToken=${credentialToken}`;
 					res.writeHead(302, {
 						Location: url,
 					});
